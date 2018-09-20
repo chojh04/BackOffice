@@ -11,11 +11,6 @@
 - jquery
 - redis
 
-## Install / Development
-
-git clone -b back_office https://sanghyunhwang@bitbucket.org/openny/kpcadmin.git
-cd kpcadmin/KpcAdmin
-
 # Install dependencies
 pip install requirements
 
