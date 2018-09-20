@@ -1,0 +1,54 @@
+
+<!-- 
+	카드 관리 > 카드 정보 조회 > 카드 거래 결제,충전 취소 modal html
+ -->
+<div class="modal fade cancel-card-deal-modal" id="cancel-card-deal-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" ><span aria-hideen="true">x</span></button>
+				<h4 class="modal-title text-center" id="test-modal-title">취소</h4>
+			</div>
+			<div class="modal-body">
+				<form name="cancelCardDealForm">
+					<input type="hidden" id="targetCardNo" />
+					<input type="hidden" id="targetOrderNo" />
+					<input type="hidden" id="targetDealAmount" />
+					<input type="hidden" id="targetTransactionCode" />
+					<input type="hidden" id="targetMerchantId" />
+					<input type="hidden" id="targetMerchantPwd" />
+					<input type="hidden" id="targetApprovalNo" />
+					<input type="hidden" id="targetApprovalDate" />
+					<input type="hidden" id="targetCancelType" value="D1"/> <!-- 취소타입은 전체취소 D1, 부분취소 D2 인데 해당은 기능은 전체취소 -->
+					<input type="hidden" id="targetPosCode" />
+					
+					<div class="row">
+						<div class="form-group">
+							<p style="padding-left: 10px">취소 하시겠습니까?<br>취소 사유 선택 후 확인 버튼을 클릭해주세요.</p>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4 col-sm-4 col-xs-12">
+								<select class="form-control" id="cancelCardDealType">
+									<option value="none">선택</option>
+									<option value="store">점포지급</option>
+									<option value="customer">고객카드지급</option>
+									<option value="direct">직접입력</option>
+	
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-8 col-sm-8 col-xs-12">
+								<input type="text" class="form-control" id="cancelCardDealDirectInput" disabled="disabled">
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="dt-button btn green btn-outline" id="cancelCardDeal">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>

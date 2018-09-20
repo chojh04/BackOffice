@@ -1,0 +1,188 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>사용자 상세</h3>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <form action="#" id="employeeMngForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 사용자 정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+                                    <label class="control-label col-lg-2 col-md-12 col-sm-12 col-xs-12">사원번호</label>
+                                    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="employeeId" class="span-vertical-middle col-md-3 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">성별</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                   		<span id="genderName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">부서</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+										<span id="divisionName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">팀</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                        <span id="teamName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">휴대전화</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="phone" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">이메일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="email" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">이름</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="name" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">입사일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="enteringDate" class="span-vertical-middle col-md-7 col-xs-12" isDateField="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">퇴사일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="leaveDate" class="span-vertical-middle col-md-7 col-xs-12" isDateField="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">직위</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="positionName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">생년월일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="birthDate" class="span-vertical-middle col-md-7 col-xs-12" isDateField="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        {% if admin_view.isNew == "false" %}
+			            <br />
+                        <div class="column-align-right">
+							<!-- <a id="inq" class="dt-button btn green btn-outline" href="javascript:;"><span>관리이력조회</span></a> -->
+							{% if admin_view.pageAuth["delFlag"] == "1" %}                 	
+							<a id="del" class="dt-button btn red btn-outline" href="javascript:;"><span>삭제</span></a>
+							{% endif %}
+							{% if admin_view.pageAuth["updFlag"] == "1" %}                        	
+							<a id="upt" class="dt-button btn green btn-outline" href="javascript:;"><span>수정</span></a>
+							{% endif %}                        	
+                        </div>   
+						{% endif %}                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <!-- jQuery validation -->
+    
+    <script type="text/javascript">
+
+        var userDetail = function () {
+        	
+            var setPageEvents = function (){
+
+	           	{% if admin_view.isNew == "false" %}
+					$.ajax({
+	                    url: "/api/systemMng/employees/employee",
+	                    data : "employeeId={{admin_view.employeeId}}",
+	                    type: 'GET',
+	                    dataType : "json",
+	                    contentType  : "application/json",
+	                    async : true,
+	                    success: function(data){
+	                    	kpcUtil.setFormData("#employeeMngForm" , data)
+	                    },
+	                    error : function(e){
+	                    	kpcUtil.errorHandling(e);
+	                    }
+	                   });                	
+	            	$("#upt").click(function (){
+                    	location.href = "/systemMng/employees/employeeUpt?employeeId={{admin_view.employeeId}}";
+	            	});
+	            	$("#del").click(function (){
+	            		if(kpcUtil.confirm("삭제 하시겠습니까?")){
+	    					$.ajax({
+	    	                    url: "/api/systemMng/employees/employee?employeeId={{admin_view.employeeId}}",
+	    	                    type: 'DELETE',
+	    	                    dataType : "json",
+	    	                    contentType  : "application/json",
+	    	                    async : true,
+	    	                    success: function(data){
+	    	                    	if(kpcUtil.deleteHandling(data))
+	    	                    		history.back();
+	    	                    },
+	    	                    error : function(e){
+	    	                    	kpcUtil.errorHandling(e);
+	    	                    }
+	    	                });                    	
+	            		}
+	                });					
+					
+	            {% endif %}
+            }        	
+
+            return {
+                init : function (){
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            userDetail().init();
+        });
+
+    </script>
+{% endblock %}

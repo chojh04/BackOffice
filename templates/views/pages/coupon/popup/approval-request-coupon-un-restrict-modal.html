@@ -1,0 +1,247 @@
+<div id="unRestrictRequestModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog" style="width:400px">
+		<div class="modal-content" style="text-align: center">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 class="modal-title"><b>승인자 선택</b></h3>
+			</div>
+			<div class="modal-body">
+				<div id="testId" class="form-horizontal" role="form">
+					<div class="form-group" id="unRestrictApproverList"></div>
+					<div class="form-group" id="kconUnRestrictReqMemoDiv" style="margin-bottom: 0px">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="unRestrictAfterReqMemo" name="unRestrictAfterReqMemo" placeholder="사용해제 사유 입력(한글 20자 이내)" maxlength="100">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="text-align: center">
+				<div style="margin-bottom: 20px;">
+					<label class="checkbox checkbox-single checkbox-outline notiSmsDiv">
+                    	<input type="checkbox" class="checkboxes" id="unRestrictRequestNotiSms" name="unRestrictRequestNotiSms"><span>승인자에게 SMS를 발송합니다.</span>
+					</label>
+				</div>
+				<button id="sendkconUnRestrictRequestBtn" type="button" class="btn btn-primary">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+var couponNo = "";
+var approvalUpdate = false;
+var workType = "";
+var approvalSeq = "";
+
+var kconUnRestrictRequestBtnTrigger = function (targetCouponNo, targetWorkType) {
+	couponNo = targetCouponNo;
+	workType = targetWorkType;
+	$("#unRestrictRequestBtn").trigger("click");
+}
+
+var couponUnRestrictequestUpdateTrigger = function (targetSeq, targetWorkType) {
+	approvalUpdate = true;
+	approvalSeq = targetSeq;
+	workType = targetWorkType
+	
+	$(".notiSmsDiv").remove();
+	
+	$.ajax({
+        url: "/api/approvals/detail/"+targetSeq,
+        type:'GET',
+        dataType : "json",
+        contentType  : "application/json",
+    }).done(function(result){
+
+    	if (result.status === 200) {
+        	approvalInfo = result.data.approvalInfo
+        	coupon = result.data.content.coupon
+        	$("#unRestrictAfterReqMemo").val(approvalInfo.reqMemo);
+        	
+        	getUnRestrictApprover(approvalInfo.apprEmpId);
+    	}
+    	
+    }).fail(function(e){
+		kpcUtil.errorHandling(e);
+    });
+}
+
+var getUnRestrictApprover = function (apprEmpId) {
+	// 승인자 선택
+	$.ajax({
+		url: "/api/approval/getApprovers",
+		data: "menuId=MENU-0003",
+		type: 'GET',
+		dataType : "json",
+	}).done(function(data){
+		var bodyHtml = ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: left">';
+		for(var idx in data){
+			bodyHtml += ''
+				if (idx < (data.length - 1)) {
+					bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-bottom: 1px solid rgba(115, 135, 156, .36); padding-top: 5px;" >'
+				}
+				else {
+					bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 5px;" >'
+				}
+			bodyHtml +=  '	<label class="mt-radio mt-radio-single mt-radio-outline" style="margin-top:15px">'
+				+  '		<input type="radio" class="selCheckboxes" name="empList" value="1" empId="'+data[idx].empId + '"'
+				+  ' 		menuId="'+data[idx].menuId+'"'
+				if (apprEmpId !== "" && apprEmpId === data[idx].empId) {
+					bodyHtml += ' checked ' 
+				}
+				bodyHtml += '>' 
+				+  '		<span></span>' + data[idx].name +' ('+data[idx].email+')'
+				+  '	</label>'
+				+  '</div>';
+		}
+	bodyHtml +='</div></div>';
+		$("#unRestrictApproverList").html(bodyHtml);
+		
+		$("#unRestrictRequestModal").modal("show");
+		
+	}).fail(function(e){
+		kpcUtil.errorHandling(e);
+	});
+}
+
+
+var kconUnRestrictModalInit = function () {
+
+	$("#unRestrictRequestBtn").click(function (){
+		{% if admin_view.pageAuth["insFlag"] == "1"%}
+		if(kpcUtil.confirm("사용해제 하시겠습니까?")) {
+			// 승인자 선택
+			getUnRestrictApprover("")
+		}
+    	{% endif %}
+	})
+	
+	$("#sendkconUnRestrictRequestBtn").click(function (){
+		var apprEmpId = $("input[name=empList]:checked").attr("empId");
+		if(typeof apprEmpId === "undefined"){
+			kpcUtil.customAlert("승인자를 선택해주세요.");
+			return false;
+		} else if ($("#unRestrictAfterReqMemo").val() === "") {
+			kpcUtil.customAlert("사용해제 사유를 입력해주세요.");
+		}
+		else {
+			
+			if (approvalUpdate === false ) {
+				var data = {
+						"couponNo" : couponNo,
+						"apprEmpId" : apprEmpId,
+						"reqMemo" : $("#unRestrictAfterReqMemo").val()
+					}
+				
+				var apiUrl = "";
+				var smsMessage = "";
+				if (workType === "AWRK-0010") {
+					apiUrl = "/api/coupon/kcon/un-restrict";
+					smsMessage = "[R2 - KCON 쿠폰 : 사용해제] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+				}
+				else if (workType === "AWRK-0005") {
+					apiUrl = "/api/coupon/charge/un-restrict";
+					smsMessage = "[R2 - 충전권 : 사용해제] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+				}
+				
+				$.ajax({
+		            url: apiUrl,
+					data: JSON.stringify(data),
+					type: 'POST',
+					dataType : "json",
+					contentType  : "application/json",
+				}).done(function(resultData,status,jqXhr){
+					
+					/* -------------------------------------  */
+					if ($("#unRestrictRequestNotiSms").is(':checked')) {
+						var notiInfo = {
+								"receiverEmpId" : apprEmpId,
+								"message" : smsMessage,
+								"approvalType" : "request"
+						}
+						//문자 보내기
+						approval.notificationSmsService(notiInfo);
+					}
+					/* -------------------------------------  */
+					
+					if (resultData.status == 200) {
+						if (confirm("승인요청 처리되었습니다.\n신청내역 화면으로 이동하시겠습니까?")) {
+							location.href ="/approval/request";
+						}
+						else {
+							$("#unRestrictRequestModal").modal("hide");
+						}
+		        	}
+					else if (resultData.status == 500) {
+						kpcUtil.customAlert(resultData.message);
+						$("#unRestrictRequestModal").modal("hide");
+					}
+		        }).fail(function(e){
+		        	kpcUtil.errorHandling(e);
+		    	});
+			}
+			else {
+				
+				//승인요청 정보 수정
+				var data = {
+						"apprEmpId" : apprEmpId,
+						"reqMemo" : $("#unRestrictAfterReqMemo").val()
+					}
+				var updateApiUrl = "";
+							
+				if (workType === "AWRK-0010") {
+					//KCON 쿠폰
+					updateApiUrl = "/api/approvals/request/kcon/coupon/extension/"+approvalSeq+"/update";
+				}
+				else if (workType === "AWRK-0005") {
+					//충전권
+					updateApiUrl = "/api/approvals/request/coupon/charge/"+approvalSeq+"/update";
+				}
+
+				$.ajax({
+					url: updateApiUrl,
+					data: JSON.stringify(data),
+					type: 'PUT',
+					dataType : "json",
+					contentType  : "application/json",
+				}).done(function(resultData,status,jqXhr){
+					if (resultData.status == 200) {
+						kpcUtil.customAlert("수정 되었습니다.");
+						$("#updateApprovalInfoModal").modal("hide");
+						//location.href = "/approval/request/detail?apprSeq="+approvalSeq+"&apprWorkType="+workType+"&apprStatus=ARST-0001";
+						location.href ="/approval/request";
+	            	}
+					else if (resultData.status == 500) {
+						kpcUtil.customAlert(resultData.message);
+						$("#updateApprovalInfoModal").modal("hide");
+					}
+	            }).fail(function(e){
+	            	kpcUtil.errorHandling(e);
+	        	});
+			}
+		}
+	})
+	
+	$("#unRestrictRequestModal").on("shown.bs.modal", function(e) {
+		$("#unRestrictAfterReqMemo").focus(); 
+	})
+	
+	/**
+	 * 수정 승인 요청 모달이 닫힐 때 모달내 input 값 초기화 
+	 */
+	$("#unRestrictRequestModal").on("hidden.bs.modal", function(e) {
+		$("#unRestrictAfterReqMemo").val("");
+		/* 
+		if (approvalUpdate) {
+			location.href = "/approval/request/detail?apprSeq="+approvalSeq+"&apprWorkType="+workType+"&apprStatus=ARST-0001";
+		}
+		else {
+			$("#unRestrictAfterReqMemo").val(""); 
+		}
+		 */
+	})
+}
+
+</script>

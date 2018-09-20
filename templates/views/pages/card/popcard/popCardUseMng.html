@@ -1,0 +1,387 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>카드 거래 내역 조회</h3>
+                <h5><span class="red">[홈 > 카드 관리 > 카드 거래 내역 조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="searchForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+                                    <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">
+	                                   <select class="select2_single select2-selection--single " id="target" name="target" >
+	                                       <option value="1">카드번호</option>
+	                                       <option value="2">거래번호</option>
+	                                       <option value="3">연동아이디</option>
+	                                   </select>
+                                    </label>
+                                    <div class="col-lg-9 col-md-10 col-sm-9 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-msmall" id="cardNumber" name="cardNumber" style="margin-top:3px;" delHyphen="true">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">
+	                                   <select class="select2_single select2-selection--single " id="dateType" name="dateType" >
+	                                       <option value="SALE">영업일</option>
+	                                       <option value="TRAN">거래일</option>
+	                                   </select>
+                                    </label>
+                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-large" id="searchDate" name="searchDate"  style="margin-top: 3px; text-align: center;">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">관리번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" class="form-control input-msmall" id="startGiftNo" name="startGiftNo" > ~ <input type="text" class="form-control input-msmall" id="endGiftNo" name="endGiftNo" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-small" id="merchantName" name="merchantName" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">금액</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-small" id="amount" name="amount" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                   <select class="select2_single select2-selection--single " id="status" name="status" >
+	                                       <option value="">전체</option>
+	                                       <option value="충전">충전</option>
+	                                       <option value="결제">결제</option>
+	                                       <option value="환불">환불</option>
+	                                       <option value="선물하기">선물하기</option>
+	                                       <option value="선물받기">선물받기</option>
+	                                   </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">지불형태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                   <select class="select2_single select2-selection--single " id="payKind" name="payKind" >
+	                                       <option value="">전체</option>
+	                                       <option value="결제">결제</option>
+	                                       <option value="카드충전">카드충전</option>
+	                                       <option value="바코드충전">바코드충전</option>
+	                                       <option value="모바일충전">모바일 충전</option>
+	                                   </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">지불수단</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                   <select class="select2_single select2-selection--single " id="payMethod" name="payMethod" >
+	                                       <option value="">전체</option>
+	                                       <option value="현금">기본,현금</option>
+	                                       <option value="신용카드">신용카드</option>
+	                                       <option value="포인트">포인트</option>
+	                                       <option value="충전쿠폰">충전쿠폰</option>
+	                                       <option value="계좌이체">계좌이체</option>
+	                                       <option value="휴대폰">휴대폰</option>
+	                                       <option value="상품권">상품권</option>
+	                                       <option value="추가충전권">추가충전권</option>
+	                                   </select>
+                                    </div>
+                                </div>
+                                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">점포명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-small" id="storeName" name="storeName" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">점포코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-small" id="storeCode" name="storeCode" >
+                                    </div>
+                                </div>
+                                <!-- 
+                               		#TODO: 
+	                                거래시간 조건 추가. 
+	                                api수정 후 key, value는 api에 맞추어서 수정 후 테스트. 민욱
+                                -->
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래시간</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="orderType1" name="order" value="ASC" >
+                                    		<label for="orderType1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			오름차순
+                                    		</label>
+                                    	</div>      
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="orderType2" name="order" value="DESC" checked="checked">
+                                    		<label for="orderType2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			내림차순
+                                    		</label>
+                                    	</div>                                                                        	         
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <table id="popCardTable" class="table table-striped table-bordered" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>거래처명</th>
+                                    <th>서비스명</th>
+                                    <th>점포코드</th>
+                                    <th>점포명(사용처)</th>                                    
+                                    <th>구분</th>
+                                    <th>지불수단</th>
+                                    <th>지불형태</th>
+                                    <th>영업일</th>
+                                    <th>거래일</th>
+                                    <th>거래시간</th>
+                                    <th>거래번호</th>
+                                    <th>승인번호</th>
+                                    <th>금액</th>
+                                    <th>사용카드번호</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var merchant_inq = function () {
+        	var table = {};
+            var setDatePicker = function (){
+                kpcUtil.setDateTimeRangePicker('#searchDate');
+            }
+            var setSelect2 = function () {
+            	$("#target").select2({
+                    width: 125,
+                });
+                $("#dateType,#status,#payKind,#payMethod,#payMethod").select2({
+                    width: 160,
+                });
+            }
+            var setDataTable = function () {
+                table = $('#popCardTable')
+                    .dataTable(
+                        {
+                            "bProcessing": true,
+                            "bServerSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,
+                            "ajax": {
+                                "url": "/api/card/usages",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#searchForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "popCardTable",
+                            		menuId : "{{session['menuId']}}", 
+                            		targetTable : table 
+                            	});
+                            },
+                            columns: [
+                                {data: "rownum", width: 30,  defaultContent: "", className: "column-align-right"}, // 순번
+                                {data: "merchantName", width: 100, defaultContent: "", className: "column-align-center"}, //거래처명 
+                                {data: "serviceName", width: 250, defaultContent: "", className: "column-align-center"}, // 서비스명
+                                {data: "posCode", width: 140, defaultContent: "", className: "column-align-center"}, // 점포코드
+                                {data: "posName", width: 140, defaultContent: "", className: "column-align-center"}, // 점포명(사용처)                                
+                                {data: "payStatus", width: 125,  defaultContent: "", className: "column-align-center"}, // 구분
+                                {data: "payMethod", width: 100,  defaultContent: "", className: "column-align-center"}, // 지불수단
+                                {data: "payType", width: 100,  defaultContent: "", className: "column-align-center"}, // 지불형태
+                                {
+                                  	data : "businessDate" , 
+  	                                defaultContent: "",
+  	                                width : 145,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.businessDate , "YYYY-MM-DD");
+  	                                }
+                                  }, // 영업일
+                                {
+                                  	data : "approvalDate" , 
+  	                                defaultContent: "",
+  	                                width : 145,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.approvalDate.substring(0,8) , "YYYY-MM-DD");
+  	                                }
+                                  }, // 거래일
+                                  {
+                                  	data : "approvalDate" , 
+  	                                defaultContent: "", 
+  	                                width : 80,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return moment(full.approvalDate.substring(8,14), 'hmmss').format("HH:mm:ss");
+  	                                }
+                                  }, // 거래시간                                
+                                {data: "orderNo", width : 250, defaultContent: "", className: "column-align-right"}, // 거래번호 
+                                {data: "approvalNo", width : 110, defaultContent: "", className: "column-align-right"}, // 승인번호 
+                                {
+                                	data : "amount" , 
+	                                defaultContent: "",
+	                                width: 100, 
+	                                className: "column-align-right" ,
+	                                render : function (data, type , full , meta){
+	                                	if(full.amount.startsWith("-")){
+	                                		return "<span class='red'>" + kpcUtil.numberWithCommas(full.amount)+"</span>";
+	                                	}else {
+	                                		return kpcUtil.numberWithCommas(full.amount);
+	                                	}
+	                                }
+                                },// 거래금액                                   
+                                {data: "cardNumber", width : 130, defaultContent: "", className: "column-align-right"}, // 사용 카드번호
+                            ],
+                            buttons: [
+                                {
+                                	text: 'Layout',
+                                    className: 'dt-button btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+    							    		columnArray : $(table).find("thead>tr>th").siblings().not(".checkboxes"),
+    							    		tableId : "popCardTable",
+    							    		menuId : "{{session['menuId']}}",
+    							    		targetTable : table
+        								}); 
+                                    }
+                                },
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/card/usages/excel",
+                	                            type: 'GET',
+                	                            data : $("#searchForm").serialize(),
+                	                            contentType  : "application/json",
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                        table.fnFilter();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+            
+            var setPageEvents = function (){
+    			// 조회 이벤트
+    			/*
+            	kpcUtil.serachFormEvent({
+            		selects : "#searchForm select",
+            		inputs : "#searchForm input",
+            		callback : function (){
+            			table.fnFilter();
+            		}
+            	});
+    			*/
+            	// hypthen(-) 제거
+            	kpcUtil.setFormTextFieldFormat({
+            		target : "#searchForm"
+            	});    			
+            }
+            
+            return {
+                init : function (){
+                	setDatePicker();
+                    setSelect2();
+                    setDataTable();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            merchant_inq().init();
+        });
+    </script>
+{% endblock %}

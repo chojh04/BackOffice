@@ -1,0 +1,311 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>(대표) 거래처 수정</h3>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <form action="#" id="merchantForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 대표 거래처 정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+                                    <label class="control-label col-lg-2 col-md-12 col-sm-12 col-xs-12">대표 거래처 정보</label>
+                                    <div class="col-lg-10 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                        <input type="text" id="merchantId" name="merchantId" class="form-control col-md-3 col-xs-12" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">가맹점명(한글)</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                   		
+										<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">가맹점명(영문)</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+										<input type="text" id="nameEng" name="nameEng" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">가맹점명 별칭(한글)</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	                                    
+                                        <input type="text" id="alias" name="alias" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">가맹점명 별칭(영문)</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+										<input type="text" id="aliasEng" name="aliasEng" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 성명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+                                        <input type="text" id="ceoName" name="ceoName" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+										<input type="text" id="tel" name="tel" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">보조 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+										                                    	
+                                        <input type="text" id="telSub" name="telSub" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 팩스번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="fax" name="fax" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">보조 팩스번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" id="faxSub" name="faxSub" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">우편번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+										<input type="text" id="zipcode" name="zipcode" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">주소</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
+										<input type="text" id="address" name="address" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상세주소</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
+										<input type="text" id="addressaddressDetail" name="addressDetail" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">업종</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="bizKind" name="bizKind" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">업태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="bizCond" name="bizCond" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">가맹점 구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="bizGrp" name="bizGrp" >
+	                                        <option value="1">가맹점 구분1</option>
+	                                        <option value="2">가맹점 구분2</option>
+	                                        <option value="3">가맹점 구분3</option>
+	                                    </select>                                         
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사업자 번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+										<input type="text" id="corpRegNo" name="corpRegNo" class="form-control col-md-7 col-xs-12" maxlength="12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">개업일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-date-picker" id="openDate" name="openDate" isDateField="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">폐업일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" class="form-control input-date-picker" id="closeDate" name="closeDate" isDateField="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">폐업 여부</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="closeFlag1" name="closedFlag" value="Y">
+                                    		<label for="closeFlag1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			운영
+                                    		</label>
+                                    	</div>
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="closeFlag2" name="closedFlag" value="N">
+                                    		<label for="closeFlag2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			폐업
+                                    		</label>
+                                    	</div>                                    
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">자본금</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+                                        <input type="text" id="capitalAmount" name="capitalAmount" class="form-control" isNumber="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">직원 수</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+										<input type="text" id="empCount" name="empCount" class="form-control" isNumber="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">매장 갯수</label>
+                                    <div class="col-lg-9 cl-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+                                        <input type="text" id="storeCount" name="storeCount" class="form-control " isNumber="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">월 평균 매출</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+                                    	
+										<input type="text" id="avgSaleMonth" name="avgSaleMonth" class="form-control " isNumber="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">연 평균 매출</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline " >
+                                    	
+                                        <input type="text" id="avgSaleYear" name="avgSaleYear" class="form-control " isNumber="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12"></label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        {% if admin_view.pageAuth["updFlag"] == "1" %}
+                        <div class="column-align-right">
+							<a id="upt" class="dt-button btn green btn-outline" href="javascript:;"><span>수정</span></a>                        	
+                        </div>
+                        {% endif %}
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <!-- jQuery validation -->
+    
+    <script type="text/javascript">
+
+        var merchantUpt = function () {
+        	var validate;
+            var setDatePicker = function (){
+                kpcUtil.setDatePicker('#openDate');
+                kpcUtil.setDatePicker('#closeDate');
+            }
+            var setSelect2 = function () {
+                $("#bizGrp").select2({
+                    width: 110,
+                }); 
+            }            
+            var setPageEvents = function (){
+            	{% if admin_view.isNew == "false" %}
+					$.ajax({
+	                    url: "/api/merchants/merchant/represent",
+	                    data : "merchantId=" + "{{admin_view.merchantId}}",
+	                    type: 'GET',
+	                    dataType : "json",
+	                    contentType  : "application/json",
+	                    async : true,
+	                    success: function(data){
+	                    	kpcUtil.setFormData("#merchantForm" , data)
+	                    },
+	                    error : function(e){
+	                    	kpcUtil.errorHandling(e);
+	                    }
+                    });    
+					$("#upt").click(function (){
+	                    if($("#merchantForm").valid() && kpcUtil.confirm("수정 하시겠습니까?")){
+	                        $.ajax({
+	                           url: "/api/merchants/merchant/represent",
+	                           data: $("#merchantForm").serializeObject(),
+	                           type: 'PUT',
+	                           dataType : "json",
+	                           contentType  : "application/json",
+	                           async : true,
+	                           success: function(data){
+	                             kpcUtil.successHandling("#merchantForm",data,false) 
+	                           },
+	                           error : function(e){
+	                           	kpcUtil.errorHandling(e);
+	                           }
+	                       }); 
+	                   }					
+					});
+				{% endif %}
+            }            
+            return {
+                init : function (){
+                    setDatePicker();
+                    setSelect2();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            merchantUpt().init();
+        });
+
+    </script>
+{% endblock %}

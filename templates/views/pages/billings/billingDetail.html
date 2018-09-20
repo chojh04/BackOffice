@@ -1,0 +1,438 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>정산명세서 조정 등록</h3>
+                <h5><span class="red">[홈 > 회계 등록 관리 > 정산명세서 등록/조회 > 정산명세서 조정 등록]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <form action="#" id="infoForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">[거래처 정산정보]</label>
+                                </div>
+                            </div>
+                            <div class="x_content" style="margin-top:0px; padding-bottom:10px;"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처명</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="submerchantName" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스명</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+										<span id="serviceName" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산기간</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                        <span id="approvalDt" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산지급일</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                        <span id="billingDt" class=" col-md-12 col-xs-12 span-vertical-middle" isDateField="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래구분</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+										<span id="typeName" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산타입</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="billingCommType" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산주기</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="billingDuration" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래건수</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="cnt" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 수수료</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="merchantComm" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">수수료 타입</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="commTypeName" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">부가세 타입</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="taxTypeName" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            	<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">입금은행</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="bankName" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">예금주</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="bankHolder" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">계좌번호</label>
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+                                        <span id="bankAccNo" class=" col-md-12 col-xs-12 span-vertical-middle"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-12 col-sm-12 col-xs-12">			
+                <div class="x_panel">
+                	<input type="hidden" name="billingSeq" id="billingSeq" value="{{admin_view.billingSeq}}"/>
+                	<input type="hidden" name="regBillingSeq" id="regBillingSeq"  value="{{admin_view.regBillingSeq}}"/>
+                	<input type="hidden" id="seq" value="{{admin_view.apprSeq}}" />
+                	<input type="hidden" id="contentSeq" value="{{admin_view.contentSeq}}" />
+                	<form action="#" id="inputForm" class="form-bordered ">
+	                	<input type="hidden" id="billingId" value="" />
+		                <input type="hidden" id="billingName" value="" />
+                    	<div class="form">
+                    		
+	                    	<div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-md-12 col-sm-12 col-xs-12 ">
+	                        		<label class="control-label col-md-3 col-sm-3 col-xs-12">[실정산대상 금액 등록]</label>
+	                            </div>
+	                        </div>
+	                        <div class="x_content" style="margin-top:0px; padding-bottom:10px;"></div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="amount" name="amount" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래 취소금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="cancelAmount" name="cancelAmount" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">불일치 금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+	                                	<input type="text" id="notMatchedAmount" name="notMatchedAmount" class="form-control col-md-12 col-xs-12" isNumber="Y">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산일별 차액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+	                                	<input type="text" id="differenceAmount" name="differenceAmount" class="form-control col-md-12 col-xs-12" isNumber="Y">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">기타금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="etcAmount" name="etcAmount" class="form-control col-md-12 col-xs-12" value="0" isNumber="Y">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">조정금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="adjustmentAmount" name="adjustmentAmount" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">총 거래금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="totTransAmount" name="totTransAmount" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">결제금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="payAmount" name="payAmount" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">할인금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="dcAmount" name="dcAmount" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">수수료</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="commision" name="commision" class="form-control col-md-12 col-xs-12" isNumber="Y">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">부가세</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="tax" name="tax" class="form-control col-md-12 col-xs-12" isNumber="Y">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">수수료 합계</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="commTotal" name="commTotal" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-border-left-xs">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">실정산금액</label>
+	                                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                                	<input type="text" id="billingAmount" name="billingAmount" class="form-control col-md-12 col-xs-12" isNumber="Y" readonly="readonly">
+	                                </div>
+	                            </div>
+	                        </div>
+                    	</div>
+	                    <div class="col-md-20 col-sm-12 col-xs-12">
+	                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
+	                            <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">메모</label>
+	                            <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12  form-border-left-lg" >
+	                            	<input type="text" id="memo" name="memo" class="form-control col-md-20 col-xs-12" placeholder="조정 사유 또는 기타사항 입력 (한글 기준 100자 이내)">
+	                            </div>
+	                        </div>
+	                    </div>
+                    </form>
+                    <br>
+					<div class="column-align-right">					
+						<a class="dt-button btn green btn-outline" id="createApprovalRequestBtn"><span>정산 등록</span></a>						
+						<a class="dt-button btn green btn-outline" href="/billing/billingHistory"><span>목록</span></a>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-create-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+    <!-- jQuery validation -->
+    
+    <script type="text/javascript">
+
+        var billingDetail = function () {
+        	//예비 정산명세서 -> 정산명세서 등록  승인요청
+            var selectDetail = function (seq){
+				$.ajax({
+                    url: "/api/billing/billingDetail",
+                    data : "seq=" + seq,
+                    type: 'GET',
+                    dataType : "json",
+                    contentType  : "application/json",
+                    async : true,
+                    success: function(data){
+                    	kpcUtil.setFormData("#infoForm", data.resultList);
+                    	$("#infoForm #approvalDt").html(data.resultList.approvalDtMin.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3')+"~"+data.resultList.approvalDtMax.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3'));
+                    	$("#infoForm #merchantComm").html(data.resultList.merchantCommision+"%");
+                    	
+                    	kpcUtil.setFormData("#inputForm", data.resultList);
+                    	$("#billingSeq").val(data.resultList.seq)
+                    	$("#inputForm #adjustmentAmount").val(String(data.resultList.notMatchedAmount + data.resultList.differenceAmount).addComma());
+                    	var totTransAmount = data.resultList.amount - data.resultList.cancelAmount - (data.resultList.notMatchedAmount + data.resultList.differenceAmount);
+                    	$("#inputForm #totTransAmount").val(String(totTransAmount).addComma());
+                    	
+                    	//수수료
+                    	var commision = totTransAmount * (data.resultList.merchantCommision*0.01);
+                    	$("#inputForm #commision").val(String(Math.floor(commision)).addComma());
+                    	//$("#inputForm #commision").val(String(totTransAmount * (data.resultList.merchantCommision*0.01)).addComma());
+                    	
+                    	//부가세
+                    	var tax = commision*0.1;                    	
+                    	$("#inputForm #tax").val(String(Math.floor(tax)).addComma());
+                    	//$("#inputForm #tax").val(String(totTransAmount * (data.resultList.merchantCommision*0.01)*0.1).addComma());
+                    	
+                    	//수수료합계(수수료+부가세)
+                    	$("#inputForm #commTotal").val(String(Math.floor(commision+tax)).addComma());
+                    	
+                    	//실정산금액
+                    	$("#inputForm #billingAmount").val(String(totTransAmount-Math.floor(commision+tax)).addComma());
+                    	
+                    	
+                    },
+                    error : function(e){
+                    	kpcUtil.errorHandling(e);
+                    }
+                });
+            }
+			 var modifyDetail = function (seq){			
+				$.ajax({
+	                url: "/api/approval/Info/"+seq,
+	                type:'GET',
+	                dataType : "json",
+	                contentType  : "application/json",
+	            }).done(function(result){
+	            	if (result.status === 200) {
+		            	approvalInfo = result.data.approvalInfo;
+		            	content = JSON.parse(result.data.content);   
+		            	selectDetail(content.seq);
+		            	consolr.log(content);
+		            	
+                    	kpcUtil.setFormData("#infoForm", data.resultList);
+                    	$("#infoForm #approvalDt").html(data.resultList.approvalDtMin.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3')+"~"+data.resultList.approvalDtMax.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3'));
+                    	$("#infoForm #merchantComm").html(data.resultList.merchantCommision+"%");
+                    	
+                    	kpcUtil.setFormData("#inputForm", data.resultList);
+                    	$("#billingSeq").val(data.resultList.seq)
+                    	$("#inputForm #adjustmentAmount").val(String(data.resultList.notMatchedAmount + data.resultList.differenceAmount).addComma());
+                    	var totTransAmount = data.resultList.amount - data.resultList.cancelAmount - (data.resultList.notMatchedAmount + data.resultList.differenceAmount);
+                    	$("#inputForm #totTransAmount").val(String(totTransAmount).addComma());
+                    	
+                    	//수수료
+                    	var commision = totTransAmount * (data.resultList.merchantCommision*0.01);
+                    	$("#inputForm #commision").val(String(Math.floor(commision)).addComma());
+                    	//$("#inputForm #commision").val(String(totTransAmount * (data.resultList.merchantCommision*0.01)).addComma());
+                    	
+                    	//부가세
+                    	var tax = commision*0.1;                    	
+                    	$("#inputForm #tax").val(String(Math.floor(tax)).addComma());
+                    	//$("#inputForm #tax").val(String(totTransAmount * (data.resultList.merchantCommision*0.01)*0.1).addComma());
+                    	
+                    	//수수료합계(수수료+부가세)
+                    	$("#inputForm #commTotal").val(String(Math.floor(commision+tax)).addComma());
+                    	
+                    	//실정산금액
+                    	$("#inputForm #billingAmount").val(String(totTransAmount-Math.floor(commision+tax)).addComma());
+	            	}
+	            });
+			 }
+          
+
+            var setPageEvents = function (){            	
+            	if(typeof $("#billingSeq").val() !== "undifined" && $("#billingSeq").val()!="") selectDetail($("#billingSeq").val());            	
+            	if(typeof $("#seq").val() !== "undifined" && $("#seq").val()!="") modifyDetail($("#seq").val());
+       		}
+           		
+            return {
+                init : function (){
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+        	billingDetail().init();
+        	approvalReuestCreateModal("inputForm", "BSM-0001", "AWRK-0006", "정산 등록 하시겠습니까?"); //사용제한 해제 승인 요청 모달
+        	// 숫자만 입력
+        	$("#inputForm input:text[isNumber=Y]").on("input", function() {
+        		if($(this).val().length > 0){
+        			$(this).val(String(parseInt($(this).val().replace(/[^0-9]/g, ""))).addComma());
+        		}else{
+        			$(this).val(0);
+        		}
+        	});
+        	
+        	// 조정금액 및 총 거래금액 자동계산
+        	$("#inputForm #notMatchedAmount, #differenceAmount, #etcAmount").on("input", function() {
+        	//$("#inputForm:not(#memo)").on("input", function() {
+        		var $inputForm = $("#inputForm");
+        		
+        		var notMatchedAmount = parseInt($inputForm.find("#notMatchedAmount").val().replace(/,/g,""));
+        		var differenceAmount = parseInt($inputForm.find("#differenceAmount").val().replace(/,/g,""));
+        		var etcAmount = parseInt($inputForm.find("#etcAmount").val().replace(/,/g,""));
+        		var adjustmentAmount = notMatchedAmount + differenceAmount + etcAmount;
+        		$inputForm.find("#adjustmentAmount").val(String(adjustmentAmount).addComma());
+        		
+        		
+        		var amount = parseInt($inputForm.find("#amount").val().replace(/,/g,""));
+        		var cancelAmount = parseInt($inputForm.find("#cancelAmount").val().replace(/,/g,""));
+        		var totTransAmount = amount - cancelAmount - adjustmentAmount;        		
+        		$inputForm.find("#totTransAmount").val(String(totTransAmount).addComma());
+        		
+        		var merchantComm = parseInt($("#merchantComm").text().replace("%",""));
+        		var commision = parseInt(totTransAmount * merchantComm *0.01);
+        		
+        		$inputForm.find("#commision").val(String(Math.floor(commision)).addComma());
+        		
+        		var tax = parseInt(commision * 0.1);
+        		$inputForm.find("#tax").val(String(Math.floor(tax)).addComma());
+        		
+        		var commTotal = commision + tax;        		
+        		$inputForm.find("#commTotal").val(String(Math.floor(commTotal)).addComma());
+        		
+        		$inputForm.find("#billingAmount").val(String(Math.floor(parseInt($("#totTransAmount").val().replace(/,/g,"")-commTotal))).addComma());
+        	});
+        	
+        	// 수수료 합계 및 실정산금액 자동계산
+        	$("#inputForm #commision").on("input", function() {
+        		var $inputForm = $("#inputForm");
+        		
+        		var commision = parseInt($inputForm.find("#commision").val().replace(/,/g,""));        		
+        		$inputForm.find("#commision").val(String(Math.floor(commision)).addComma());
+        		
+        		var tax = parseInt($inputForm.find("#tax").val().replace(/,/g,""));        		
+        		$inputForm.find("#tax").val(String(Math.floor(tax)).addComma());
+        		
+        		var commTotal = commision+tax;        		
+        		$inputForm.find("#commTotal").val(String(Math.floor(commTotal)).addComma());
+        		
+        		$inputForm.find("#billingAmount").val(String(Math.floor(parseInt($("#totTransAmount").val().replace(/,/g,"")-commTotal))).addComma());
+        	});
+        	
+        	$("#inputForm #tax").on("input", function() {
+        		var $inputForm = $("#inputForm");
+        		
+        		var commision = parseInt($inputForm.find("#commision").val().replace(/,/g,""));        		
+        		
+        		var tax = parseInt($inputForm.find("#tax").val().replace(/,/g,""));        		
+        		$inputForm.find("#tax").val(String(Math.floor(tax)).addComma());
+        		
+        		var commTotal = commision+tax;        		
+        		$inputForm.find("#commTotal").val(String(Math.floor(commTotal)).addComma());
+        		
+        		$inputForm.find("#billingAmount").val(String(Math.floor(parseInt($("#totTransAmount").val().replace(/,/g,"")-commTotal))).addComma());
+        	});
+        });
+
+    </script>
+{% endblock %}

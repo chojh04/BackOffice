@@ -1,0 +1,232 @@
+<!-- 카드관리 - 카드기간별 잔액관리:
+     1. 데이터 조회시 데이터가 있으면 표시되는 총 합계를 클릭하여 띄우는 모달창
+     2. 충전합계 클릭 -> 카드 기간별 충전 합계 리스트 추출
+     3. List Api: GET - /balance/transaction-summary 거래별 요약조회
+     4. transactionType = TRNT-0001(충전)
+//-->
+<div id="cardChargeSumListModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog modal-full">
+		<div class="modal-content">
+			<div class="modal-header" style="text-align: center">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 class="modal-title"><b>카드 기간별 충전합계</b></h3>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid form">
+				 	<table id="cardChargeSumListTable" class="table table-striped table-bordered " style="width: 100%">
+                    	<thead>
+                        	<tr>
+                            	<th>번호</th>
+                                <th>거래처-서비스명</th>
+                                <th class="column-align-center">충전</th>
+                                <th class="column-align-center">충전취소</th>
+                                <th class="column-align-center">충전합계</th>
+							</tr>
+						</thead>
+                        <tbody>
+                        </tbody>
+					</table> 
+				</div>
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+
+var cardChargeSumListMng = function() {
+	  
+	var cardChargeSumListTable;
+	  
+	  var setChargeDataTable = function() {
+		  cardChargeSumListTable = $('#cardChargeSumListTable')
+		  .dataTable(
+				  {
+					  "processing": true,
+					  "serverSide": true,
+					  "deferRender": true,
+					  "deferLoading": 0,
+                    "ajax": {
+                        "url": "/api/card/balance/transaction-summary",
+                        "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                        "async" : "true",
+                        "data": function(parameter) {
+                            parameter.formData = $("#searchForm").serializeObject();
+                            parameter.transactionType ="TRNT-0001";
+                        },
+                        "error" : function(e) {kpcUtil.sessionExpire(e);}
+                    },
+                    "ordering": false,
+                    "drawCallback": function(settings) {
+                  	  for(var i=0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                            $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                            settings.json.data[i].rownum = i + 1 + settings._iDisplayStart; 
+                  	  }
+                  	  
+                  	  //조회된 데이터가 없으면 총합계 summay 데이터 표시 안함 
+                   	 if(settings.aiDisplay.length > 0) {
+                  		 var data = cardChargeSumListTable.fnSettings().json;
+                  		 
+                  		 var checkZero = function(data) {
+                	 		  	if(data == 0) {
+                	 			  	return "-";
+                	 		  	} else {
+                	 			    return data;
+                	 		  	}
+                	 	  	 }
+                  		 
+                  		 // summary 값으로 전달 받은 데이터 총금액 하단 고정 표시 데이터 HTML
+                  	 	 var addTotalHtml = '<tr role="row">'
+                  	 			 			+'<td class="bg-ligth-gray"></td>' // 빈칸 
+                  	 			 			+'<td class="bg-ligth-gray"></td>' // 빈칸 
+                  	 			 			+'<td class=" column-align-right bg-ligth-gray">'
+                  	 			 			+checkZero(kpcUtil.numberWithCommas(data.totalData.transactionAmount))// 
+                  	 			 			+'</td>'
+                  	   			 			+'<td class=" column-align-right bg-ligth-gray">'
+                  	 			 			+checkZero(kpcUtil.numberWithCommas(data.totalData.cancelTransactionAmount))// 
+                  	 			 			+'</td>'
+                  	 			 			+'<td class=" column-align-right bg-ligth-gray">'
+                  	 			 			+checkZero(kpcUtil.numberWithCommas(data.totalData.transactionSum))// 
+                  	 			 			+'</td></tr>'	 	
+                  	 			 
+                  		 $("#cardChargeSumListTable").append(addTotalHtml).addClass("col-md-12");
+
+                  	 }
+                  	  
+                        kpcPopupUtil.setUserTableColumnData({
+                            tableId : "cardChargeSumListTable",
+                            menuId : "{{session['menuId']}}", 
+                            targetTable : cardChargeSumListTable 
+                        });  
+                    },
+                    columns: [
+                  	  {data : "rownum" , defaultContent: "",width : 50, className: "column-align-center"},// 번호
+                  	  {
+                  		  data : "serviceName" ,
+                  		  defaultContent: "",
+                  		  width : 50,
+                  		  className: "column-align-center",
+                  		  render : function(data, type, full, meta) {
+                  			  return full.merchantName+" - "+full.serviceName;
+                  		  } 
+                  		  
+                  	  },// 
+                  	  {
+                  		  data : "transactionAmount" ,
+                  		  defaultContent: "",
+                  		  width : 50,
+                  		  className: "column-align-right",
+                  		  render : function(data, type, full, meta) {
+                  			  return (full.transactionAmount>0) ? kpcUtil.numberWithCommas(full.transactionAmount) : "-";
+                  		  } 
+                  		  
+                  	  },// 
+                  	  {
+                  		  data : "cancelTransactionAmount" ,
+                  		  defaultContent: "",
+                  		  width : 50,
+                  		  className: "column-align-right",
+                  		  render : function(data, type, full, meta) {
+                  			  return (full.cancelTransactionAmount>0) ? kpcUtil.numberWithCommas(full.cancelTransactionAmount) : "-";
+                  		  }
+                  		  
+                  	  },// 충전
+                  	  {
+                  		  data : "transactionSum" ,
+                  		  defaultContent: "",
+                  		  width : 50,
+                  		  className: "column-align-right",
+                  		  render : function(data, type, full, meta) {
+                  			  return (full.transactionSum>0) ? kpcUtil.numberWithCommas(full.transactionSum) : "-";
+                  		  }
+                  		  
+                  	  },// 충전취소
+                    ],
+                    buttons: [
+                        {
+                            text: 'Excel',
+                            className: 'btn yellow btn-outline ',
+                            action: function (e, dt, node, config) {
+                         	   var count = dt.rows().data().count();
+                         	   
+                         	   
+                         	   
+                         	   if (count > 0 ) {
+                                		if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                                    		$.ajax({
+                                        		url: "/api/card/balance/transaction-summary/cargeSum/excelAll",
+                                        		type: 'GET',
+                                        		data : $("#searchForm").serialize(),
+                                        		contentType  : "application/json",
+                                        		async : true,
+                                        		success: function(data){
+                                            		kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                                        		},
+                                        		error : function(e){
+                                        			console.log(e)
+                                        			kpcUtil.errorHandling(e);
+                                        		}
+                                   		}); 
+                                		}
+                         	   }
+                         	   else {
+                         		   kpcUtil.customAlert("Excel로 변환할 자료가 없습니다.");
+                         	   }
+                            	}
+                        },
+                    ],
+                    "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                    "pageLength": 10,
+                    "dom": "<'row' <'col-md-8 col-sm-12'l><'col-md-4 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                    responsive: true,
+                    "language": {
+                        "aria": {
+                            "sortAscending": ": activate to sort column ascending",
+                            "sortDescending": ": activate to sort column descending"
+                        },
+                        "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                        "emptyTable": "조회된 자료가 없습니다.",
+                        "infoEmpty": "조회된 자료가 없습니다.",
+                        "lengthMenu": "_MENU_",
+                        "zeroRecords": "조회된 자료가 없습니다."
+                    },
+				  });
+		  
+
+	  }
+	  
+	  
+    return {
+        init : function() {
+        	setChargeDataTable();
+            cardChargeSumListTable.fnFilter();
+        },
+        cardChargeSumModalEvent : function() {
+        	$('#cardChargeSumListTable').dataTable().fnFilter();
+        }
+    }
+	  
+}
+
+$(document).ready(function() {
+	cardChargeSumListMng().init();
+	
+	$("#cardChargeSumListModal").on("focus", function() {
+		cardChargeSumListMng().cardChargeSumModalEvent();
+		
+		var startDate=$("#startDate").val();
+		$("#cardChargeSumListTable_length").find("span").empty();
+		$("#cardChargeSumListTable_length").append("<span>&nbsp;&nbsp;&nbsp;"+startDate+"</sapn>");
+		
+		 });
+	
+	
+});
+
+	
+</script>
+

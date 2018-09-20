@@ -1,0 +1,205 @@
+<!--
+	삭제 승인 요청 모달 html 입니다.
+	화면 내 삭제 버튼의 id는 deleteApprovalRequestBtn로 해야합니다.
+-->
+
+<div id="deleteApprovalReqeustModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog" style="width:400px">
+		<div class="modal-content">
+			<div class="modal-header" style="text-align: center">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 class="modal-title"><b>승인자 선택</b></h3>
+			</div>
+			<div class="modal-body">
+				<div id="testId" class="form-horizontal" role="form">
+					<div class="form-group" id="deleteRequestApproverList"></div>
+					<div class="form-group" style="margin-bottom: 0px">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="deleteReqMemo" name="deleteReqMemo" placeholder="삭제 사유를 입력해주세요." maxlength="100">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="text-align: center">
+				<div style="margin-bottom: 20px;">
+					<label class="checkbox checkbox-single checkbox-outline notiSmsDiv">
+                    	<input type="checkbox" class="checkboxes" id="createApprovalReqeustNotiSms" name="createApprovalReqeustNotiSms"><span>승인자에게 SMS를 발송합니다.</span>
+					</label>
+				</div>
+				<button id="sendDeleteApprovalReqeustBtn" type="button" class="btn btn-primary">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+/**
+ * <!-- 삭제 승인 요청 모달 js-->
+ */
+
+var deleteTargetId = "";
+ 
+var requestDeleteButtonTrigger = function (targetId) {
+	deleteTargetId = targetId;
+	$("#deleteApprovalRequestBtn").trigger("click");
+}
+
+var approvalReuestDeleteModal = function (targetId, menuId, workType) {
+	
+	if (targetId !== undefined || targetId === "") {
+		deleteTargetId = targetId
+	}
+	
+	/**
+	 * 삭제 승인 요청 모달 show
+	 * @returns
+	 */
+	$("#deleteApprovalRequestBtn").click(function() {
+		
+		confirmMsg = "";
+		if(workType === "AWRK-0001") {
+			confirmMsg = "삭제 하시겠습니까?\n삭제시 등록된 하위 거래처가 모두 삭제됩니다.\n해당 대표거래처를 삭제 신청 하시겠습니까?";
+		}
+		else if(workType === "AWRK-0002") {
+			confirmMsg = "삭제시 등록된 서비스정보가 모두 삭제됩니다.\n해당 일반거래처를 삭제하시겠습니까?";
+		}
+		else if (workType === "AWRK-0009") {
+			confirmMsg = "삭제 하시겠습니까?";
+		}
+		else {
+			confirmMsg = "삭제시 연결된 정산 정보가 삭제됩니다.\n해당 서비스를 삭제 하시겠습니까?";
+		}
+		
+		var isExist = approval.existApprovalRequest(deleteTargetId);
+		if (!isExist) {
+			if(confirm(confirmMsg)) {
+    			$.ajax({
+    				url: "/api/approval/getApprovers",
+    				data: "menuId=" + menuId,
+    				type: 'GET',
+    				dataType : "json",
+    			}).done(function(data){
+    				var bodyHtml = ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: left">';
+    					for(var idx in data){
+							bodyHtml += ''
+								if (idx < (data.length - 1)) {
+									bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-bottom: 1px solid rgba(115, 135, 156, .36); padding-top: 5px;" >'
+								}
+								else {
+									bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 5px;" >'
+								}
+							bodyHtml +=  '	<label class="mt-radio mt-radio-single mt-radio-outline" style="margin-top:15px">'
+								+  '		<input type="radio" class="selCheckboxes" name="empList" value="1" empId="'+data[idx].empId + '"'
+								+  ' 		menuId="'+data[idx].menuId+'">'
+								+  '		<span></span>' + data[idx].name +' ('+data[idx].email+')'
+								+  '	</label>'
+								+  '</div>';
+    					}
+    				bodyHtml +='</div></div>';
+    				$("#deleteRequestApproverList").html(bodyHtml);
+    				
+    				$("#deleteApprovalReqeustModal").modal("show");
+    				
+    			}).fail(function(e){
+    				kpcUtil.errorHandling(e);
+    			});
+    		}
+		}
+	});
+	
+	/**
+	 * 삭제 승인 요청 하기
+	 * @returns
+	 */
+	$("#sendDeleteApprovalReqeustBtn").click(function() {
+		var apprEmpId = $("input[name=empList]:checked").attr("empId");
+		if(typeof apprEmpId === "undefined"){
+			kpcUtil.customAlert("승인자를 선택해주세요.");
+			return false;
+		}
+		else {
+			var data = {
+					'reqMemo' : $("#deleteReqMemo").val(),
+					'apprEmpId' : apprEmpId,
+			}
+			
+			var apiUrl = "";
+			var smsMessage = ""
+			if(workType === "AWRK-0001") {
+				data.merchantId = deleteTargetId,
+				apiUrl = "/api/merchants/merchant/represent";
+				smsMessage = "[R2 - 대표 거래처 : 삭제] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if(workType === "AWRK-0002") {
+				data.subMerchantId = deleteTargetId,
+				apiUrl = "/api/merchants/merchant";
+				smsMessage = "[R2 - 일반 거래처 : 삭제] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if(workType === "AWRK-0003") {
+				data.serviceId = deleteTargetId,
+				apiUrl = "/api/merchants/services/service";
+				smsMessage = "[R2 - 거래처 서비스 : 삭제] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if (workType === "AWRK-0009") {
+				data.productId = deleteTargetId,
+				apiUrl = "/api/coupon/brochures/brochure/delete";
+				smsMessage = "[R2 - KCON 상품 : 삭제] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			
+			$.ajax({
+				url: apiUrl,
+				data: JSON.stringify(data),
+				type: 'DELETE',
+				dataType : "json",
+				contentType  : "application/json",
+			}).done(function(resultData,status,jqXhr){
+				if (resultData.status == 200) {
+					
+					/* -------------------------------------  */
+					if ($("#createApprovalReqeustNotiSms").is(':checked')) {
+						var notiInfo = {
+								"receiverEmpId" : apprEmpId,
+								"message" : smsMessage,
+								"approvalType" : "request"
+						}
+						//문자 보내기
+						approval.notificationSmsService(notiInfo);
+					}
+					/* -------------------------------------  */
+					
+					if (confirm("승인요청 처리되었습니다.\n신청내역 화면으로 이동하시겠습니까?")) {
+						location.href ="/approval/request";
+					}
+					else {
+						$("#deleteApprovalReqeustModal").modal("hide");
+						if (workType === "AWRK-0001" || workType === "AWRK-0002" ) {
+							location.href = "/merchants/inquiry/merchantInq";
+						}
+						else if (workType === "AWRK-0003" || workType === "AWRK-0004" ) {
+							location.href = "/merchants/inquiry/merchantServiceInq";
+						}
+					}
+            	}
+				else if (resultData.status == 500) {
+					kpcUtil.customAlert(resultData.message);
+					$("#deleteApprovalReqeustModal").modal("hide");
+				}
+            }).fail(function(e){
+            	kpcUtil.errorHandling(e);
+            });
+		}
+	})
+	
+	$("#deleteApprovalReqeustModal").on("shown.bs.modal", function(e) {
+		$("#deleteReqMemo").focus(); 
+	})
+	
+	/**
+	 * 삭제 승인 요청 모달이 닫힐 때 모달 input 값 초기화 
+	 */
+	$("#deleteApprovalReqeustModal").on("hidden.bs.modal", function(e) {
+		$("#deleteReqMemo").val(""); 
+	})
+}
+</script>

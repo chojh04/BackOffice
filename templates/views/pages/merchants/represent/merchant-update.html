@@ -1,0 +1,469 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>대표/일반 거래처 수정</h3>
+                <h5><span class="red">[홈 > 거래처 관리 > 대표/일반 거래처 조회 > 대표/일반 거래처 수정]</span></h5>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <input type="hidden" name="beforeApprEmpId" id="beforeApprEmpId">
+                        <input type="hidden" name="beforeReqMemo" id="beforeReqMemo">
+                        <form action="#" id="merchantUpdateForm" class="form-bordered ">
+                        	<input type="hidden" id="reqMemo" name="reqMemo" >
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 대표 거래처 정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 거래처 코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                   		<i class="fa"></i>
+                                        <input type="text" id="merchantId" name="merchantId" class="form-control col-md-3 col-xs-12" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 거래처 명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                   		<i class="fa"></i>
+										<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 거래처 약칭</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" id="alias" name="alias" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>[거래처 상세정보]</b></label>
+                                </div>
+                            </div>                            
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 성명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+                                        <input type="text" id="ceoName" name="ceoName" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">개업일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-date-picker" id="openDate" name="openDate" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사업자등록번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="bizRegNo" name="bizRegNo" class="form-control col-md-7 col-xs-12" maxlength="12" isBzno="true">
+										<span class="input-group-btn">
+                                        	<button class="btn btn-default btn-search bzno" type="button">중복</button>
+                                        </span>
+                                    </div>
+                                </div>                                 
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">법인등록번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="corpRegNo" name="corpRegNo" class="form-control col-md-7 col-xs-12" maxlength="13">
+										<span class="input-group-btn">
+                                        	<button class="btn btn-default btn-search corpNo" type="button">중복</button>
+                                        </span>										
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">업태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="bizCond" name="bizCond" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">업종</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="bizKind" name="bizKind" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">우편번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="zipCode" name="zipCode" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">주소</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="address" name="address" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상세주소</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="addressDetail" name="addressDetail" class="form-control col-lg-12 col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="bizGrp" name="bizGrp" >
+	                                    </select>                                         
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="tel" name="tel" class="form-control col-md-7 col-xs-12" isTel="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표 팩스번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="fax" name="fax" class="form-control col-md-7 col-xs-12" isTel="true">
+                                    </div>
+                                </div>
+								<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사용여부</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="useFlag" name="useFlag" >
+	                                    	<option value="Y">사용</option>
+	                                    	<option value="N">미사용</option>
+	                                    </select>       
+                                    </div>
+                                </div>
+							</div>
+                        </form>
+	                    <br />
+	                    <div class="column-align-right">
+							{% if (admin_view.pageAuth["updFlag"] == "1")  and ((admin_view.reApproval == "true")  and (admin_view.updateApproval == "false")) or ((admin_view.reApproval == "false")  and (admin_view.updateApproval == "false")) %}
+							<button type="button" id="updateApprovalRequestBtn" class="dt-button btn green btn-outline"><span>수정</span></button>
+							{% elif (admin_view.pageAuth["updFlag"] == "1") and (admin_view.updateApproval == "true") %}
+							<a id="updateApprovalInfoBtn" class="dt-button btn green btn-outline" href="javascript:;"><span>수정</span></a>
+							{% endif %}
+							{% if admin_view.pageAuth["selFlag"] == "1" %}
+							<a id="returnListBtn" class="dt-button btn blue btn-outline" href="/merchants/inquiry/merchantInq"><span>목록</span></a>
+							{% endif %}
+	                    </div>                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-update-modal.html' %}
+{% include 'views/pages/common/approval/popup/approval-request-info-update-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+{% if admin_view.pageAuth["insFlag"] == "1" %}
+	<script src="/assets/js/approval/merchant/merchant.js"></script>
+{% endif %}
+    <script type="text/javascript">
+
+	  	if ('{{admin_view.pageAuth["updFlag"] == "1"}}' === "False") {
+	  		$("#updateApprovalRequestBtn").prop("disabled", true);
+	  	}
+    	
+        var merchant_inq = function () {
+
+        	var bizGrp;
+        	var useFlag;
+        	var approvalInfo;
+        	
+			function setDatePicker(){
+			    kpcUtil.setDatePicker('#merchantUpdateForm #openDate');
+			}            
+        	
+        	var setSelect2 = function () {
+                $("#bizGrp").select2({
+                    width: 150,
+                }); 
+                $("#useFlag").select2({
+                    width: 150,
+                }); 
+            }
+        	
+			//거래처 정보 조회
+        	var setViewData = function() {
+            	setDatePicker();
+            	setFormValidate();
+            	            	
+            	if(("{{admin_view.reApproval}}" === "false") && ("{{admin_view.updateApproval}}" == "false")) {
+            		setMerchantInfo();
+            	}
+            	else if (("{{admin_view.reApproval}}" === "true") || ("{{admin_view.updateApproval}}" == "true")) {
+            		setApprovalContentInfo();
+            	}
+            	
+            	setPageEvents();
+        	}
+			
+			var setMerchantInfo = function() {
+    			$.ajax({
+                    url: "/api/merchants/representative/"+"{{admin_view.merchantId}}",
+                    type:'GET',
+                    dataType : "json",
+                    contentType  : "application/json",
+                }).done(function(result){
+
+                	if (result.status === 200) {
+                		
+	                	$("#merchantId").val(result.data.merchantId);
+	                	$("#name").val(result.data.name);
+	                	$("#alias").val(result.data.alias);
+	                	$("#ceoName").val(result.data.ceoName);
+	                	$("#openDate").val(kpcUtil.setDateFormat(result.data.openDate, "YYYY-MM-DD"));
+	                	
+	                	$("#bizRegNo").val(kpcUtil.setBznoFormat(result.data.bizRegNo));
+	                	$("#corpRegNo").val(result.data.corpRegNo);
+	                	
+	                	$("#bizCond").val(result.data.bizCond);
+	                	$("#bizKind").val(result.data.bizKind);
+	                	$("#zipCode").val(result.data.zipCode);
+	                	$("#address").val(result.data.address);
+	                	$("#addressDetail").val(result.data.addressDetail);
+	                	$("#bizGrp").val(result.data.bizGrp);
+
+	                	$("#tel").val(kpcUtil.setTelFormat(result.data.tel));
+	                	$("#fax").val(kpcUtil.setTelFormat(result.data.fax));
+
+	                	$("#useFlag").val(result.data.useFlag);
+	                	
+	                	bizGrp = result.data.bizGrp;
+	                	useFlag = result.data.useFlag;
+	                	
+	        			setCommonCode();
+                	}
+                	$("#merchantUpdateForm").valid();
+                
+                }).fail(function(e){
+            		kpcUtil.errorHandling(e);
+          	    });
+			}
+			
+			var setApprovalContentInfo = function() {
+	    		$.ajax({
+	                url: "/api/approvals/detail/"+"{{admin_view.apprSeq}}",
+	                type:'GET',
+	                dataType : "json",
+	                contentType  : "application/json",
+	            }).done(function(result){
+	            	approvalInfo = result.data.approvalInfo
+	            	var merchantBasic = result.data.content.merchant
+	            	var merchantDetail = result.data.content.merchant.detail
+
+	            	if (result.status === 200) {
+	                	$("#merchantId").val(merchantBasic.merchantId);
+	                	$("#name").val(merchantBasic.name);
+	                	$("#alias").val(merchantBasic.alias);
+	                	$("#ceoName").val(merchantDetail.ceoName);
+	                	$("#openDate").val(kpcUtil.setDateFormat(merchantDetail.openDate, "YYYY-MM-DD"));
+	                	
+	                	$("#bizRegNo").val(kpcUtil.setBznoFormat(merchantDetail.bizRegNo));
+	                	$("#corpRegNo").val(merchantDetail.corpRegNo);
+	                	
+	                	$("#bizCond").val(merchantDetail.bizCond);
+	                	$("#bizKind").val(merchantDetail.bizKind);
+	                	$("#zipCode").val(merchantDetail.zipCode);
+	                	$("#address").val(merchantDetail.address);
+	                	$("#addressDetail").val(merchantDetail.addressDetail);
+	                	$("#bizGrp").val(merchantDetail.bizGrp);
+
+	                	$("#tel").val(kpcUtil.setTelFormat(merchantDetail.tel));
+	                	$("#fax").val(kpcUtil.setTelFormat(merchantDetail.fax));
+
+	                	$("#useFlag").val(merchantBasic.useFlag);
+	                	
+	                	$("#beforeApprEmpId").val(approvalInfo.apprEmpId)
+	                	$("#beforeReqMemo").val(approvalInfo.reqMemo)
+	                	
+	                	bizGrp = merchantDetail.bizGrp;
+	                	useFlag = merchantBasic.useFlag;
+
+                	}
+                	$("#merchantUpdateForm").valid();
+	            	
+	            }).fail(function(e){
+	        		kpcUtil.errorHandling(e);
+	      	    });
+			}
+			
+        	
+			//필수 입력값 유효성 검증
+        	function setFormValidate(){
+        	    $("#merchantUpdateForm").validate({
+        	        errorElement: 'span', //default input error message container
+        	        errorClass: 'help-block help-block-error', // default input error message class
+        	        rules: {
+        	        	name : {
+        	                required : true,
+        	            },
+        	            nameEng : {
+        	                required : true,
+        	            },
+        	            bizKind : {
+        	                required : true,
+        	            },
+        	            bizCond : {
+        	                required : true,
+        	            },
+                        bizRegNo : {
+                            required : true,
+                            minlength : 10,
+                            bznoCheck : true,
+                            bznoDupCheck : true
+                        },
+        	            ceoName : {
+        	                required : true,
+        	            },
+        	            zipCode : {
+        	                required : true,
+        	            },
+        	            address : {
+        	                required : true,
+        	            },
+        	            addressDetail : {
+                            required : true,
+                        },
+        	            tel : {
+        	                required : true,
+        	            }
+        	        },
+        	        messages : {
+        	        	name : {
+        	                required : "대표 거래처명을 입력해주세요.",
+        	            },
+        	            bizKind : {
+        	                required : "업종을 선택해주세요.",
+        	            },
+        	            bizCond : {
+        	                required : "업태를 선택해주세요.",
+        	            },
+        	            bizRegNo : {
+                            required : "사업자 번호를 입력해주세요.",
+                            minlength : "정확한 사업자번호를 입력해주세요.",
+                            bznoCheck : "잘못된 사업자번호 입니다.",
+                            bznoDupCheck : "사용중인 사업자번호 입니다."
+                        },
+        	            ceoName : {
+        	                required : "대표 성명을 입력해주세요.",
+        	            },
+        	            zipCode : {
+        	                required : "우편 번호를 입력해주세요.",
+        	            },
+        	            address : {
+        	                required : "주소를 입력해주세요.",
+        	            },
+        	            addressDetail : {
+                            required : "상세주소를 입력해주세요.",
+                        },
+        	            tel : {
+        	                required : "대표 연락처를 입력해주세요.",
+        	            }                        
+        	        },
+        	        errorPlacement : function (error , element){
+        	        	var icon = $(element).parent(".input-icon").children('i');
+        	        	icon.removeClass('fa-check').addClass("fa-warning");
+        	        	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+        	        },
+        	        highlight: function (element) { // hightlight error inputs
+        	           	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+        	        },
+        	        success : function (label,element){
+        	        	var icon = $(element).parent(".input-icon").children('i');
+        	        	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+        	        	icon.removeClass('fa-warning').addClass("fa-check");
+        	        },
+        	    });
+        	}
+            
+            var setPageEvents = function () {
+     
+            	$(".bzno").click(function (){
+            		kpcUtil.bzNoCheck("#bizRegNo", "#merchantUpdateForm");         		
+            	});
+            	
+            	$(".corpNo").click(function (){
+            		kpcUtil.corpNoCheck("#corpRegNo", "#merchantUpdateForm");
+            	});
+            	
+            	// 전화번호 , 사업자 번호 format 지정
+            	kpcUtil.setFormTextFieldFormat({
+            		target : "#merchantUpdateForm"
+            	});
+            }
+            
+            var setCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+            		target : "#bizGrp", 
+            		apiUrl : "/api/systemMng/common/commonCodes",
+            		params : {type : 'MER'},
+            		type   : "GET",
+            		option : {width : 150},	
+            		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			$(target).val(bizGrp).trigger("change");            			
+            		}
+            	});
+      			//사용여부 값 설정
+      			$("#useFlag").val(useFlag).trigger("change");
+            }            
+            return {
+                init : function (){
+                    setViewData();
+                    setSelect2();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            
+            //임포트한 수정 승인 요청 모달 초기화
+            approvalReuestUpdateModal("{{admin_view.merchantId}}", "merchantUpdateForm", "MENU-0001", "AWRK-0001"); //거래처 수정 승인 요청 모달
+            approvalReuestInfoUpdateModal("{{admin_view.apprSeq}}", "merchantUpdateForm", "MENU-0001", "update", "AWRK-0001"); //승인 대기중인 거래처 정보 수정 모달
+            merchant_inq().init();
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,104 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>일별 매출 집계</h3>
+                <h5><span class="red">[홈 > 매출 관리 > 일별 매출 집계]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="formApprovals" class="form-bordered ">
+                            <input type="hidden" id="submerchantId" name="submerchantId" >                              
+                            <input type="hidden" id="serviceId" name="serviceId" >                              
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">조회 일자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-date-picker" id="searchDate" name="searchDate" >                              
+                                    </div>
+                                </div>
+                            </div>                                
+                        </form>
+                        <br />
+                        <div class="column-align-right">
+                        	<a id="excel" class="dt-button btn green btn-outline" href="javascript:;"><span>생성</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var sales = function () {
+            var setDatePicker = function (){
+            	kpcUtil.setDatePickerToday('#searchDate');
+            }
+            
+            var setPageEvents = function (){
+            	$("#excel").click(function (){
+	            	if(kpcUtil.confirm("일별 매출 집계 자료를 생성 하시겠습니까?")){
+						$.ajax({
+	                        url: "/api/sales/dailySales",
+	                        type: 'GET',
+	                        data : $("#formApprovals").serialize(),
+	                        contentType  : "application/json",
+	                        async : true,
+	                        success: function(data){
+	                        	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+	                        },
+	                        error : function(e){
+	                        	kpcUtil.errorHandling(e);
+	                        }
+	                   });
+	            	}            	
+            	});
+            }
+            
+            return {
+                init : function (){
+                    setDatePicker();
+                    setPageEvents();
+                    
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            sales().init();
+        });
+    </script>
+{% endblock %}

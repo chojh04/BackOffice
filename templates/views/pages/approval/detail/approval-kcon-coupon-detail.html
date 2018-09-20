@@ -1,0 +1,610 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+	<div>
+		<div class="page-title">
+            <div class="title_left">
+            {% if admin_view.menuType == "request" %}
+                <h3>승인 신청내역 상세보기</h3>
+                <h5><span class="red">[홈 > 승인 관리 > 승인  신청내역 조회 > 승인 신청내역 상세보기]</span></h5>
+            {% elif admin_view.menuType == "answer" %}
+                <h3>승인 결제내역 상세보기</h3>
+                <h5><span class="red">[홈 > 승인 관리 > 승인  결제내역 조회 > 승인 결제내역 상세보기]</span></h5>
+            {% endif %}    
+            </div>
+        </div>
+	
+	<div class="clearfix"></div>
+
+	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+            	<form action="#" id="searchForm" class="form-bordered ">
+					<input type="hidden" name="workType" id="workType" />
+					<input type="hidden" name="keyword" id="keyword" />
+					<input type="hidden" name="status" id="status" />
+					<input type="hidden" name="reqType" id="reqType" />
+					<input type="hidden" name="reqEmpName" id="reqEmpName" />
+					<input type="hidden" name="apprEmpName" id="apprEmpName" />
+					<input type="hidden" name="searchDateType" id="searchDateType" />
+					<input type="hidden" name="searchDate" id="searchDate" />
+					<input type="hidden" name="searchDateOrderType" id="searchDateOrderType" />
+					<input type="hidden" name="orderType" id="orderType" />
+					<input type="hidden" name="datableOffset" id="datableOffset" />
+                </form>
+            
+                <div class="x_panel">
+                    <div class="form">
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-top:30px">
+	                            <label class="control-label col-md-3 col-sm-3 col-xs-12"><b style="font-size:14px;">KCON 쿠폰 상세정보</b></label>
+	                        </div>
+	                    </div>
+	                    <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">쿠폰번호</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="couponNo" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">쿠폰명</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="couponTitle" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">쿠폰구분</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="couponType" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">발행일</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="kconApprovalDate" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">사용일</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="kconUseDate" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">유효기간</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="expireDate" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="amountWithCommas" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">카드번호</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="kconCardNumber" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">판매처</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="store" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+                            </div>
+						</div>
+                        <div>
+							<div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">상태</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="kconStatus" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">사용제한</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="restrictFlag" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">사용여부</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="useFlag" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+							</div>
+						</div>
+						<div class="x_content reqMemoDiv" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:11px"></div>
+						<div class="col-md-12 col-sm-12 col-xs-12 reqMemoDiv">
+							<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                            <label id="apprReqMemoTitle" class="col-lg-3 control-label">사유</label>
+	                            <div class="col-lg-9 form-inline">
+	                            	<span id="apprReqMemo" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+						</div>
+						<div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                            <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>승인 상세정보</b></label>
+	                        </div>
+	                    </div>
+						<div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                        {% if admin_view.menuType == "request" %}
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">승인자</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="approvalApprEmpName" class="span-vertical-middle"></span>
+	                            </div>
+                            {% elif admin_view.menuType == "answer" %}
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">신청자</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="approvalReqEmpName" class="span-vertical-middle"></span>
+	                            </div>
+                            {% endif %}
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">승인상태</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+									<span id="apprStatusName" style="padding-left:12px; padding-top:6px; padding-bottom:6px"></span>
+	                            	<span id="apprTypeCodeName" style="padding-top:6px; padding-bottom:6px" ></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">신청일</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="apprCreateDate" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">처리일</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="apprUpdateDate" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group apprMemoDiv">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">승인 반려사유</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="apprMemo" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+						</div>
+	                    <br />
+	                    <div class="column-align-right">
+	                    	{% if (admin_view.pageAuth["selFlag"] == "1") and (admin_view.menuType == "request") and (admin_view.status == "ARST-0001") %}
+	                    	<button type="button" id="updateApprovalRequestBtn" class="dt-button btn green btn-outline">수정</button>   
+	                    	<button type="button" id="cancelApprovalRequestBtn" class="dt-button btn green btn-outline">취소</button>
+	                    	{% elif (admin_view.pageAuth["selFlag"] == "1") and (admin_view.menuType == "request") and (admin_view.status == "ARST-0003" or (admin_view.status == "ARST-0004")) %}
+	                    	<button type="button" id="reApprovalRequestBtn" class="dt-button btn green btn-outline">재승인</button>
+							{% endif %}
+	                    	{% if (admin_view.pageAuth["apprFlag"] == "1") and admin_view.menuType == "answer" and (admin_view.status == "ARST-0001") %}   
+							<button type="button" id="approveApprovalInfo" class="dt-button btn green btn-outline">승인</button>                        
+							<button type="button" id="rejectApprovalInfo" class="dt-button btn green btn-outline">반려</button>
+							{% endif %}
+							{% if admin_view.pageAuth["selFlag"] == "1" %}
+							<button type="button" id="returnApprovalList" class="dt-button btn red btn-outline">목록</button>
+							{% endif %}
+	                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- 반려사유 모달 -->
+<div id="rejectApprovalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog" style="width:400px">
+		<div class="modal-content">
+			
+			<div class="modal-header" style="text-align: center">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h4 class="modal-title">승인 반려사유 입력</h4>
+			</div>
+			<div class="modal-body" style="text-align: center">
+				<div id="testId" class="form-horizontal" role="form">
+					<div class="form-group">
+						<span>승인 반려사유를 입력해주세요.</span>
+					</div>
+					<div class="form-group" style="margin-bottom: 0px">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="rejectApprMemo" name="rejectApprMemo" placeholder="한글 기준 (100자 이내) 입력">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer"  style="text-align: center">
+				<button id="rejectApprovalBtn" type="button" class="btn btn-primary">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+
+    <script type="text/javascript">
+
+    var merchantDetail = function () {
+
+    	var seq = "{{admin_view.seq}}"
+    	var approvalInfo;
+    	var rejectApprovalSeqList = [];
+    	
+    	var getBillingInfo = function() {
+    		    		
+    		$.ajax({
+                url: "/api/approvals/detail/"+seq,
+                type:'GET',
+                dataType : "json",
+                contentType  : "application/json",
+            }).done(function(result){
+
+            	if (result.status === 200) {
+            		
+	            	approvalInfo = result.data.approvalInfo
+	            	
+	            	var coupon = result.data.content.coupon
+	            	
+	            	$("#couponNo").text(coupon.couponNo);
+	            	$("#couponTitle").text(coupon.title);
+	            	$("#couponType").text(coupon.couponTypeName);
+	            	$("#amountWithCommas").text(kpcUtil.numberWithCommas(coupon.amount));
+	            	$("#expireDate").text(kpcUtil.setDateFormat(coupon.expireDate , "YYYY-MM-DD"));
+	            	
+	            	$("#kconStatus").text(coupon.status);
+	            	$("#restrictFlag").text(coupon.restrictFlag);
+	            	$("#useFlag").text(coupon.useFlag);
+	            	
+	            	$("#kconApprovalDate").text("-");
+	            	
+                	if (coupon.useDate != undefined && coupon.useDate !== "") {
+	                	$("#kconUseDate").text(moment(detail.openDate).format("YYYY-MM-DD")); //개업일
+                	}
+                	else {
+	            		$("#kconUseDate").text("-");
+                	}
+                	if (coupon.cardNumber != undefined && coupon.cardNumber !== "") {
+	                	$("#kconCardNumber").text(coupon.cardNumber);
+                	}
+                	else {
+	            		$("#kconCardNumber").text("-");
+                	}
+	            	
+	            	$("#store").text("-");
+	            	
+					//승인 정보
+                	$("#approvalApprEmpName").text(approvalInfo.apprEmpName); //승인자
+                	$("#approvalReqEmpName").text(approvalInfo.reqEmpName); //신청자
+                	
+                	if (approvalInfo.reqType === "AREQ-0004") {
+                		$("#apprReqMemoTitle").text("연장 사유");
+                    	$("#apprTypeCodeName").text("(연장)");
+                		//$("#updateApprovalRequestBtn").remove();
+                	} else if (approvalInfo.reqType === "AREQ-0005") {
+                		$("#apprReqMemoTitle").text("해제 사유");
+                    	$("#apprTypeCodeName").text("(사용해제)");
+                		//$("#updateApprovalRequestBtn").remove();
+                	} else {
+                		$("#apprReqMemoTitle").text("사유");
+                	}
+
+                	if (approvalInfo.status !== "ARST-0001") {
+                		$("#updateApprovalRequestBtn").remove();
+                	}
+                	
+                	
+                	//신청 사유
+                	if (approvalInfo.reqMemo != undefined && approvalInfo.reqMemo !== "") {
+                    	$("#apprReqMemo").text(approvalInfo.reqMemo)
+                	}
+                	else {
+	                	$(".reqMemoDiv").remove();
+                	}
+                	
+                	//반려 사유
+                	if(approvalInfo.apprMemo != undefined && approvalInfo.apprMemo !== "") {
+                		$("#apprMemo").text(approvalInfo.apprMemo);
+                	}
+                	else {
+                		$(".apprMemoDiv").remove();
+                	}
+                	
+               	 	//진행상태에 따른 메시지 표시
+                	if(approvalInfo.status === "ARST-0001") {
+                		$("#apprStatusName").text("최종 승인대기");
+                	} else if (approvalInfo.status === "ARST-0002") {
+                		$("#apprStatusName").text("최종 승인완료");
+                	} else if (approvalInfo.status === "ARST-0003") {
+                		$("#apprStatusName").text("최종 승인반려");
+                		$("#apprStatusName").addClass("red");
+                	} else if (approvalInfo.status === "ARST-0004") {
+                		$("#apprStatusName").text("승인 요청취소");
+                	} else {
+                		$("#apprStatusName").text("");
+                	}
+
+                	$("#apprCreateDate").text(moment(approvalInfo.reqDate).format("YYYY-MM-DD")); //신청일
+                	
+                	if (approvalInfo.apprDate !== "") {
+	                	$("#apprUpdateDate").text(moment(approvalInfo.apprDate).format("YYYY-MM-DD")); //처리일
+                	}
+                	else {
+	                	$("#apprUpdateDate").text("-"); //처리일
+                	}
+                	
+ 					var commonCodes = {
+							"kconStatus" : coupon.status,
+						}
+						
+					setServiceBillingCommonCode(commonCodes);
+
+            	}
+				else if (result.status == 500) {
+					kpcUtil.customAlert(result.message);
+				}
+            	
+            }).fail(function(e){
+        		kpcUtil.errorHandling(e);
+      	    });
+    	}
+    	
+        var setPageEvents = function () {
+        	
+        	//검색 조건 설정
+        	{% if admin_view.searchData is not none %}
+        		var searchData = {{admin_view.searchData| tojson}}
+        		
+        		$("#searchForm, #workType").val(searchData.workType);
+        		$("#searchForm, #keyword").val(searchData.keyword);
+        		$("#searchForm, #status").val(searchData.status);
+        		$("#searchForm, #reqType").val(searchData.reqType);
+        		$("#searchForm, #reqEmpName").val(searchData.reqEmpName);
+        		$("#searchForm, #apprEmpName").val(searchData.apprEmpName);
+        		$("#searchForm, #searchDateType").val(searchData.searchDateType);
+        		$("#searchForm, #searchDate").val(searchData.searchDate);
+        		$("#searchForm, #searchDateOrderType").val(searchData.searchDateOrderType);
+        		$("#searchForm, #orderType").val(searchData.orderType);
+        		$("#searchForm, #datableOffset").val(searchData.datableOffset);
+        	{% endif %}
+        	
+        	{% if admin_view.menuType == "request" %}
+    		//요청 수정 버튼
+        	$("#updateApprovalRequestBtn").click(function () {
+        		if(approvalInfo.status === "ARST-0001" && approvalInfo.reqType === "AREQ-0004") {
+        			location.href = "/coupon/kcon/kconDetail?couponNo="+approvalInfo.refId+"&updateApprSeq="+seq+"&apprReqType=extendExpireDate";
+        		}
+        		else if (approvalInfo.status === "ARST-0001" && approvalInfo.reqType === "AREQ-0005") {
+        			location.href = "/coupon/kcon/kconDetail?couponNo="+approvalInfo.refId+"&updateApprSeq="+seq+"&apprReqType=unRestriction";
+        		}
+        		else {
+        			kpcUtil.customAlert("수정 할 수 없는 요청 정보입니다.");
+        		}
+        	})
+	        	
+	        	//요청 취소 버튼
+	        	$("#cancelApprovalRequestBtn").click(function () {
+	        		
+	        		if (approvalInfo.status === "ARST-0001") {
+		        		if (kpcUtil.confirm("승인요청을 취소 하시겠습니까?")) {
+		           			$.ajax({
+		   	        			url: "/api/approvals/request/cancellation",
+		   	        			data: JSON.stringify(seq),
+		   	        			type:'PUT',
+		   	        			dataType : "json",
+		   	        			contentType  : "application/json"
+		   	        			}).done(function(resultData,status,jqXhr){
+		   	        				if (resultData.status == 200) {
+		                       			kpcUtil.customAlert("승인요청이 취소 되었습니다.");
+		   								approvalInfo = null;
+		   								location.href ="/approval/request";
+		                       		}
+		                           	else if (resultData.status == 500) {
+		   	                        		alert(resultData.message);
+		                           	}
+		   	        			}).fail(function(e){
+		   	        				kpcUtil.errorHandling(e);
+		           				});
+		           		}
+	        		}
+	        		else {
+              			kpcUtil.customAlert("승인 취소 할 수 없는 요청 정보입니다.");
+	        		}
+	        	})
+	        	
+	        	//재승인 요청 버튼
+	        	$("#reApprovalRequestBtn").click(function() {
+	        		if (approvalInfo.reqType === "AREQ-0004") {
+	        			//재승인이 가능한 요청 정보인지 확인
+		        		var isPossibleReApproval = approval.possibleReApproval(approvalInfo.workType, approvalInfo.refId);
+		        		if (isPossibleReApproval) {
+		        			
+		        			//요청정보에 해당하는 거래처의 요청 정보가 있는지 확인 
+                    		var isExistRequest = approval.existApprovalRequest(approvalInfo.refId);
+                    		if (!isExistRequest) {
+            	        		if(approvalInfo.status === "ARST-0003"  || approvalInfo.status === "ARST-0004") {
+            	        			//KCON 상세 정보조회 화면으로 이동
+            	        			location.href = "/coupon/kcon/kconDetail?couponNo="+approvalInfo.refId;
+            	        		}
+                    		}
+		        		}
+	        		}
+ 	        	})
+	        	
+        	{% elif admin_view.menuType == "answer" %}
+	        	$("#approveApprovalInfo").click(function (){
+	        		
+	        		var dataArray = new Array();
+					if(approvalInfo.status === "ARST-0001") {
+						result = {
+								"seq" : approvalInfo.seq,
+								"contentSeq" : approvalInfo.contentSeq,
+								"workType" : approvalInfo.workType,
+								"reqType" : approvalInfo.reqType,
+								"status" : approvalInfo.status
+						}
+						dataArray.push(result)
+					}
+	         		
+	        		if(kpcUtil.confirm("승인 처리 하시겠습니까?")){
+		        		$.ajax({
+		        			url: "/api/approvals/response/approval",
+		        			data: JSON.stringify(dataArray),
+		        			type:'POST',
+		        			dataType : "json",
+		        			contentType  : "application/json"
+		        			}).done(function(resultData,status,jqXhr){
+		        				if (resultData.status == 200) {
+		        					//문자보내기
+		                   			notiData = {
+		        								"workType" : approvalInfo.workType,
+		        								"reqType" : approvalInfo.reqType,
+		        								"reqEmpId" : approvalInfo.reqEmpId
+		        							}
+		        					approval.approvalAnswerSendSms(notiData, "approve");
+		        					
+	                    			kpcUtil.customAlert("승인 처리 되었습니다.");
+									approvalInfo = null;
+									location.href ="/approval/answer";
+	                    		}
+	                        	else if (resultData.status == 500) {
+		                        		alert(resultData.message);
+	                        	}
+		        			}).fail(function(e){
+		        				kpcUtil.errorHandling(e);
+	        				});
+	        		}
+	        		
+	        		
+	       		});
+        	
+	        	//승인 반려 처리 이벤트1 (모달 띄우기)
+	        	$("#rejectApprovalInfo").click(function (){
+	        		//API가 다건도 처리 가능하기 때문에 배열 사용
+	        		var sequenceList = [];
+				
+					//현재 승인요청 건인지 확인
+					if(approvalInfo.status === "ARST-0001") {
+						sequenceList.push(approvalInfo.seq)
+						
+						if(kpcUtil.confirm("승인 반려 처리하시겠습니까?")){
+							rejectApprovalSeqList = sequenceList;
+							$("#rejectApprovalModal").modal("show");
+		           		}
+					}
+					else {
+						kpcUtil.alert("반려할수 없는 승인요청입니다.");
+					}
+	        	});
+        	
+	        	//승인 반쳐 처리 이벤트2 (모달 뜬 이후 처리)
+				$("#rejectApprovalBtn").click(function (){
+					rejectList = {
+							"sequenceList" : rejectApprovalSeqList,
+							"apprMemo" : $("#rejectApprMemo").val() 
+					}
+					
+					$.ajax({
+						url: "/api/approvals/response/rejection",
+						data: JSON.stringify(rejectList),
+						type:'POST',
+						dataType : "json",
+						contentType  : "application/json"
+					}).done(function(resultData,status,jqXhr){
+												
+	               		if (resultData.status == 200) {
+	    					//문자보내기
+	               			notiData = {
+	    								"workType" : approvalInfo.workType,
+	    								"reqType" : approvalInfo.reqType,
+	    								"reqEmpId" : approvalInfo.reqEmpId
+	    							}
+	    					approval.approvalAnswerSendSms(notiData, "reject");
+	               			kpcUtil.customAlert("반려 처리 되었습니다.");
+							rejectApprovalSeqList = []
+							$("#rejectApprovalModal").modal("hide")
+							location.href ="/approval/answer";
+	               		}
+	                   	else if (resultData.status == 500) {
+	                       		alert(resultData.message);
+	                   	}
+					}).fail(function(e){
+						kpcUtil.errorHandling(e);
+						$("#rejectApprovalModal").modal("hide")
+					});
+	 			})
+
+	 			//모달이 닫힐 때 모달 값 초기화
+	 			$("#rejectApprovalModal").on("hidden.bs.modal", function(e) {
+	 				$("#rejectApprMemo").val(); 
+	 			})
+	 			
+				$("#rejectApprovalModal").on("shown.bs.modal", function(e) {
+					$("#rejectApprMemo").focus(); 
+				})
+	 			
+ 			{% endif %}
+
+ 			
+        	//목록 화면으로 이동
+        	$("#returnApprovalList").click(function (){
+	        	{% if admin_view.searchData is not none %}
+	        		location.href ="/approval/{{admin_view.menuType}}?"+$("#searchForm").serialize();
+				{% else%}
+	        		location.href ="/approval/{{admin_view.menuType}}";
+	        	{% endif %}
+        	})
+        }   
+
+        var setServiceBillingCommonCode = function (commonCodes){
+        	kpcUtil.setSelectBoxData({
+         		target : "#kconStatus", 
+         		apiUrl : "/api/systemMng/common/commonCodes",
+         		params : {type : 'CONS'},
+         		type   : "GET",
+         		option : {width : 150},	
+         		callBack : function (data,target,option){
+        			for(var idx in data.data){
+             			if (commonCodes.kconStatus === data.data[idx].code) {
+    	        			$(target).text(data.data[idx].codeName);            			
+         				}     
+        			}
+         		}
+         	});
+        }
+        
+        return {
+            init : function (){
+            	getBillingInfo();
+                setPageEvents();
+            }
+        }
+    }
+
+    $(document).ready(function () {
+    	merchantDetail().init();
+    });
+    </script>
+{% endblock %}

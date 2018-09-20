@@ -1,0 +1,614 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>판매 정산 내역 조회</h3>
+                <h5><span class="red">[홈 > 정산 내역 관리 > 판매 정산 내역 조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="searchForm" class="form-bordered ">
+                            <input type="hidden" id="submerchantId" name="submerchantId" >                              
+                            <input type="hidden" id="serviceId" name="serviceId" >                              
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-3 col-xs-12">조회타입</label>
+                                    <div class="custom-col-lg-10 col-md-12 col-sm-9 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="tableType1" name="tableType" value="nomal" checked="checked">
+                                    		<label for="tableType1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			일반
+                                    		</label>
+                                    	</div>      
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="tableType2" name="tableType" value="month">
+                                    		<label for="tableType2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			월별요약
+                                    		</label>
+                                    	</div>                                         
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-4 col-sm-3 col-xs-12">거래처/서비스</label>
+                                    <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 form-inline">
+	                                    <select class="form-control" id="selType" name="selType" >
+	                                        <option value="0">거래처</option>
+	                                        <option value="1">서비스</option>
+	                                    </select>
+                                        <input type="text" class="form-control " id="selName" name="selName" readonly="readonly" style="width: 150px;">
+                                        <a href="#" class="btn btn-default btn-search">조회</a>                              
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="label-top-3 custom-col-lg-2 col-md-3 col-sm-12 col-xs-12">
+	                                   <select class="select2_single select2-selection--single " id="noType" name="noType" >
+	                                       <option value="1">주문번호</option>
+	                                       <option value="2">승인번호</option>
+	                                   </select>
+                                    </label>
+                                    <div class="custom-col-lg-8 col-md-8 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id="approvalNo" name="approvalNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">판매 일자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                        <input type="text" class="form-control input-date-picker-long" id="startDate" name="startDate" >                              
+                                    </div>
+                                </div> 
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="status" name="status" >
+	                                    	<option value="">전체</option>
+	                                    </select>
+	                            	</div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">연동아이디</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id="svcConnId" name="svcConnId" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상품유형</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="saleType" name="saleType" >
+	                                    	<option value="">전체</option>
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상품유형상세</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="saleTypeDetail" name="saleTypeDetail" >
+	                                    	<option value="">전체</option>
+	                                    </select>
+                                    </div>
+                                </div>                                                            
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">권종</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id="amount" name="amount" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>                                                            
+                            </div>                                
+                        </form>
+                        <br />
+                        <div id="salementDiv">
+	                        <table id="salementTable" class="table table-striped table-bordered" style="width: 100%">
+	                            <thead>
+	                                <tr>
+	                                    <th>순번</th>
+	                                    <th>거래처명</th>
+	                                    <th>서비스명</th>
+	                                    <th>연동아이디</th>
+	                                    <th>상태</th>
+	                                    <th>상품명</th>
+	                                    <th>상품ID</th>
+	                                    <th>상품구분</th>
+	                                    <th>거래일</th>
+	                                    <th>거래시간</th>
+	                                    <th>주문번호</th>
+	                                    <th>승인번호</th>
+	                                    <th>권종</th>
+	                                    <th>거래건수</th>
+	                                    <th>거래금액</th>
+	                                    <th>비고</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            </tbody>
+	                        </table>
+                        </div>              
+                        <div id="salementMonthDiv" style="display: none;">
+	                        <table id="salementMonthTable" class="table table-striped table-bordered" style="width: 100%">
+	                            <thead>
+	                                <tr>
+	                                    <th>순번</th>
+	                                    <th>거래처명</th>
+	                                    <th>서비스명</th>
+	                                    <th>연동아이디</th>
+	                                    <th>상태</th>
+	                                    <th>상품명</th>
+	                                    <th>상품ID</th>
+	                                    <th>상품구분</th>
+	                                    <th>권종</th>
+	                                    <th>거래일</th>
+	                                    <th>거래건수</th>
+	                                    <th>거래금액</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            </tbody>
+	                        </table>
+                        </div>                                  
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var salement = function () {
+        	var salementTable;
+        	var salementMonthTable;
+            var setDatePicker = function (){
+            	kpcUtil.setDateRangePicker('#startDate');
+            }
+            var setSelect2 = function () {
+                $("#selType").select2({
+                    width: 100,
+                });
+                $("#noType").select2({
+                    width: 110,
+                });
+            }
+            var setCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+            		target : [
+            			 "#status",
+            			 "#saleType",
+            			 "#saleTypeDetail",
+            			 "#saleTypeDetail",
+            		], 
+            		apiUrl : "/api/systemMng/common/commonCodeList",
+            		params : {type : 'SSTS,PRTY,CPC,CPT'},
+            		type   : "GET",
+            		option : {width : 110},	
+            		callBack : function (data,target,option){
+            			for(var idx in data){
+            				for(var idx2 in data[idx].resultList){
+	            				$(target[idx]).append($("<option></option>")
+	            						.attr("value" , data[idx].resultList[idx2].code)
+	            						.text(data[idx].resultList[idx2].codeName));
+            				}
+	           				$(target[idx]).select2(option);       
+            			}
+            			setDataTable();
+            			setPageEvents();
+            			// 조회 이벤트
+                    	kpcUtil.serachFormEvent({
+                    		selects : "#searchForm #dateType,#searchForm #status,#searchForm #saleType,#searchForm #saleTypeDetail",
+                    		inputs : "#searchForm input",
+                    		callback : function (){
+                    			salementSearch();
+                    		}
+                    	});
+            		}
+            	});            	
+            }            
+            var setDataTable = function () {
+                salementTable = $('#salementTable')
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,
+                            "ajax": {
+                                "url": "/api/approvals/salements",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#searchForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                $("#salementDiv").find(".dataTables_length span").remove();
+                                if(settings.aiDisplay.length > 0){
+									var data = salementTable.fnSettings().json;
+									var total = "합계 (" 
+											  + "총 판매 합계:  " + kpcUtil.numberWithCommas(data.totalData.amountSum) 
+											  + "  총 취소 합계 : " +kpcUtil.numberWithCommas(data.totalData.cancelSum)
+											  +")";                                	
+	                                var html = "<span class='red'> "+ total +"</span>";
+	                                $("#salementDiv").find(".dataTables_length").append(html).addClass("col-md-12");
+                                }
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "salementTable",
+                            		menuId : "{{session['menuId']}}", 
+                            		targetTable : salementTable 
+                            	});
+                            },
+                            columns: [
+                                  {data : "rownum" , defaultContent: "",width : 60, className: "column-align-right"}, // 순번
+                                  {data : "submerchantNm", width: 200, defaultContent: ""}, // 거래처 명
+                                  {data : "serviceNm" , width: 250, defaultContent: ""}, // 서비스명                   
+                                  {data : "svcConnId" , width : 200, defaultContent: ""}, // AGENT ID                 
+                                  {data : "approvalStatusNm" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 상태        
+                                  {data : "prodNm" , width : 250, className: "column-align-center" ,defaultContent: ""}, // 상품명   
+                                  {data : "prodCd" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 상품ID
+                                  {data : "prodTypeNm" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 상품구분
+                                  {
+                                  	data : "approvalDt" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.approvalDt , "YYYY-MM-DD");
+  	                                }
+                                  }, // 거래일
+                                  {
+                                  	data : "approvalDt" , 
+  	                                defaultContent: "", 
+  	                                width : 100,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.approvalDt , "HH:mm:ss");
+  	                                }
+                                  }, // 거래시간                  
+                                  {data : "orderNo" , width : 250, className: "column-align-center" ,defaultContent: ""}, // 주문번호
+                                  {data : "approvalNo" , width : 200, className: "column-align-center" ,defaultContent: ""}, // 승인번호
+                                  {
+                                    	data : "saleAmt" , 
+    	                                defaultContent: "",
+    	                                width: 100, 
+    	                                className: "column-align-right" ,
+    	                                render : function (data, type , full , meta){
+    	                                	return kpcUtil.numberWithCommas(full.saleAmt);
+    	                                }
+                                  }, // 권종
+                                  {data : "saleCnt" , width : 100, className: "column-align-right" ,defaultContent: ""}, // 거래건수
+                                  {
+                                  	data : "saleAmt" , 
+  	                                defaultContent: "",
+  	                                width: 150, 
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	if (full.approvalStatus == "SSTS-0002") {
+  	                                		tag = '<span class="red">- ';
+  	                                		endTag = "</span>";
+  	                                	}
+  	                                	return tag + kpcUtil.numberWithCommas(full.saleAmt * full.saleCnt) + endTag;
+  	                                }
+                                  }, // 거래금액                 
+                                  {data : "desc01" , defaultContent: "",width : 150, className: "column-align-right"}, // 비고
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Layout',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+                                    		columnArray : $(salementTable).find("thead>tr>th").siblings().not(".checkboxes"),
+                                    		tableId : "salementTable",
+                                    		menuId : "{{session['menuId']}}",
+                                    		targetTable : salementTable
+                                    	});
+                                    }
+                                },
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/approvals/salements/excelAll",
+                	                            type: 'GET',
+                	                            data : $("#searchForm").serialize(),
+                	                            contentType  : "application/json",
+                	                            async : true,
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	salementSearch();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-8 col-sm-12'l><'col-md-4 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+                salementMonthTable = $('#salementMonthTable')
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,
+                            "ajax": {
+                                "url": "/api/approvals/salementsMonth",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#searchForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                $("#salementMonthDiv").find(".dataTables_length span").remove();
+                                if(settings.aiDisplay.length > 0){
+									var data = salementMonthTable.fnSettings().json;
+									var total = "합계 (" 
+											  + "총 결제 합계:  " + kpcUtil.numberWithCommas(data.totalData.amountSum) 
+											  + "  총 취소 합계 : " +kpcUtil.numberWithCommas(data.totalData.cancelSum)
+											  + ")";                                	
+	                                var html = "<span class='red'> "+ total +"</span>";
+	                                $("#salementMonthDiv").find(".dataTables_length").append(html).addClass("col-md-12");
+                                }
+                                
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "salementMonthTable",
+                            		menuId : "{{session['menuId']}}_month", 
+                            		targetTable : salementMonthTable 
+                            	});
+                                
+                            },
+                            columns: [
+                                  {data : "rownum" , defaultContent: "",width : 60, className: "column-align-right"}, // 순번
+                                  {data : "submerchantNm", width: 200, defaultContent: ""}, // 거래처 명
+                                  {data : "serviceNm" , width: 250, defaultContent: ""}, // 서비스명                   
+                                  {data : "svcConnId" , width: 200,  defaultContent: ""}, // AGENT ID                 
+                                  {data : "approvalStatusNm" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 상태        
+                                  {data : "prodNm" , width : 200, className: "column-align-center" ,defaultContent: ""}, // 상품명   
+                                  {data : "prodCd" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 상품ID
+                                  {data : "prodTypeNm" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 상품구분
+                                  {
+                                    	data : "saleAmt" ,
+                                   	 	width: 100, 
+    	                                defaultContent: "", 
+    	                                className: "column-align-right" ,
+    	                                render : function (data, type , full , meta){
+    	                                	return kpcUtil.numberWithCommas(full.saleAmt);
+    	                                }
+                                  }, // 권종                                  
+                                  {
+                                  	data : "dealDt" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.dealDt + "01", "YYYY-MM");
+  	                                }
+                                  }, // 거래일
+                                  {
+                                  	data : "saleCnt" , 
+  	                                defaultContent: "", 
+  	                                width : 100,
+  	                                className: "column-align-right" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.numberWithCommas(full.saleCnt);
+  	                                }
+                                  }, // 거래건수                  
+                
+                                  {
+                                  	data : "saleAmt" , 
+  	                                defaultContent: "",
+  	                                width: 150, 
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	if (full.approvalStatus == "SSTS-0002") {
+  	                                		tag = '<span class="red">- ';
+  	                                		endTag = "</span>";
+  	                                	}  	                                	
+  	                                	return tag + kpcUtil.numberWithCommas(full.saleAmt * full.saleCnt) + endTag;
+  	                                }
+                                  },// 거래처 금액
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Layout',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+                                    		columnArray : $(salementTable).find("thead>tr>th").siblings().not(".checkboxes"),
+                                    		tableId : "salementMonthTable",
+                                    		menuId : "{{session['menuId']}}_month",
+                                    		targetTable : salementMonthTable
+                                    	});
+                                    }
+                                },
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/approvals/salements/monthExcelAll",
+                	                            type: 'GET',
+                	                            data : $("#searchForm").serialize(),
+                	                            contentType  : "application/json",
+                	                            async : true,
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	salementSearch();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-8 col-sm-12'l><'col-md-4 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+            
+            var setPageEvents = function (){
+            	$("#selType").change(function (){
+            		$("#searchForm #serviceId").val(''); 
+            		$("#searchForm #submerchantId").val(''); 
+            		$("#searchForm #selName").val('');
+            	});
+            	$(".btn-search").click(function (){
+            		if($("#selType option:selected").val() == "0"){
+	        			kpcUtil.openSubMerchantsPopup("#submerchantId", "#selName" , "");
+            		}else{
+	            		kpcUtil.openServicePopup("#searchForm #serviceId", "#searchForm #selName" , "");
+            		}
+        			
+        		});
+            	
+            	$("input[name=tableType]").change(function (){
+            		// approvalNo 
+            		// orderNo
+            		if($(this).val() == "nomal"){
+            			$("#salementDiv").css("display" , "inline");
+            			$("#salementMonthDiv").css("display" , "none");
+            			$("#approvalNo,#orderNo").attr("readonly",false);
+            		}else if($(this).val() == "month"){
+            			$("#salementDiv").css("display" , "none");
+            			$("#salementMonthDiv").css("display" , "inline");
+            			$("#approvalNo,#orderNo").attr("readonly",true);
+            		}
+            		salementSearch();
+            	});
+            	
+            	kpcUtil.setAllChecked(".group-checkable");
+
+            }
+            
+            var salementSearch = function (){
+            	var checkedVal = $("input[name=tableType]:checked").val();
+        		if(checkedVal == "nomal"){
+        			salementTable.fnFilter();
+        		}else if(checkedVal == "month"){
+        			salementMonthTable.fnFilter();
+        		}            	
+            }
+            
+            var hideTableColumn = function (){
+
+            }            
+            
+            return {
+                init : function (){
+                    setDatePicker();
+                    setSelect2();
+                    setCommonCode();
+                    //setPageEvents();
+                    // TODO : setDatatable call at setCommonCode callback function  
+                    // setDataTable();  
+                    
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            salement().init();
+        });
+    </script>
+{% endblock %}

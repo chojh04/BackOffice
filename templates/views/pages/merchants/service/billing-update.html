@@ -1,0 +1,673 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>거래처-정산 수정</h3>
+                <h5><span class="red">[홈 > 거래처 관리 > 거래처 조회 > 대표/일반 거래처 조회 > 대표 거래처 상세 > 일반 거래처 상세 > 서비스 상세보기 > 정산 수정]</span></h5>
+            </div>
+        </div>
+        
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <input type="hidden" name="beforeApprEmpId" id="beforeApprEmpId">
+                        <input type="hidden" name="beforeReqMemo" id="beforeReqMemo">
+                        <form action="#" id="billingForm" class="form-bordered ">
+                            <input type="hidden" id="serviceBillingId" name="serviceBillingId">
+                            <input type="hidden" id="commisionId" name="commisionId">
+                            <input type="hidden" name="reqMemo" id="reqMemo">
+                            <input type="hidden" name="divider" id="divider">
+                            <input type="hidden" name="code" id="code">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 정산정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                   		<i class="fa"></i>
+                                        <input type="text" id="serviceBillingIdInput" name="serviceBillingIdInput" class="form-control col-md-3 col-xs-12" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    	<span>
+                                    		<b>[계좌정보]</b>
+                                    		<a class="btn btn-default btn-search accLoad" >불러오기</a>
+                                    	</span> 
+                                    </label>
+                                </div>
+                            </div>                            
+                            <div class="col-md-12 col-sm-12 col-xs-12" id="accDiv">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">은행명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<select class="form-control isSelectValid" id="bankCode" name="bankCode">
+											<option value="">선택</option>
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12 input-icon left">계좌번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="bankAccNo" name="bankAccNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">예금주</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="bankHolder" name="bankHolder" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>[거래처 담당자정보]</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="managerName" name="managerName" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="managerTel" name="managerTel" class="form-control col-md-7 col-xs-12" isTel="true">
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 이메일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="managerEmail" name="managerEmail" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>[KPC 담당자정보]</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+										<input type="text" id="kpcManagerName" name="kpcManagerName" class="form-control col-md-7 col-xs-12" ">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="kpcManagerTel" name="kpcManagerTel" class="form-control col-md-7 col-xs-12" isTel="true">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 이메일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+										<input type="text" id="kpcManagerEmail" name="kpcManagerEmail" class="form-control col-md-7 col-xs-12" >
+                                    </div>
+                                </div>                                
+                            </div>    
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>[정산정보]</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+	                                    <select class="form-control" id="billingDivider" name="billingDivider" >
+	                                    </select>                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="billingCode" name="billingCode" >
+	                                    </select>                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산주기</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+	                                    <select class="form-control" id="billingDuration" name="billingDuration" disabled >
+	                                    </select>                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline custom-input-icon left">
+										<i>D+</i>                                    
+										<input type="text" id="billingDt" name="billingDt" class=" col-lg-3 col-md-5 col-xs-12" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 수수료 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<select class="form-control" id="merchantCommType" name="merchantCommType" disabled >
+	                                    </select> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 수수료<span id="merchantCommisionCurrency">(%)</span></label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+	                                    <input type="text" id="merchantCommision" name="merchantCommision" class="form-control col-md-7 col-xs-12" disabled>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 수수료 적용 시작일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+	                                    <input type="text" id="billingStartDate" name="billingStartDate" class="form-control col-md-7 col-xs-12" disabled>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<select class="form-control" id="billingCommType" name="billingCommType" disabled>
+	                                    </select> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">부가세 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+										<select class="form-control" id="merchantTaxType" name="merchantTaxType" disabled>
+	                                    </select> 
+                                    </div>
+                                </div>
+                            </div>    
+                        </form>
+	                    <br />
+	                    <div class="column-align-right">
+							{% if (admin_view.pageAuth["updFlag"] == "1")  and ((admin_view.reApproval == "true")  and (admin_view.updateApproval == "false")) or ((admin_view.reApproval == "false")  and (admin_view.updateApproval == "false")) %}
+							<button type="button" id="updateApprovalRequestBtn" class="dt-button btn green btn-outline"><span>수정</span></button>
+							{% elif (admin_view.pageAuth["updFlag"] == "1") and (admin_view.updateApproval == "true") %}
+							<a id="updateApprovalInfoBtn" class="dt-button btn green btn-outline" href="javascript:;"><span>수정</span></a>
+							{% endif %}
+							{% if admin_view.pageAuth["selFlag"] == "1" %}
+							<a id="returnListBtn" class="dt-button btn blue btn-outline" href="/merchants/inquiry/merchantServiceInq"><span>목록</span></a>
+							{% endif %}
+	                    </div>                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-update-modal.html' %}
+{% include 'views/pages/common/approval/popup/approval-request-info-update-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+{% if admin_view.pageAuth["insFlag"] == "1" %}
+	<script src="/assets/js/approval/merchant/merchant.js"></script>
+{% endif %}
+    <script type="text/javascript">
+
+  	if ('{{admin_view.pageAuth["updFlag"] == "1"}}' === "False") {
+  		$("#updateApprovalRequestBtn").prop("disabled", true);
+  	}
+	  	
+        var merchant_inq = function () {
+        	var approvalInfo;
+        	
+        	var setSelect2 = function () {
+                $("#bankCode").select2({
+                    width: 150,
+                });
+                $("#billingDivider").select2({
+                    width: 150,
+                });
+                $("#billingCode").select2({
+                    width: 150,
+                });
+                $("#billingDuration").select2({
+                    width: 150,
+                });
+                $("#billingCommType").select2({
+                    width: 150,
+                });
+                $("#merchantCommType").select2({
+                    width: 150,
+                });
+                $("#merchantTaxType").select2({
+                    width: 150,
+                });
+            }
+        	
+			//거래처 정보 조회
+        	var setFormData = function() {
+            	setFormValidate();
+            	
+            	if(("{{admin_view.reApproval}}" === "false") && ("{{admin_view.updateApproval}}" == "false")) {
+            		console.log("------setServiceBillingInfo------------");
+            		
+            		setServiceBillingInfo();
+            	}
+            	else if (("{{admin_view.reApproval}}" === "true") || ("{{admin_view.updateApproval}}" == "true")) {
+            		console.log("------setApprovalContentInfo------------");
+            		setApprovalContentInfo();
+            	}
+            	setPageEvents();
+        	}
+			
+			var setServiceBillingInfo = function() {
+				
+				console.log("-----------------------------");
+				console.log("{{admin_view.updateType}}");
+				console.log("{{admin_view.targetId}}");
+				
+				
+				var apiUrl = "";
+				if ("{{admin_view.updateType}}" === "billing" ) {
+					apiUrl = "/api/merchants/sub-merchant/billing/{{admin_view.targetId}}";
+				}
+				else if ("{{admin_view.updateType}}" === "commision") {
+					apiUrl = "/api/merchants/sub-merchant/billing/commision/{{admin_view.targetId}}";
+				}
+				
+				$.ajax({
+					url: apiUrl, 
+					type:'GET',
+					dataType : "json",
+					contentType  : "application/json",
+				}).done(function(result){
+					if (result.status === 200) {
+						var billing = result.data.billing
+						var commision = result.data.commision
+						
+						console.log(billing);
+						console.log(commision);
+						
+						$("#serviceBillingId").val(billing.serviceBillingId)
+						$("#serviceBillingIdInput").val(billing.serviceBillingId)
+						$("#commisionId").val(commision.id)
+						
+						$("#divider").val(billing.divider)
+						$("#code").val(billing.code)
+						
+						$("#name").val(billing.name)
+						
+						$("#bankAccNo").val(billing.bankAccountNo)
+						$("#bankHolder").val(billing.bankHolder)
+						
+						$("#managerName").val(billing.managerName)
+						$("#managerTel").val(kpcUtil.setTelFormat(billing.managerTel));
+						$("#managerEmail").val(billing.managerEmail)
+						$("#kpcManagerName").val(billing.kpcManagerName)
+						$("#kpcManagerTel").val(kpcUtil.setTelFormat(billing.kpcManagerTel));
+						$("#kpcManagerEmail").val(billing.kpcManagerEmail)
+					
+						$("#billingDivider").val(billing.divider)
+						$("#billingCode").val(billing.code)
+						
+						$("#billingDuration").val(commision.billingDuration)
+						$("#billingDt").val(commision.billingDate); //정산일
+						
+						$("#merchantCommisionType").val(commision.merchantCommisionType)
+						$("#merchantCommision").val(commision.merchantCommision); //정산 수수료
+
+						var commonCodes = {
+							"bankName" : billing.bankName,
+							"billingDivider" : billing.divider,
+							"billingCode" : billing.code,
+							"billingDuration" : commision.billingDuration,
+							"merchantCommisionType" : commision.merchantCommisionType,
+							"merchantTaxType" : commision.merchantTaxType,
+							"billingCommisionType" : commision.billingCommisionType
+						}
+						
+						setServiceBillingCommonCode(commonCodes);
+						
+						$("#serviceBillingDetailModal").modal("show");
+			       	}
+					else if (result.status == 500) {
+						kpcUtil.customAlert(result.message);
+					}
+				}).fail(function(e){
+					kpcUtil.errorHandling(e);
+				});
+			}
+			
+			var setApprovalContentInfo = function() {
+				
+
+	    		$.ajax({
+	                url: "/api/approvals/detail/"+"{{admin_view.apprSeq}}",
+	                type:'GET',
+	                dataType : "json",
+	                contentType  : "application/json",
+	            }).done(function(result){
+	            	if (result.status === 200) {
+    	            	
+	            		approvalInfo = result.data.approvalInfo;
+	            		var billing = result.data.content.billing;
+	            		var commision = result.data.content.billing.commision;
+						console.log(billing);
+						console.log(commision);
+						
+						$("#serviceBillingId").val(billing.serviceBillingId)
+						$("#serviceBillingIdInput").val(billing.serviceBillingId)
+						$("#commisionId").val(commision.id)
+						
+						$("#divider").val(billing.divider)
+						$("#code").val(billing.code)
+						
+						$("#name").val(billing.name)
+						
+						$("#bankAccNo").val(billing.bankAccountNo)
+						$("#bankHolder").val(billing.bankHolder)
+						
+						$("#managerName").val(billing.managerName)
+						$("#managerTel").val(kpcUtil.setTelFormat(billing.managerTel));
+						$("#managerEmail").val(billing.managerEmail)
+						$("#kpcManagerName").val(billing.kpcManagerName)
+						$("#kpcManagerTel").val(kpcUtil.setTelFormat(billing.kpcManagerTel));
+						$("#kpcManagerEmail").val(billing.kpcManagerEmail)
+					
+						$("#billingDivider").val(billing.divider)
+						$("#billingCode").val(billing.code)
+						
+						$("#billingDuration").val(commision.billingDuration)
+						$("#billingDt").val(commision.billingDate); //정산일
+						
+						$("#merchantCommisionType").val(commision.merchantCommisionType)
+						$("#merchantCommision").val(commision.merchantCommision); //정산 수수료
+
+						var commonCodes = {
+							"bankName" : billing.bankName,
+							"billingDivider" : billing.divider,
+							"billingCode" : billing.code,
+							"billingDuration" : commision.billingDuration,
+							"merchantCommisionType" : commision.merchantCommisionType,
+							"merchantTaxType" : commision.merchantTaxType,
+							"billingCommisionType" : commision.billingCommisionType
+						}
+						
+						setServiceBillingCommonCode(commonCodes);
+						
+	                	$("#beforeApprEmpId").val(approvalInfo.apprEmpId)
+	                	$("#beforeReqMemo").val(approvalInfo.reqMemo)
+						
+                	}
+                	$("#billingForm").valid();
+	            	
+	            }).fail(function(e){
+	        		kpcUtil.errorHandling(e);
+	      	    });
+			}
+			
+			//필수 입력값 유효성 검증
+        	function setFormValidate(){
+        	    $("#billingForm").validate({
+        	        errorElement: 'span', //default input error message container
+        	        errorClass: 'help-block help-block-error', // default input error message class
+                    rules: {
+                    	name : {
+                    		required : true,
+                        },
+                        bankCode: {
+                    		required : true,
+                        },
+                        bankAccNo: {
+                    		required : true,
+                        },
+                        bankHolder: {
+                    		required : true,
+                        },
+                        managerName: {
+                    		required : true,
+                        },
+                        managerEmail: {
+                    		required : true,
+                        }
+                    },
+                    messages : {
+                        name : {
+                        	required : "정산명을 입력해주세요.",
+                        },
+                        bankCode: {
+                    		required : "은행명을 선택해주세요.",
+                        },
+                        bankAccNo: {
+                    		required : "계좌번호를 입력해주세요.",
+                        },
+                        bankHolder: {
+                    		required : "예금주를 입력해주세요.",
+                        },
+                        managerName: {
+                    		required : "정산담당자를 입력해주세요.",
+                        },
+                        managerEmail: {
+                    		required : "정산담당자 이메일을 입력해주세요.",
+                        }
+                    },   
+        	        errorPlacement : function (error , element){
+        	        	var icon = $(element).parent(".input-icon").children('i');
+        	        	icon.removeClass('fa-check').addClass("fa-warning");
+        	        	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+        	        },
+        	        highlight: function (element) { // hightlight error inputs
+        	           	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+        	        },
+        	        success : function (label,element){
+        	        	var icon = $(element).parent(".input-icon").children('i');
+        	        	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+        	        	icon.removeClass('fa-warning').addClass("fa-check");
+        	        },
+        	    });
+        	}
+            
+            
+            var setPageEvents = function (){
+            	$("#returnListBtn").click(function (){
+            		//history.back();
+            		location.href = "/merchants/inquiry/merchantServiceInq";
+            	});
+            	
+            	$("#merchantCommType").change(function(event){
+            		if (event.target.value === "FEE-0001") {
+            			$("#merchantCommisionCurrency").text("(%)")
+            		}
+            		else if (event.target.value === "FEE-0002") { 
+            			$("#merchantCommisionCurrency").text("(원)")
+            		}
+            	})
+            	
+            	// 전화번호 format 지정
+            	kpcUtil.setFormTextFieldFormat({
+            		target : "#billingForm"
+            	});
+            }
+            
+
+            var setServiceBillingCommonCode = function (commonCodes){
+            	kpcUtil.setSelectBoxData({
+             		target : "#bankCode", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'BANK'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.bankName !== undefined) {
+	            			$(target).val(commonCodes.bankName).trigger("change");          
+            			}
+             		}
+             	});
+            	kpcUtil.setSelectBoxData({
+             		target : "#billingDivider", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'DEAL'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.billingDivider !== undefined) {
+	            			$(target).val(commonCodes.billingDivider).trigger("change");          
+            			}
+             		}
+             	});
+            	kpcUtil.setSelectBoxData({
+             		target : "#billingCode", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'BIL'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.billingCode !== undefined) {
+	            			$(target).val(commonCodes.billingCode).trigger("change");          
+            			}
+             		}
+             	});
+            	kpcUtil.setSelectBoxData({
+             		target : "#billingDuration", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'BILC'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.billingDuration !== undefined) {
+	            			$(target).val(commonCodes.billingDuration).trigger("change");          
+            			}
+             		}
+             	});
+            	kpcUtil.setSelectBoxData({
+             		target : "#merchantCommType", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'FEE'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.merchantCommisionType !== undefined) {
+	            			$(target).val(commonCodes.merchantCommisionType).trigger("change");          
+            			}
+             		}
+             	});
+            	kpcUtil.setSelectBoxData({
+             		target : "#billingCommType", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'BILT'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.billingCommisionType !== undefined) {
+	            			$(target).val(commonCodes.billingCommisionType).trigger("change");          
+            			}
+             		}
+             	});
+            	kpcUtil.setSelectBoxData({
+             		target : "#merchantTaxType", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'TAX'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.merchantTaxType !== undefined) {
+	            			$(target).val(commonCodes.merchantTaxType).trigger("change");          
+            			}
+             		}
+             	});
+            }
+
+            return {
+                init : function (){
+                    setSelect2();
+                    setFormData();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            
+            merchant_inq().init();
+            //임포트한 수정 승인 요청 모달 초기화
+            approvalReuestUpdateModal("{{admin_view.merchantId}}", "billingForm", "MENU-0001", "AWRK-0004"); //서비스 정산 수정 승인 요청 모달
+            approvalReuestInfoUpdateModal("{{admin_view.apprSeq}}", "billingForm", "MENU-0001", "update", "AWRK-0004"); //승인 대기중인 서비스 정산 수정 모달
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,142 @@
+<!-- extend base layout -->
+{% extends "views/loginbase.html" %}
+
+{% block body %}
+<div class="login_wrapper">
+    <div class="animate form login_form">
+        <section class="login_content">
+            <form class=" text-xs-left">
+                <div style="text-align : center">
+                	<p>
+                		<img alt="kpc logo" src="/assets/img/54.PNG">
+                	</p>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="id" id="id" class="form-control" placeholder="사용자 아이디" />
+                </div>
+                <div class="form-group">
+                    <input type="password" name="pwd" id="password" class="form-control" placeholder="비밀번호" />
+                </div>
+                <div class="form-group">
+	                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	                    <div class="checkbox">
+	                    	<label><input type="checkbox" id="rememberId" >아이디 저장</label>
+	                    </div>
+	                </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    	<button class="btn btn-default btn-block submit" type="button" id="submitBtn">Log in</button>
+                    	<!-- <a class="btn btn-default submit" id="">Log in</a> -->
+                    </div>	                
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="separator">
+                    <div class="clearfix"></div>
+                    <br />
+
+                    <div>
+                        <p>Copyright<i class="fa fa-copyright"></i> 2017 All rights reserved.</p>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}
+{% block tail %}
+    <!-- jQuery validation -->
+    
+    <!-- 아이디 저장을 위한 쿠키 플러그인 -->
+    <script src="/assets/js-cookie/js.cookie-2.2.0.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function (){
+        	var loginInfo = Cookies.getJSON("r2_loginInfo")
+        	
+        	if (loginInfo !== undefined) {
+        		$("#id").val(loginInfo.id)        		
+        		$("#rememberId").attr("checked", true)
+        	}
+        	
+            $("form").validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                rules: {
+                	id : {
+                        required: true,
+                        minlength : 5,
+                    },
+                    pwd : {
+                        required: true,
+                        minlength : 4,
+                    }
+                },
+                messages : {
+                	id : {
+                        required : "아이디를 입력해주세요.",
+                        minlength : "아이디를 5자 이상 입력해주세요.",
+                    },
+                    pwd : {
+                        required : "비밀번호를 입력해주세요.",
+                        minlength : "비밀번호를 4자 이상 입력해주세요.",
+                    }
+                },
+                highlight: function (element) { // hightlight error inputs
+                   $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+            });
+            $("#submitBtn").on("click", function (){
+                if($("form").valid()){
+					$.ajax({
+						url: "/api/user/login",
+						data: $("form").serializeObject(),
+						type: 'POST',
+						dataType : "json",
+                        contentType  : "application/json",
+						async : true,
+						success: function(data){
+							if(data.auth){
+								/*
+									아이디 저장을 체크하였을때 쿠키로 아이디 저장,
+									로그인 성공시 쿠키 만료일을 갱신한다.(30일)
+									체크하지 않았을 경우 쿠키 정보 삭제
+								*/
+								if ($("#rememberId").is(":checked")) {
+									Cookies.set("r2_loginInfo", { "id": $("#id").val() }, {	expires: 30 /* 30일로 설정*/ }) 
+								}
+								else {
+									var loginInfo = Cookies.getJSON("r2_loginInfo")
+									if (loginInfo !== undefined) {
+										Cookies.remove("r2_loginInfo")
+									}
+								}
+								
+							    // page redirection
+                                location.replace('/backOffice/');
+							}else{
+							    kpcUtil.customAlert(data.message);
+                            }
+						},
+						error : function(e){
+							console.log(e);
+							kpcUtil.customAlert("오류가 발생하였습니다. 관리자에게 문의하세요.");
+						}
+					});
+                }
+            });
+            $('input').keyup(function(e) {
+                if (e.keyCode == 13) {
+                    $("#submitBtn").trigger("click");
+                }
+            });
+            
+            $("#id").focus();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,406 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+	<div>
+		<div class="page-title">
+            <div class="title_left">
+                <h3>잔액 환불내역 상세보기</h3>
+                <h5><span class="red">[홈 > 카드 관리 > 잔액 환불내역 조회 > 잔액 환불내역 상세보기]</span></h5>
+            </div>
+        </div>
+	
+	<div class="clearfix"></div>
+
+	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="x_panel">
+                    <div class="form">
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-top:30px">
+	                            <label class="control-label col-md-3 col-sm-3 col-xs-12"><b style="font-size:14px;">카드 잔액환불 상세정보</b></label>
+	                        </div>
+	                    </div>
+	                    <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">카드번호</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="cardNumber" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">환불접수번호</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="refundSeq" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">고객명</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="customerName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">연락처</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="customerTel" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">메모</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                                	<span id="apprDesc" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            
+                            </div>
+						</div>
+                        <div>
+							<div class="x_content" style="margin-top:0px; padding-bottom:9px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">접수시 잔액</label>
+	                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                	<span id="balance" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">환불 수수료</label>
+	                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                	<span id="refundCommision" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">실환불 금액</label>
+	                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
+	                                	<span id="actualRefundAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+							</div>
+						</div>
+						
+                        <div>
+							<div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">환불은행</label>
+	                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                	<span id="bankName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">환불 계좌</label>
+	                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                	<span id="bankAccountNo" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">예금주</label>
+	                                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
+	                                	<span id="bankHolder" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+							</div>
+						</div>
+						
+						<div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                            <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>환불처리 상세정보</b></label>
+	                        </div>
+	                    </div>
+						<div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">접수일</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="receptionDate" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">승인일</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+									<span id="approvalDate" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">환불일</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="refundDate" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">진행상태</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="refundStatus" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group" id="apprMemoDiv" style="display:none;">
+	                            <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">환불 불가사유</label>
+	                            <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-inline">
+	                            	<span id="refundDesc" class="span-vertical-middle"></span>
+	                            </div>
+	                        </div>
+						</div>
+	                    <br />
+	                    <div class="column-align-right">
+							{% if admin_view.pageAuth["insFlag"] == "1" %}
+								<button type="button" id="refundBtn" style="display:none;" class="dt-button btn green btn-outline">환불완료</button>
+								<button type="button" id="rejectBtn" style="display:none;" class="dt-button btn green btn-outline">환불불가</button>
+	                    		<button type="button" id="reApprovalRequestBtn" style="display:none;" class="dt-button btn green btn-outline">재접수</button>	                    		
+							{% endif %}
+							{% if admin_view.pageAuth["selFlag"] == "1" %}
+							<button type="button" id="returnBalanceRefundList" class="dt-button btn red btn-outline">목록</button>
+							{% endif %}
+	                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- 반려사유 모달 -->
+<div id="rejectApprovalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog" style="width:400px">
+		<div class="modal-content">
+			
+			<div class="modal-header" style="text-align: center">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h4 class="modal-title">환불 불가사유 입력</h4>
+			</div>
+			<div class="modal-body" style="text-align: center">
+				<div id="testId" class="form-horizontal" role="form">
+					<div class="form-group">
+						<span>환불 불가사유를 입력해주세요.</span>
+					</div>
+					<div class="form-group" style="margin-bottom: 0px">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="reqRefundDesc" name="reqRefundDesc" placeholder="한글 기준 (100자 이내) 입력" maxlength="100">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer"  style="text-align: center">
+				<button id="rejectApprovalBtn" type="button" class="btn btn-primary">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/card/card.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+        
+    <script type="text/javascript">
+
+    var merchantDetail = function () {
+
+    	var seq = "{{admin_view.seq}}"
+    	var refundInfo;
+    	var seqList = [];
+    	var sequenceList = [];
+		result = {
+				"seq" : "{{admin_view.seq}}"
+		}
+		sequenceList.push(result);
+		seqList = sequenceList;
+    	var getInfo = function() {
+    		    		
+    		$.ajax({
+                url: "/api/card/balanceRefund/detail?seq="+seq,
+                type:'GET',
+                dataType : "json",
+                contentType  : "application/json",
+            }).done(function(result){
+            	console.log(result);
+            	if (result.data != null) {
+            		
+	            	var refund = result.data;
+	            	refundInfo = refund;
+	            	//console.log(refund);	            	
+	            	$("#cardNumber").text(refund.cardNumber);
+	            	$("#refundSeq").text(refund.seq);
+	            	$("#customerName").text(refund.customerName);
+	            	$("#customerTel").text(refund.customerTel);
+	            	$("#refundDesc").text(refund.refundDesc);
+	            	$("#apprDesc").text(refund.apprDesc);
+	            	
+	            	$("#balance").text(String(refund.balance).addComma());
+	            	$("#refundCommision").text(String(refund.refundCommision).addComma());
+	            	$("#actualRefundAmount").text(String(refund.balance - refund.refundCommision).addComma());
+
+	            	$("#bankName").text(refund.bankName);
+	            	$("#bankAccountNo").text(refund.bankAccNo);
+	            	$("#bankHolder").text(refund.bankHolder);
+	            	
+               	 	//진행상태에 따른 메시지 표시
+               		$("#refundStatus").html(card.getBalanceRefundStatus(refund.status));
+                	
+                	$("#receptionDate").text(kpcUtil.setDateFormat(refund.receptionDt , "YYYY-MM-DD")); //신청일
+                	
+                	if (refund.approvalDt != null) {
+	                	$("#approvalDate").text(kpcUtil.setDateFormat(refund.approvalDt , "YYYY-MM-DD")); //처리일
+                	}
+                	else {
+	                	$("#approvalDate").text("-");
+                	}
+
+                	if (refund.refundDt != null) {
+	                	$("#refundDate").text(kpcUtil.setDateFormat(refund.refundDt , "YYYY-MM-DD")); //환불일
+                	}
+                	else {
+	                	$("#refundDate").text("-");
+                	}
+                	//환불 불가 사유
+                	$("#refundDesc").html(refund.refundDesc);
+                	
+                	if(refund.status=="PROC-0010"){
+                		$("#rejectBtn").show();
+                		$("#refundBtn").show();
+                	}if(refund.status=="PROC-0050"){                		
+                		$("#reApprovalRequestBtn").show();
+                		$("#apprMemoDiv").show();
+                	}
+            	}
+				else {
+					kpcUtil.customAlert(result.message);
+				}
+            	
+            }).fail(function(e){
+        		kpcUtil.errorHandling(e);
+      	    });
+    	}
+    	
+        var setPageEvents = function () {
+        	       	
+        	//목록 화면으로 이동
+        	$("#returnBalanceRefundList").click(function (){
+        		location.href ="/card/popCard/balanceRefundMng";
+        	})
+        	
+        	$("#reApprovalRequestBtn").click(function(){         		  
+       			//요청정보에 해당하는 거래처의 요청 정보가 있는지 확인 
+              	var isExistRequest = approval.existApprovalRequest(refundInfo.cardNo);
+             	if (!isExistRequest) {
+     	        	if(refundInfo.status === "PROC-0050") {
+        				location.href = "/card/popCard/balanceRefund?reApprSeq="+refundInfo.apprSeq;
+     	        	}
+              	}        		
+        	})        	
+        }   
+        
+        $("#rejectBtn").click(function(){        	
+        	if(kpcUtil.confirm("환불불가 처리하시겠습니까?")){        		
+				$("#rejectApprovalModal").modal("show");
+       		}
+        });
+        
+		//환불불가 처리
+		$("#rejectApprovalBtn").click(function (){		
+			
+			if($("#reqRefundDesc").val()==""){
+				alert('환불불가 사유를 입력해주세요.');
+				return;
+			}
+			
+			rejectList = {							
+				"refundList" : seqList,
+				"refundDesc" : $("#reqRefundDesc").val() 
+			}           			
+		
+			$.ajax({
+				url: "/api/card/balanceRefund/reject",
+				data: JSON.stringify(rejectList),
+				type:'POST',
+				dataType : "json",
+				contentType  : "application/json"
+			}).done(function(resultData,status,jqXhr){
+									
+           		if (resultData.status == 200) {	           			
+	           			//문자 보내기
+						sendAnswerSms("reject");	
+	           			kpcUtil.customAlert("환불불가 처리 되었습니다.");
+						document.location.reload();
+						$("#rejectApprovalModal").modal("hide")
+						//table.fnFilter();
+	           		}
+	               	else if (resultData.status == 500) {
+	                   		alert(resultData.message);
+	               	}
+				}).fail(function(e){
+					kpcUtil.errorHandling(e);
+					console.log(e);
+					$("#rejectApprovalModal").modal("hide")
+				});			
+			});
+      
+		$("#refundBtn").click(function(){
+			if(!confirm('환불처리 하시겠습니까?'))	return;	
+			
+			$.ajax({
+                  url: "/api/card/balanceRefund/approve",
+                  data: JSON.stringify(sequenceList),
+                  type:'POST',
+                  dataType : "json",
+                  contentType  : "application/json",
+              }).done(function(resultData,status,jqXhr){
+          		if (resultData.status == 200) {
+              		//문자 보내기
+						sendAnswerSms("approve");
+              		kpcNotiUtil.reload();
+          			kpcUtil.customAlert("환불완료 처리되었습니다.");
+						table.fnFilter();
+          		}
+              	else if (resultData.status == 500) {
+                  	alert("환불처리중 에러가 발생하였습니다.");
+              	}
+              }).fail(function(e){
+              	alert("환불처리중 에러가 발생하였습니다.");
+          		//kpcUtil.errorHandling(e);
+        	    });
+		});
+		
+		
+		var sendAnswerSms = function (approvalType) {
+  			var data = $('#approvalTable').DataTable().rows({selected:true}).data();
+				data.each(function(value, index) {
+					notiData = {
+						"workType" : value.workType,
+						"reqType" : value.reqType,
+						"reqEmpId" : value.reqEmpId
+					}
+					approval.approvalAnswerSendSms(notiData, approvalType); 
+				});
+    	}
+        return {
+            init : function (){
+            	getInfo();
+                setPageEvents();
+            }
+        }
+    }
+
+    $(document).ready(function () {
+    	merchantDetail().init();
+    });
+    </script>
+{% endblock %}

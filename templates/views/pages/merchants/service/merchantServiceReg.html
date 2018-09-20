@@ -1,0 +1,496 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>거래처-서비스 등록</h3>
+                <h5><span class="red">[홈 > 거래처 관리 > 거래처 조회 > 대표/일반 거래처 조회 > 대표 거래처 상세 > 일반 거래처 상세 > 서비스 등록]</span></h5>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <form action="#" id="serviceForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 서비스 정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">거래처코드</label>
+                                    <div class="custom-col-lg-10 col-md-3 col-sm-4 col-xs-12 form-inline input-icon left">
+	                                    <i class="fa"></i>
+                                        <input type="text" id="submerchantId" name="submerchantId" class="form-control col-lg-7" readonly="readonly" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스 코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline input-icon left">
+                                        <input type="text" id="serviceId" name="serviceId" class="form-control col-lg-7" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+	                                    <i class="fa"></i>
+                                        <input type="text" id="serviceName" name="serviceName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+	                                    <select class="form-control" id="type" name="type" >
+	                                    </select>                                        
+                                    </div>
+                                </div>
+								<div
+									class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+									<label
+										class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스	카테고리</label>
+									<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<select class="form-control" id="category" name="category">
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">연동 아이디</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="svcConnId" name="svcConnId" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">연동 비밀번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="password" id="svcConnPw" name="svcConnPw" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+<!--                                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">에이전트 아이디</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="agentId" name="agentId" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">에이전트 비밀번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="password" id="agentPw" name="agentPw" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스 사용 여부</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="useFlag" name="useFlag" >
+	                                    	<option value="Y">사용</option>
+	                                    	<option value="N">미사용</option>
+	                                    </select>  
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">매출 구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="saleDivider" name="saleDivider" >
+	                                    </select>                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처 경로</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="path" class=" col-md-7 col-xs-12 span-vertical-middle">{{request.args.get("path")}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <div class="column-align-right">
+                        	<a id="back" class="dt-button btn green btn-outline" href="javascript:;"><span>목록</span></a>
+							{% if (admin_view.pageAuth["insFlag"] == "1") and (admin_view.updateApproval == "false") %}
+							<a id="createApprovalRequestBtn" class="dt-button btn green btn-outline" href="javascript:;"><span>등록</span></a>
+							{% elif (admin_view.pageAuth["insFlag"] == "1") and (admin_view.updateApproval == "true") %}
+							<a id="updateApprovalInfoBtn" class="dt-button btn green btn-outline" href="javascript:;"><span>등록</span></a>
+							{% endif %}                                 	
+							<a id="clear" class="dt-button btn red btn-outline" href="javascript:;"><span>초기화</span></a>
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-create-modal.html' %}
+{% include 'views/pages/common/approval/popup/approval-request-info-update-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+{% if admin_view.pageAuth["insFlag"] == "1" %}
+	<script src="/assets/js/approval/merchant/service.js"></script>
+{% endif %}            
+    <script type="text/javascript">
+    
+    	function tooltipAdd(obj){
+    		$(obj).parent().attr("title", $(obj).attr("title"))
+    	}
+
+        var service_reg = function () {
+            
+        	var type;
+        	var category;
+        	var useFlag;
+        	var saleDivider;
+        	
+        	var setSelect2 = function () {
+                $("#type").select2({
+                    width: 110,
+                });
+                $("#category").select2({
+                    width: 110,
+                });
+                $("#saleDivider").select2({
+                    width: 110,
+                });
+                $("#useFlag").select2({
+                    width: 110,
+                });
+
+            }  
+        	
+            var setFormData = function() {
+            	
+                setFormValidate();
+            	if(("{{admin_view.reApproval}}" === "true") || ("{{admin_view.updateApproval}}" === "true")) {
+    	    		$.ajax({
+    	                url: "/api/approvals/detail/"+"{{admin_view.apprSeq}}",
+    	                type:'GET',
+    	                dataType : "json",
+    	                contentType  : "application/json",
+    	            }).done(function(result){
+    	            	if (result.status === 200) {
+	    	            	
+    	            		approvalInfo = result.data.approvalInfo;
+    	            		var service = result.data.content.service;
+    	            		
+    	            		$("#submerchantId").val(service.subMerchantId);
+    	            		$("#serviceName").val(service.name);
+    	            		$("#svcConnId").val(service.svcConnId);
+    	            		
+    	            		type = service.type
+    	            		category = service.category
+    	            		useFlag = service.useFlag
+    	            		saleDivider = service.saleDivider
+
+    	            		setSubMerchantPath(service.subMerchantId);
+    	        			setContentCommonCode();
+                    	}
+                    	$("#serviceForm").valid();
+    	            	
+    	            }).fail(function(e){
+    	        		kpcUtil.errorHandling(e);
+    	      	    });
+            	}
+            	else {
+            		setCommonCode();
+            	}
+                setPageEvents();
+            }
+            
+            var setSubMerchantPath = function(subMerchantId) {
+   	    		$.ajax({
+   	                url: "/api/merchants/sub-merchant/"+subMerchantId+"/path",
+   	                type:'GET',
+   	                dataType : "json",
+   	                contentType  : "application/json",
+   	            }).done(function(result){
+   	            	if (result.status === 200) {
+   	            		$("#path").text(result.data.path)
+                   	}   	            	
+   	            }).fail(function(e){
+   	        		kpcUtil.errorHandling(e);
+   	      	    });
+            }
+            
+            var setContentCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+            		target : "#type", 
+            		apiUrl : "/api/systemMng/common/commonCodes",
+            		params : {type : 'SVRT'},
+            		type   : "GET",
+            		option : {width : 150},	
+            		callBack : function (data,target,option){
+
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//서비스 타입 값 설정
+            			if (type !== undefined) {
+	            			$(target).val(type).trigger("change");          
+            			}
+            		}
+            	});
+      			kpcUtil.setSelectBoxData({
+            		target : "#category", 
+            		apiUrl : "/api/systemMng/common/commonCodes",
+            		params : {type : 'SVRT'},
+            		type   : "GET",
+            		option : {width : 150},	
+            		callBack : function (data,target,option){
+
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//서비스 카테고리 값 설정
+            			if (category !== undefined) {
+	            			$(target).val(category).trigger("change");          
+            			}
+            		}
+            	});      			
+      			kpcUtil.setSelectBoxData({
+            		target : "#saleDivider", 
+            		apiUrl : "/api/systemMng/common/commonCodes",
+            		params : {type : 'SVC'},
+            		type   : "GET",
+            		option : {width : 150},	
+            		callBack : function (data,target,option){
+
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//매출 구분 값 설정
+            			if (saleDivider !== undefined) {
+	            			$(target).val(saleDivider).trigger("change");          
+            			}
+            		}
+            	});      			
+      			//사용여부 값 설정
+      			$("#useFlag").val(useFlag).trigger("change");
+            }
+        	
+            var setCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+      				target : [
+      				          "#type", 
+      				          "#category", 
+      				], 
+      				apiUrl : "/api/systemMng/common/commonCodeList",
+      				params : {type : 'SVRT,SVRT'},
+      				type   : "GET",
+      				option : {
+      							width : 150,
+     				},	
+      				callBack : function (data,target,option){
+      					for(var idx in data){
+      						for(var idx2 in data[idx].resultList){
+      		    				$(target[idx]).append($("<option></option>")
+      		    						.attr("value" , data[idx].resultList[idx2].code)
+      		    						.text(data[idx].resultList[idx2].codeName));
+      						}
+      						$(target[idx]).select2({
+      							escapeMarkup: function (m) { return m;}
+      						});       
+      					}
+      					$("#category").val("SVR-0002").change();
+      				}
+      			});		
+      			kpcUtil.setSelectBoxData({
+      				target : [
+      				          "#saleDivider", 
+      				], 
+      				apiUrl : "/api/systemMng/common/commonCodeList",
+      				params : {type : 'SVC'},
+      				type   : "GET",
+      				option : {
+      							width : 150,
+     				},	
+      				callBack : function (data,target,option){
+      					for(var idx in data){
+      						for(var idx2 in data[idx].resultList){
+      							var tag = "<span title='"+data[idx].resultList[idx2].descText+ "' onmouseover='tooltipAdd(this)'>"+data[idx].resultList[idx2].codeName +"</span>";
+      		    				$(target[idx]).append($("<option></option>")
+      		    						.attr("value" , data[idx].resultList[idx2].code)
+      		    						.text(tag));
+      						}
+      						$(target[idx]).select2({
+      							escapeMarkup: function (m) { return m;},
+      							width : 120,
+      						});       
+      					}
+      				}
+      			});		
+            }      
+            
+            var setFormValidate = function (){
+                $("#serviceForm").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    rules: {
+                    	submerchantId : {
+                            required : true,
+                        },
+                        serviceName: {
+                            required : true,
+                        },
+						svcConnId: {
+                            required : true,
+                            svcConnIdDupCheck : true
+                        },
+						svcConnPw: {
+                            required : true,
+                        },
+						agentId: {
+                            required : true,
+                        },
+						agentPw: {
+                            required : true,
+                        },
+                        useFlag: {
+                            required : true,
+                        },
+                    },
+                    messages : {
+                    	submerchantId : {
+                            required : "잘못된 접근입니다.",
+                        },
+                        serviceName: {
+                            required : "서비스명을 입력해주세요..",
+                        },
+						svcConnId: {
+                            required : "연동 아이디를 입력해주세요.",
+                            svcConnIdDupCheck : "사용중인 연동 ID 입니다."
+                        },
+						svcConnPw: {
+                            required : "연동 비밀번호를 입력해주세요.",
+                        },
+						agentId: {
+                            required : "에이전트 아이디를 입력해주세요.",
+                        },
+						agentPw: {
+                            required : "에이전트 비밀번호를 입력해주세요",
+                        },
+                        useFlag: {
+                            required : "서비스사용여부를 선택해주세요.",
+                        },                        
+                    },            
+                    errorPlacement : function (error , element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	icon.removeClass('fa-check').addClass("fa-warning");
+                    	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                       	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+                    success : function (label,element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+                    	icon.removeClass('fa-warning').addClass("fa-check");
+                    },
+                });
+
+            }
+            
+            var setPageEvents = function (){
+            	
+            	$("#clear").click(function (){
+            		kpcUtil.resetForm("#serviceForm");
+                    {% if admin_view.merchantId != "" %}
+    	            	$("#submerchantId").val("{{admin_view.merchantId}}");
+    	        		$("#submerchantId").focus();
+    	        		$("#category").focus();	            	
+                	{% endif %}            		
+            	});
+
+            	{% if admin_view.pageAuth["insFlag"] == "1" %}
+            	$("#regist").click(function (){
+                    if($("#serviceForm").valid() && kpcUtil.confirm("승인 신청 하시겠습니까?")){
+                    	var menuId = "MCM-0003";
+                    	// 승인자 선택
+                    	kpcPopupUtil.openApprListPop({
+                    		 menuId : menuId 
+                    		,callBack : function (data){
+                    			var apprEmpId = $("input[name=empList]:checked").attr("empId");
+   			   					if(typeof apprEmpId === "undefined"){
+   			   						kpcUtil.customAlert("승인자를 선택해주세요.");
+   			   						return false;
+   			   					} else {
+   			   						var jsonData = $("#serviceForm").serializeJsonObject();
+   			   						jsonData["apprEmpId"] = apprEmpId;
+   			   						jsonData["menuId"] = menuId;
+       			                    $.ajax({
+       		                           url: "/api/merchants/services/service",
+       		                           data: JSON.stringify(jsonData),
+       		                           type: 'POST',
+       		                           dataType : "json",
+       		                           contentType  : "application/json",
+       		                    	}).done(function(resultData,status,jqXhr){
+       		                    		if(kpcUtil.successHandling("#serviceForm",resultData,true)){
+       		                    			$(".modal").modal('toggle');
+       		                    			$("#clear").trigger("click");
+       		                    		}
+       		                        }).fail(function(e){
+       		                	    	kpcUtil.errorHandling(e);
+       		               	        });
+   			   					}
+                    		}
+                    	});                     	
+
+                   }            		
+            	});
+            	{% endif %}
+            	
+                {% if admin_view.merchantId != "" %}
+	            	$("#submerchantId").val("{{admin_view.merchantId}}");
+	        		$("#submerchantId").focus();
+	        		$("#category").focus();	            	
+            	{% endif %}
+            	
+            	$("#back").click(function (){
+            		//history.back();
+            		location.href = "/merchants/inquiry/merchantServiceInq";
+            	});            	
+            }
+            
+            return {
+                init : function (){
+                    setSelect2();
+                    setFormData();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            service_reg().init();
+            approvalReuestCreateModal("serviceForm", "MENU-0001", "AWRK-0003"); //승인 요청 모달
+            approvalReuestInfoUpdateModal("{{admin_view.apprSeq}}", "serviceForm", "MENU-0001", "create", "AWRK-0003"); //승인 대기중인 정보 수정 모달
+        });
+
+    </script>
+{% endblock %}

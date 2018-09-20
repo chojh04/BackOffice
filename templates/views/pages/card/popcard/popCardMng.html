@@ -1,0 +1,744 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>카드 정보 조회</h3>
+                <h5><span class="red">[홈 > 카드 관리 > 카드 정보 조회]</span></h5>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row" id="checkRowSize">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                    	<input type="hidden" id="seq" name="seq" value="{{admin_view.seq}}"/>
+                    	<input type="hidden" id="contentSeq" name="contentSeq" value="{{admin_view.contentSeq}}"/>
+                        <form action="#" id="searchForm" name="searchForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" >- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-3 col-xs-12">
+	                                   <select class="select2_single select2-selection--single " id="target" name="target" >
+	                                       <option value="1">카드번호</option>
+	                                       <option value="2">관리번호</option>
+	                                   </select>
+                                    </label>
+                                    <div class="custom-col-lg-10 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                        <input type="text" class="form-control col-md-7" id="cardNumber" name="cardNumber" style="top:3px;" delHyphen="true" value="{{admin_view.cardNumber}}">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                        <input type="text" class="form-control col-md-7" id="startDate" name="startDate" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">정렬방식</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="orderType1" name="orderType" value="ASC" >
+                                    		<label for="orderType1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			오름차순
+                                    		</label>
+                                    	</div>      
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="orderType2" name="orderType" value="DESC" checked="checked">
+                                    		<label for="orderType2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			내림차순
+                                    		</label>
+                                    	</div>                                                                        	         
+                                    </div>
+                                </div>
+                                                                
+                            </div>
+                        </form>
+	                    <br />
+	                    <div class="column-align-right">
+							<a id="Search" class="dt-button btn green btn-outline" href="javascript:;"><span>조회</span></a>
+	                    </div>                          
+	                    <div class="form">
+	                        <form action="#" id="couponUpdForm" name="couponUpdForm" class="form-bordered ">	                        	
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" >[<b>카드정보</b>]</label>
+	                                </div>
+	                            </div>	                        
+	                        	<div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">관리번호</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span id="giftNo" class="col-md-12 col-xs-12 span-vertical-middle"></span>	                                        
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">발행일</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+											<span id="createDate" class="col-md-12 col-xs-12 span-vertical-middle" isDateField="true"></span>											
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상태</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+											<span id="status" class="col-md-12 col-xs-12 span-vertical-middle" ></span>											
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">제한여부</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span id="restrictFlag"  class="col-md-12 col-xs-12 span-vertical-middle" readonly="readonly"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">잔액</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+											<span id="currentAmount" class="col-md-12 col-xs-12 span-vertical-middle" isNumber="true"></span>
+	                                    </div>
+	                                </div>
+									<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">판매처</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+											<span id="saleMerchantName" class="col-md-12 col-xs-12 span-vertical-middle" ></span>
+										</div>
+	                                </div>
+                                </div>
+	                        </form>
+		                    <br />
+		                    <div class="column-align-right">
+		                    	<a id="cardLimitHistory" class="dt-button btn green btn-outline" href="javascript:;"><span>제한이력</span></a>
+		                    	<a id="updateLayout" class="dt-button btn green btn-outline" href="javascript:;"><span>Layout</span></a>
+		                    	<a id="excel" class="dt-button btn yellow btn-outline" href="javascript:;"><span>Excel</span></a>
+								{% if admin_view.pageAuth["insFlag"] == "1"%}
+								<a id="cardUpdUseFlag" class="dt-button btn green btn-outline" href="javascript:;" style="display:none;"><span>사용제한</span></a>
+								<a id="createApprovalRequestBtn" class="dt-button btn green btn-outline" href="javascript:;" style="display:none;"><span>사용해제</span></a>
+								<a id="createApprovalRequestBtnAlert" class="dt-button btn green btn-outline" href="#?" onClick="alert('승인 대기중인 요청이 있습니다.');" style="display:none;"><span>사용해제</span></a>																									
+								<a id="popCardRefund" class="dt-button btn green btn-outline" href="javascript:;"><span>잔액환불</span></a>
+								{% endif %}                        	
+		                    </div>
+		                    <br />
+	                       	<table id="cardTable" class="table table-striped table-bordered" style="width: 100%;" >
+	                            <thead>
+	                                <tr>
+	                                    <th>순번</th>
+	                                    <th>상태</th>
+	                                    <th>거래처명</th>
+	                                    <th>서비스명</th>
+	                                    <th>지불수단</th>
+	                                    <th>지불형태</th>
+	                                    <th>점포코드</th>
+	                                    <th>점포명(사용처)</th>
+	                                    <th>POS</th>
+	                                    <th>거래번호</th>
+	                                    <th>거래일</th>
+	                                    <th>거래시간</th>
+	                                    <th>거래금액</th>
+	                                    <th>결제금액</th>
+	                                    <th>할인금액</th>
+	                                    <th>잔액</th>
+	                                    <th>취소</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            </tbody>
+	                        </table>                             
+	                    </div>		
+					</div>
+				</div>
+			</div>                      	
+        </div>
+    </div>
+</div>
+
+<!-- 취소 팝업 include -->
+{% include 'views/pages/common/popup/cancelCardDeal.html' %}
+<!-- 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-create-modal.html' %}
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+	<script src="/assets/js/approval/approval.js"></script>
+    <script src="/assets/js/card/card.js"></script>
+    <script type="text/javascript">
+
+        var couponMng = function () {
+        	
+			var table;
+						
+        	var setPageEvents = function (){
+				{% if admin_view.pageAuth["insFlag"] == "1" %}
+            	
+            	$("#cardUpdUseFlag").click(function (){
+            		if($("#couponUpdForm #giftNo").text() ==  ""){
+            			kpcUtil.customAlert("쿠폰권 번호 조회 후 이용바랍니다.");
+            			$("#searchForm #couponNo").focus();
+            			return false;
+            		}
+            		if($("#couponUpdForm #disuseDate").text() !=  ""){
+            			kpcUtil.customAlert("폐기된 팝카드입니다.");
+            			return false;
+            		}
+            		
+            		var confirmTitle = "", confirmMsg = "", restrictYN="", typeCode="", placeHolder="";
+            		     			
+           			confirmTitle = "사용제한";
+           			confirmMsg = "해당카드를 사용제한 하시겠습니까?\n제한사유 입력 후 확인버튼을 클릭해주세요.";  
+           			placeHolder = "사용제한 사유 입력 (한글 20자 이내)";
+           			restrictYN="Y";
+           			typeCode="CUPS-0002";
+           			
+            	
+                	kpcUtil.openSystemHistoryConfirm({
+                		confirmMsg : confirmMsg,
+                		confirmTitle : confirmTitle,
+                		alertMsg : confirmTitle+"처리 되었습니다.",
+                		targetForm : "#couponUpdForm",
+                		desc1Obj : $("#searchForm #cardNumber").val(),
+                		desc2Obj : "#desc2",
+                		desc3Obj : "R2",
+                		typeCode : typeCode,
+                		placeHolder : placeHolder,
+                		menuId  : "CPN-0001",
+                		beforeAjaxParam : {
+                            url: "/api/card/restrict",
+                            data: JSON.stringify({
+                            	   "restrictDesc" : "R2 팝카드 사용제한 설정 ",
+                            	   "giftNo" : $("#couponUpdForm #giftNo").text(),
+                            	   "restrictYN" : restrictYN,
+                            	   "cardNumber" : $("#searchForm #cardNumber").val(),
+                            	   "typeCode" : typeCode                            	   
+                            		}),
+                            type: 'POST',
+                            dataType : "json",
+                            contentType  : "application/json",
+                            async : true,
+                        },
+                        afterCAllBack : popCardSearch
+                	});             		
+            	});  
+            	
+            	// 팝카드 환불
+            	$("#popCardRefund").click(function (){
+             		if($("#couponUpdForm #cardNumber").val() ===  "" || $("#couponUpdForm #giftNo").text() ===  ""){
+            			kpcUtil.customAlert("팝카드 상세 내역 조회 후 이용바랍니다.");
+            			$("#searchForm #cardNumber").focus();
+            			return false;
+            		} 
+
+            		if($("#couponUpdForm #status").val() ===  "폐기"){
+            			kpcUtil.customAlert("폐기 팝카드 입니다.");
+            			return false;
+            		}            		
+            		location.href="/card/popCard/balanceRefund?cardNumber="+$("#cardNumber").val();
+            	});
+            	
+            	
+            	{% endif %}
+            	// 팝카드 조회
+            	$("#Search").click(function (){
+            		if($("#searchForm #cardNumber").val() === ""){
+            			kpcUtil.customAlert($("#target :selected").text() + "를 입력해주세요.");
+            			$("#cardNumber").focus();
+            			return false;
+            		}
+            		popCardSearch();
+            	});
+            	$("#cardLimitHistory").click(function (){
+            		if($("#searchForm #cardNumber").val() == ""){
+            			kpcUtil.customAlert($("#target :selected").text() + "를 입력해주세요.");
+            			$("#cardNumber").focus();
+            			return false;
+            		}
+            		
+            		kpcUtil.openCardRestrictHistoryModal({            			
+            			giftNo : $("#couponUpdForm #giftNo").text()
+            		});            		
+            	});
+            	
+            	$("#updateLayout").click(function() {
+            		kpcPopupUtil.openTableColumnMng({
+								    		columnArray : $(cardTable).find("thead>tr>th").siblings().not(".checkboxes"),
+								    		tableId : "cardTable",
+								    		menuId : "{{session['menuId']}}",
+								    		targetTable : table
+	    			});
+            	})
+            	
+            	$("#excel").click(function (){
+                     	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+ 							$.ajax({
+ 	                            url: "/api/card/excelAll",
+ 	                            type: 'GET',
+ 	                            data : "formData=" + $("#searchForm").serializeObject(),
+ 	                            contentType  : "application/json",
+ 	                            success: function(data){
+ 	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+ 	                            },
+ 	                            error : function(e){
+ 	                            	kpcUtil.errorHandling(e);
+ 	                            }
+ 	                       });  	                                    	
+                     	}
+            	});
+            	// hypthen(-) 제거
+            	kpcUtil.setFormTextFieldFormat({
+            		target : "#searchForm"
+            	});
+            	
+            	//취소 사유 팝업 내 입력 이벤트
+        		$("#cancelCardDealType").change(function(e) {
+        			if(e.target.value == "direct") {
+        				//직접 입력일 때만 취소사유 작성 가능
+        				$("#cancelCardDealDirectInput").attr('placeholder', '취소 사유를 입력해주세요.');
+        				$("#cancelCardDealDirectInput").removeAttr('disabled');
+        				$("#cancelCardDealDirectInput").focus();
+        			}
+        			else {
+        				$("#cancelCardDealDirectInput").attr('disabled', 'disabled');
+        				$("#cancelCardDealDirectInput").removeAttr('placeholder');
+        			}
+        		})
+        		
+        		//취소 사유 팝업 이벤트
+        		$("#cancelCardDeal").click(function(e) {
+        			        			
+        			var cancelCardDealType = $("#cancelCardDealType").val();
+        			
+        			if(cancelCardDealType === 'none') {
+        				alert("취소 사유를 선택해주세요.");
+        			}
+        			else if(cancelCardDealType === 'direct' && $("#cancelCardDealDirectInput").val() === '') {
+        				alert("취소 사유를 입력해주세요.");
+        			}
+        			else {
+         				if(confirm("취소 처리를 진행하시겠습니까?")) {
+         					var cancelResaon = "";
+
+         					if(cancelCardDealType !== 'direct') {
+         						cancelReason = $("#cancelCardDealType option:selected").text();
+         					}
+         					else {
+         						cancelReason = $("#cancelCardDealDirectInput").val();      						
+         					}
+         					
+         					var cardNo =  $("#targetCardNo").val();
+         					var orderNo = $("#targetOrderNo").val();         					
+         					
+							var params = JSON.stringify({
+								cardNo: cardNo,
+								orderNo: orderNo,
+								transactionCode: $("#targetTransactionCode").val(),
+								amount: $("#targetDealAmount").val(),
+								requestDate: $("#targetRequestDate").val(),
+								cancelType: $("#targetCancelType").val(),
+								cancelMemo: cancelReason,
+								merchantId: $("#targetMerchantId").val(),
+								merchantPwd: $("#targetMerchantPwd").val(),
+								approvalNo: $("#targetApprovalNo").val(),
+								approvalDate: $("#targetApprovalDate").val(),
+								posCode: $("#targetPosCode").val()
+							})
+
+							/*
+								거래코드(결제취소:PC, 충전취소:CC)
+								typeCode는 KPC_ADMIN_CODE 테이블 참조, 결제취소는 CARD-0004, 충전취소는 CARD-0005
+								시스템관리 > 시스템 코드 등록/관리에서 확인 가능
+							*/
+							var typeCode = $("#targetTransactionCode").val() === "PC" ? "CARD-0004" : "CARD-0005"
+							
+          					$.ajax({
+         						url : "/api/card/cancelCardDeal",
+         						type: "POST",
+         						dataType: "json",
+         						contentType: "application/json",
+         						async: true,
+         						data: params,
+         						success: function(data) {
+        							switch(data.code) {
+         								case("100"):
+         									//카드 거래가 취소 되면 메모 테이블(KPC_EMP_ACT_HST)에 메모를 남긴다.
+    		       							$.ajax({
+    		           							url: "/api/systemMng/common/systemHistory",
+    		           							data: JSON.stringify({
+    		           								typeCode : typeCode,
+    		           								desc1 : "사유: "+cancelReason,
+    		           								desc2 : "카드번호 : "+ cardNo,
+    		           								desc3 : "거래번호 : "+ orderNo,
+    		           								menuId : "{{session['menuId']}}",
+    		           							}),
+    		           							type: 'POST',
+    		           							dataType : "json",
+    		           							contentType  : "application/json",
+    		           							async : true,
+    		           							success: function(data) {
+    		           								alert("취소 처리 되었습니다.")
+    		           								popCardSearch()
+    		           								$("#cancel-card-deal-modal").modal('hide')
+    		           							},
+    		           							error : function(e) {
+    				                               	kpcUtil.errorHandling(e);	           								
+    		           							}
+    		           						});										         									
+         									break;
+         								case("101"):
+         									alert(data.message)
+         									break;
+         							}
+         						},
+                                error : function(e) {
+	                               	kpcUtil.errorHandling(e);
+                                }
+         					})
+        				}else {
+        					//취소 버튼에 대한 구현이 필요할 경우 여기에 구현
+        				}
+        			}
+        		})
+        		
+            	$("#cancel-card-deal-modal").on("hidden.bs.modal" , function (){
+	        		//거래 취소 정보 초기화
+ 					$("#targetCardNo").val("");
+ 					$("#targetOrderNo").val("");         					
+ 					$("#targetDealAmount").val("0")
+ 					$("#targetTransactionCode").val("")
+					$("#targetRequestDate").val("")		
+					$("#targetMerchantId").val("")
+					$("#targetMerchantPwd").val("")
+					$("#targetApprovalNo").val("")
+					$("#targetApprovalDate").val("")
+
+					$("#cancelCardDealType").val("none")
+					$("#cancelCardDealDirectInput").val("")
+    				$("#cancelCardDealDirectInput").attr('disabled', 'disabled');
+    				$("#cancelCardDealDirectInput").removeAttr('placeholder');
+            	});
+            }
+        	
+            var setDataTable = function () {
+                table = $('#cardTable')
+					.on('click', '.upt', function () {
+						//거래 취소 정보 설정
+              			$("#targetCardNo").val($(this).attr("cardNo"));
+              			$("#targetOrderNo").val($(this).attr("orderNo"));
+              			$("#targetDealAmount").val($(this).attr("dealAmount"));
+              			$("#targetTransactionCode").val($(this).attr("transactionCode"));
+              			$("#targetMerchantId").val($(this).attr("merchantId"));
+              			$("#targetMerchantPwd").val($(this).attr("merchantPwd"));
+              			$("#targetApprovalNo").val($(this).attr("approvalNo"));
+              			$("#targetApprovalDate").val($(this).attr("approvalDate"));
+              			$("#targetPosCode").val($(this).attr("posCode"));
+                    })     
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,
+                            "ajax": {
+                                "url": "/api/card/cardDealList",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#searchForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "cardTable",
+                            		menuId : "{{session['menuId']}}", 
+                            		targetTable : table 
+                            	});
+                            	
+                            	var searchNumber = $("#cardNumber").val();
+                            	var cardNumber = "";
+                            	if ($("#target").val() === "1") {
+                                	cardNumber = $("#cardNumber").val();
+                                }
+                            	
+                            	for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                             		var data = settings.json.data[i];
+									console.log("----------data---------")
+									console.log(data)
+                             		if(data.status === "결제" || data.status === "충전") {
+                             			var uptButton = ""
+                             			//data.cancelFlag == true이면 거래취소가 가능한 결제
+                             			if(data.cancelFlag) {
+                             				uptButton = '<button class="btn btn-sm red btn-outline filter-submit margin-bottom-0 upt" ';
+                                 			uptButton += 'data-toggle='+"modal ";
+    	                                    uptButton += 'data-target='+ ".cancel-card-deal-modal ";                                    
+    	                             		
+    	                                    /* --취소 관련 데이터 설정--------------------------------------------------------------- */
+    	                                    if ($("#target").val() === "1") {
+    		                                    uptButton += 'cardNo="' + cardNumber + '" '; 							// 카드번호	                                    	
+    	                                    }
+    	                                    
+    	                                    uptButton += 'orderNo="' + data.orderNo + '" ';								// 거래번호
+    	                             		uptButton += 'dealAmount="' + data.dealAmount + '" ';						// 거래금액
+    	                             	
+    	                             		uptButton += 'merchantId="' + data.merchantId + '" ';						// 온라인 아이디
+    	                             		uptButton += 'merchantPwd="' + data.merchantPwd + '" ';						// 온라인 비밀번호
+    	                             		uptButton += 'approvalNo="' + data.approvalNo + '" ';						// 승인번호
+    	                             		uptButton += 'approvalDate="' + data.dealDate + data.dealTime + '" ';		// 승인시간
+    	                             		uptButton += 'posCode="' + data.posCode + '" ';		// 점포코드
+    	                             		
+    	                             		var transactionCode = ""; 
+    	                             		switch (data.status) {
+    	                             			case "결제":
+    	                             				transactionCode = "PC"
+    	                             				break;
+    	                             			case "충전":
+    	                             				transactionCode = "CC"
+    	                             				break;
+    	                             		}
+    	                             		uptButton += 'transactionCode="' + transactionCode + '" ';					// 거래코드(결제취소:PC, 충전취소:CC)	
+    	                                    /* --취소 관련 데이터 설정--------------------------------------------------------------- */
+    	                             		uptButton += '<i class="fa fa-search"></i>가능</button>';
+                             			}
+                             			else {
+	   	                                    uptButton = '<button class="btn btn-sm dark btn-outline filter-submit margin-bottom-0 upt" ';
+                                 			uptButton += 'disabled=disabled';
+    	                             		uptButton += '<i class="fa fa-search"></i>불가</button>';
+                             			}
+                             			$('td:eq(16)', settings.aoData[settings.aiDisplay[i]].nTr).html(uptButton);                             				
+                             		}                             		
+                                }
+                            },
+                            columns: [
+                                {data: "rownum", width : 30,defaultContent: "",  className: "column-align-right"}, // 순번
+                                {data : "status" , width : 140,className: "column-align-center" ,defaultContent: ""}, // 상태 
+                                {data : "merchantName" , width : 140,className: "column-align-center" ,defaultContent: ""}, // 거래처명 
+                                {data : "serviceName" , width : 250, className: "column-align-center" ,defaultContent: ""}, // 서비스명
+                                {data : "payMethod" , width : 100,className: "column-align-center" ,defaultContent: ""}, // 지불수단
+                                {data : "payType" , width : 130,className: "column-align-center" ,defaultContent: ""}, // 지불형태
+                                {data : "posCode" , width : 80,className: "column-align-center" ,defaultContent: ""}, // 점포코드
+                                {data : "posName" , width : 150,className: "column-align-center" ,defaultContent: ""}, // 점포명(사용처) 
+                                {data : "pos" , width : 50,className: "column-align-center" ,defaultContent: ""}, // POS
+                                {data : "orderNo" ,width : 250, className: "column-align-center" ,defaultContent: ""}, // 거래번호
+                                {
+                                  	data : "dealDate" , 
+  	                                defaultContent: "",
+  	                                width : 120,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.dealDate , "YYYY-MM-DD");
+  	                                }
+                                }, // 거래일
+                                {
+                                	data : "dealTime" , 
+	                                defaultContent: "", 
+	                                width : 110,
+	                                className: "column-align-center" ,  	                                
+	                                render : function (data, type , full , meta){
+	                                	return kpcUtil.setDateFormat(full.dealDate + " "+ full.dealTime , "HH:mm:ss");
+	                                }
+                                }, // 거래시간 
+                                {
+                                  	data : "orderAmount" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	// 잔액이관대상취소
+  	                                	// 선물받기취소
+  	                                	var status = kpcUtil.nullToBlank(full.status).trim();
+  	                                	if(status === "충전취소" || status === "잔액이관"
+  	                                	|| status === "잔액이관대상취소" || status === "선물하기"	
+  	                                    || status === "선물받기취소" || status === "결제" 
+  	                                    || status === "환불"
+  	                                	){
+  	                                		return "<span class='red'>(" + kpcUtil.numberWithCommas(full.orderAmount)+")</span>";
+  	                                	}else {
+  	                                		return kpcUtil.numberWithCommas(full.orderAmount);
+  	                                	}
+  	                                }
+
+                                },// 거래금액
+                                {
+                                  	data : "dealAmount" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	// 잔액이관대상취소
+  	                                	// 선물받기취소
+  	                                	var status = kpcUtil.nullToBlank(full.status).trim();
+  	                                	var dealAmount = (full.dealAmount>0)? "(" + kpcUtil.numberWithCommas(full.dealAmount)+")" : "-";
+  	                                	if(status === "충전취소" || status === "잔액이관"
+  	                                	|| status === "잔액이관대상취소" || status === "선물하기"	
+  	                                    || status === "선물받기취소" || status === "결제" 
+  	                                    || status === "환불"
+  	                                	){
+  	                                		return "<span class='red'>"+dealAmount+"</span>";
+  	                                	}else {
+  	                                		return kpcUtil.numberWithCommas(dealAmount);
+  	                                	}
+  	                                }
+
+                                },// 결제금액
+                                {
+                                  	data : "dcAmount" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	// 잔액이관대상취소
+  	                                	// 선물받기취소
+  	                                	var status = kpcUtil.nullToBlank(full.status).trim();
+  	                                	
+  	                                	var amount = (full.dcAmount>0)? "(" + kpcUtil.numberWithCommas(full.amount)+")" : "-"; 
+  	                                	
+  	                                	if(status === "충전취소" || status === "잔액이관"
+  	                                	|| status === "잔액이관대상취소" || status === "선물하기"	
+  	                                    || status === "선물받기취소" || status === "결제" 
+  	                                    || status === "환불"
+  	                                	){
+  	                                		return "<span class='red'>"+amount+"</span>";
+  	                                	}else {
+  	                                		return kpcUtil.numberWithCommas(amount);
+  	                                	}
+  	                                }
+
+                                },// 할인금액
+                                {
+                                  	data : "amount" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                		return kpcUtil.numberWithCommas(full.amount);
+  	                                }
+                                },// 잔액
+                                {data: "cancelCardDeal", width : 100, defaultContent: "",  className: "column-align-center"}, // 환불/충전 취소
+/*                                 {                                  	 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center",
+  	                                render : function (data, type , full , meta){
+  	                                	return "<button class='btn btn-sm green btn-outline filter-submit margin-bottom-0 upt' onclick='"+cancelCardDeal()+"'>" +
+  	                                				full.amount+
+  	                                		   "</button>"
+  	                                }
+  	                                
+                                }// 환불/충전 취소 */
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-12 col-sm-12'l>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "zeroRecords": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                            },
+                        }
+                    );
+            }            
+
+            var popCardSearch = function (){
+                $.ajax({
+	                   url: "/api/card/popCard",
+	                   data: $("#searchForm").serialize(),
+	                   type: 'GET',
+	                   dataType : "json",
+	                   contentType  : "application/json",
+	                   async : true,
+	                   success: function(data){
+	                	   if(kpcUtil.kpcApiSuccessHandling("#couponUpdForm",data,false)){
+								kpcUtil.setFormData("#couponUpdForm",data);
+								///제한된 카드일 때		
+								if(data.restrictFlag == "Y"){
+									$("#restrictFlag").addClass("red");
+		               	   	    	$("#cardUpdUseFlag").hide();		               	   	    
+				               	   	var isExistRefundData = card.existBalanceRefund($("#searchForm #cardNumber").val());	
+
+					    			if (!isExistRefundData || $("#seq").val()!="") {
+					    				$("#createApprovalRequestBtn").show();
+					    			}else{						    			
+			               	   	  		$("#createApprovalRequestBtnAlert").show();
+					    			}
+	                	   		}else{
+	                	   			$("#restrictFlag").removeClass("red");
+	                	   			$("#cardUpdUseFlag").show();
+	                	   			$("#createApprovalRequestBtn").hide();
+	                	   		}
+	                	   		
+								//카드 상태가 폐기 일때
+ 	                	   		if(data.status != "사용"){
+	                	   			$("#status").addClass("red");
+	                	   		}else{
+	                	   			$("#status").removeClass("red");
+	                	   		}
+
+	                	   		table.fnFilter();
+	                	   }
+	                   },
+	                   error : function(e){
+	                   	kpcUtil.errorHandling(e);
+	                   }
+	               });
+            }
+
+            var setDatePicker = function (){
+            	kpcUtil.setDateRangePicker('#startDate');
+            }            
+            var setSelect2 = function () {
+                $("#target").select2({
+                    width: 140,
+                });
+            }            
+            
+            return {
+                init : function (){
+                	setSelect2();
+                	setDatePicker();
+                    setPageEvents();
+                    setDataTable();
+                   	if($("#searchForm #cardNumber").val()) popCardSearch();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            couponMng().init();
+            approvalReuestCreateModal("searchForm", "CRD-0001", "AWRK-0012", "사용해제 하시겠습니까?"); //사용제한 해제 승인 요청 모달
+        });
+    </script>
+{% endblock %}

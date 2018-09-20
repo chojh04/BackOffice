@@ -1,0 +1,168 @@
+<!--
+	승인요청 정보 수정 모달 html 입니다.
+	화면 내 수정 버튼의 id는 updateApprovalContentBtn로 해야합니다.
+-->
+<div id="updateApprovalInfoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog" style="width:400px">
+		<div class="modal-content" style="text-align: center">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 class="modal-title"><b>승인자 선택</b></h3>
+			</div>
+			<div class="modal-body">
+				<div id="testId" class="form-horizontal" role="form">
+					<div class="form-group" id="updateApprovalInfoApproverList"></div>
+					<div class="form-group" id="updateReqMemoDiv" style="margin-bottom: 0px">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="afterReqMemo" name="afterReqMemo" placeholder="수정 사유를 입력해주세요." maxlength="100">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="text-align: center">
+				<button id="sendUpdateApprovalInfoBtn" type="button" class="btn btn-primary">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+/**
+ * <!-- 수정 승인 요청 모달 js-->
+ */
+
+var approvalReuestInfoUpdateModal = function (targetId, formName, menuId, reqType, workType) {
+	 
+	 if(reqType === "create") {
+		 $("#updateReqMemoDiv").remove();
+	 }
+	 /**
+	 * 수정 승인 요청 모달 show
+	 * @returns
+	 */
+	 $("#updateApprovalInfoBtn").click(function (){
+		$("#afterReqMemo").val($("#beforeReqMemo").val());
+		if($("#"+formName).valid()){
+			if(kpcUtil.confirm("수정 하시겠습니까?")) {
+				// 승인자 선택
+				$.ajax({
+					url: "/api/approval/getApprovers",
+					data: "menuId=" + menuId,
+					type: 'GET',
+					dataType : "json",
+				}).done(function(data){
+					console.log(data)
+					var bodyHtml = ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: left">';
+						for(var idx in data){
+							bodyHtml += ''
+								if (idx < (data.length - 1)) {
+									bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-bottom: 1px solid rgba(115, 135, 156, .36); padding-top: 5px;" >'
+								}
+								else {
+									bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 5px;" >'
+								}
+							bodyHtml +=  '	<label class="mt-radio mt-radio-single mt-radio-outline" style="margin-top:15px">'
+								+  '		<input type="radio" class="selCheckboxes" name="empList" value="1" empId="'+data[idx].empId + '"'
+								+  ' 		menuId="'+data[idx].menuId+'"'
+								if ($("#beforeApprEmpId").val() !== "" && $("#beforeApprEmpId").val() === data[idx].empId) {
+									bodyHtml += ' checked ' 
+								}
+								bodyHtml += '>' 
+								+  '		<span></span>' + data[idx].name +' ('+data[idx].email+')'
+								+  '	</label>'
+								+  '</div>';
+						}
+					bodyHtml +='</div></div>';
+					$("#updateApprovalInfoApproverList").html(bodyHtml);
+					
+					$("#updateApprovalInfoModal").modal("show");
+					
+				}).fail(function(e){
+					kpcUtil.errorHandling(e);
+				});
+			}
+    	}
+		else {
+			kpcUtil.customAlert("필수항목이 제대로 입력되지 않았습니다.");
+		}
+	});
+
+	/**
+	 * 수정 승인 요청 하기
+	 */
+	$("#sendUpdateApprovalInfoBtn").click(function() {
+		var apprEmpId = $("input[name=empList]:checked").attr("empId");
+		var menuId = "MCM-0002";
+			if(typeof apprEmpId === "undefined"){
+				kpcUtil.customAlert("승인자를 선택해주세요.");
+				return false;
+			}
+		else {
+			$("#reqMemo").val($("#afterReqMemo").val());
+			var jsonData = $("#"+formName).serializeJsonObject();
+			jsonData["apprEmpId"] = apprEmpId;
+			jsonData["menuId"] = menuId;
+			
+			var apiUrl = "";
+						
+			if (workType === "AWRK-0001") {
+				apiUrl = "/api/approvals/request/merchant/"+targetId+"/update";
+			}
+			else if (workType === "AWRK-0002") {
+				apiUrl = "/api/approvals/request/sub-merchant/"+targetId+"/update";
+			}
+			else if (workType === "AWRK-0003") {
+				apiUrl = "/api/approvals/request/sub-merchant/service/"+targetId+"/update";
+			}
+			else if (workType === "AWRK-0004") {
+				apiUrl = "/api/approvals/request/sub-merchant/service/billing/"+targetId+"/update";
+			}
+			else if (workType === "AWRK-0008") {
+				apiUrl = "/api/approvals/request/sub-merchant/service/billing/commision/"+targetId+"/update";
+			}
+			else if (workType === "AWRK-0009") {
+				apiUrl = "/api/approvals/request/kcon/brochure/"+targetId+"/update";
+			}
+			else if (workType === "AWRK-0011") {
+				apiUrl = "/api/approvals/request/card/balance-refund/"+targetId+"/update";
+			}
+			
+			$.ajax({
+				url: apiUrl,
+				data: JSON.stringify(jsonData),
+				type: 'PUT',
+				dataType : "json",
+				contentType  : "application/json",
+			}).done(function(resultData,status,jqXhr){
+				if (resultData.status == 200) {
+					kpcUtil.customAlert("수정 되었습니다.");
+					$("#updateApprovalInfoModal").modal("hide");
+					location.href ="/approval/request";
+            	}
+				else if (resultData.status == 500) {
+					kpcUtil.customAlert(resultData.message);
+					$("#updateApprovalInfoModal").modal("hide");
+				}
+            }).fail(function(e){
+            	kpcUtil.errorHandling(e);
+        	});
+		}
+	})
+	
+	$("#updateApprovalInfoModal").on("shown.bs.modal", function(e) {
+		 if(reqType === "update") {
+			$("#afterReqMemo").focus(); 
+		 }
+	})
+	
+	/**
+	 * 수정 승인 요청 모달이 닫힐 때 모달내 input 값 초기화 
+	 */
+	$("#updateApprovalInfoModal").on("hidden.bs.modal", function(e) {
+		if (reqType === "update") {
+			$("#afterReqMemo").val($("#beforeReqMemo").val()); 
+		}
+	})
+}
+</script>

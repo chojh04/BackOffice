@@ -1,0 +1,134 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>대사 수동 처리</h3>
+                <h5><span class="red">[홈 > 시스템 관리 > 대사 수동 처리]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+	                    <div class="form">
+	                        <form action="" method="post" id="serverUpload" class="form-bordered " enctype="multipart/form-data" >
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 대사 작업</label>
+	                                </div>
+	                            </div>
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">업무구분</label>
+	                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		                                    <select class="form-control" id="jobDivider" name="jobDivider" >
+		                                    	<option value="GSPOP">GSPOP</option>
+		                                    	<option value="GSSM">GSSM</option>
+		                                    	<option value="GSPOINT">GSPOINT</option>
+		                                    	<option value="GSHB">GSHB</option>
+		                                    	<option value="HAPPYCASH">HAPPYCASH</option>		                                    	
+		                                    </select>	                                    
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">작업구분</label>
+	                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		                                    <select class="form-control" id="jobType" name="jobType" >
+		                                    	<option value="UPLOAD">UPLOAD</option>
+		                                    	<option value="DOWNLOAD">DOWNLOAD</option>
+		                                    	<option value="SETTLEMENT">대사</option>
+		                                    </select>		                                    
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">대사일자</label>
+	                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12  input-icon left">
+											<input type="text" class="form-control input-date-picker" id="settleDate" name="settleDate" >
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </form>
+		                    <div class="column-align-right">
+								<a id="gsSettlement" class="dt-button btn green btn-outline" href="javascript:;"><span>GS대사</span></a>
+		                    </div>                             	                        
+						</div>
+					</div>
+				</div>
+			</div>                      	
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var userMenuMng_inq = function () {
+        	var setDatePicker = function (){
+        		kpcUtil.setDatePicker("#settleDate");        		
+        	}
+        	var setSelect2 = function (){
+                $("#jobDivider").select2({
+                    width: 150,
+                });        		        		
+                $("#jobType").select2({
+                    width: 150,
+                });        		        		
+        	}
+            var setPageEvents = function (){
+            	$("#gsSettlement").click(function (){
+            		if($("#settleDate").val() == ""){
+            			alert("대사 일자를 선택해주세요.");
+            			return false;
+            		}
+            		if(kpcUtil.confirm("대사작업을 실행 하시겠습니까?")){
+            			
+	                    $.ajax({
+	                        url: "/api/systemMng/common/settlement",
+	                        data: $("#serverUpload").serializeObject(),
+	                        type: 'POST',
+	                        dataType : "json",
+	                        contentType  : "application/json",
+	                 	}).done(function(resultData,status,jqXhr){
+							alert(resultData.message);
+	                    }).fail(function(e){
+	             	    	kpcUtil.errorHandling(e);
+	            	    });                           
+            		}
+            		
+            	});
+            }
+            return {
+                init : function (){
+                	setDatePicker();
+                	setSelect2();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            userMenuMng_inq().init();
+        });
+    </script>
+{% endblock %}

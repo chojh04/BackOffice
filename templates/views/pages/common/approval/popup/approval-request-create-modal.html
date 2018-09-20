@@ -1,0 +1,255 @@
+<!--
+	등록 승인 요청 모달 html 입니다.
+	화면 내 등록 버튼의 id는 createApprovalRequestBtn로 해야합니다.
+-->
+<div id="createApprovalReqeustModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog" style="width:400px">
+		<div class="modal-content">
+			<div class="modal-header" style="text-align: center">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 class="modal-title"><b>승인자 선택</b></h3>
+			</div>
+			<div class="modal-body">
+				<div id="testId" class="form-horizontal" role="form">
+					<div class="form-group" id="requestApproverList"></div>
+				</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group" id="descInput" style="display:none;">				      
+            	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<input type="text" id="reason" name="reason" class="form-control col-md-7 col-xs-12" placeholder="사용해제 사유를 입혁해주세요.(한글 20자 이내)" maxlength="20">
+            	</div>
+            	</div>				
+			</div>	
+			<div class="modal-footer" style="text-align: center">				
+				<div style="margin-bottom: 20px;">
+					<label class="checkbox checkbox-single checkbox-outline notiSmsDiv">
+                    	<input type="checkbox" class="checkboxes" id="createApprovalReqeustNotiSms" name="createApprovalReqeustNotiSms"><span>승인자에게 SMS를 발송합니다.</span>
+					</label>
+				</div>
+				<button id="sendCreateApprovalReqeustBtn" type="button" class="btn btn-primary">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+/**
+ * <!-- 등록 승인 요청 모달 js-->
+ */
+var approvalReuestCreateModal = function (formName, menuId, workType, confirmMsg, confirmFnc) {
+	/**
+	 * 등록 승인 요청 모달 show
+	 * @returns
+	 */
+	$("#createApprovalRequestBtn").click(function (){		
+		 if(workType == "AWRK-0012"){
+			$("#reason").val("");
+	 		var isExistRefundData = card.existBalanceRefund($("#searchForm #cardNumber").val());									
+			if (isExistRefundData && $("#seq").val()=="") {
+				alert("승인 대기중인 요청이 있습니다.");
+				return;
+			}
+		 }else if(workType == "AWRK-0006" && $("#seq").val()==""){
+			 var isExistData = approval.existApprovalRequest($("#billingSeq").val());									
+				if (isExistData) {
+					alert("승인 대기중인 요청이 있습니다.");
+					document.location.href='/billing/billingHistory';
+					return;
+				}
+		 }
+		if($("#"+formName).valid()){		
+			if(typeof confirmFnc == 'function') {
+				confirmMsg = confirmFnc();
+				if(confirmMsg == false) {
+					alert('선택된 데이터가 없습니다.');
+					return;
+				}
+			} else {
+				confirmMsg = (typeof confirmMsg !== "undefined" && confirmMsg != "")? confirmMsg : "등록 하시겠습니까?";
+			}
+			if(kpcUtil.confirm(confirmMsg)){
+				// 승인자 선택
+				$.ajax({
+					url: "/api/approval/getApprovers",
+					data: "menuId=" + menuId,
+					type: 'GET',
+					dataType : "json",
+				}).done(function(data){
+					var bodyHtml = ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: left">'
+						for(var idx in data){
+							bodyHtml += ''
+								if (idx < (data.length - 1)) {
+									bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-bottom: 1px solid rgba(115, 135, 156, .36); padding-top: 5px;" >'
+								}
+								else {
+									bodyHtml +=  ' <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 5px;" >'
+								}
+							bodyHtml +=  '	<label class="mt-radio mt-radio-single mt-radio-outline" style="margin-top:15px">'
+								+  '		<input type="radio" class="selCheckboxes" name="empList" value="1" empId="'+data[idx].empId + '"'
+								+  ' 		menuId="'+data[idx].menuId+'"/><span></span>' + data[idx].name +' ('+data[idx].email+')'
+								+  '	</label>'
+								+  '</div>';
+						}
+					bodyHtml +='</div></div>';
+					$("#requestApproverList").html(bodyHtml);
+					$("input[name=empList]")[0].focus();					
+					if(menuId=="CRD-0001") $("#descInput").show();//카드 사용제한 요청일때 사유입력 필드 노출
+					$("#createApprovalReqeustModal").modal("show");
+					
+					
+				}).fail(function(e){
+					kpcUtil.customAlert("등록중 오류가 발생하였습니다.\n Error Message:"+kpcUtil.errorHandling(e));					
+				});
+			}
+    	}
+		else {
+			kpcUtil.customAlert("필수항목이 제대로 입력되지 않았습니다.");
+		}
+	});
+
+	/**
+	 * 등록 승인 요청 하기
+	 */
+	$("#sendCreateApprovalReqeustBtn").click(function() {
+		var apprEmpId = $("input[name=empList]:checked").attr("empId");
+		//retuest Type 설정
+		var type = ($("#seq").val()!="" && $("#seq").val()>0)? 'PUT' : 'POST';
+		
+		var keyWord = "";
+		if(typeof apprEmpId === "undefined"){
+			kpcUtil.customAlert("승인자를 선택해주세요.");
+			return false;
+		}
+		else {
+			var jsonData = $("#"+formName).serializeJsonObject();
+			jsonData["apprEmpId"] = apprEmpId;
+			var apiUrl = "";
+			
+			if(workType === "AWRK-0001") {
+				//대표 거래처
+				apiUrl = "/api/merchants/merchant/represent";
+				smsMessage = "[R2 - 대표 거래처 : 등록] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if(workType === "AWRK-0002") {
+				//일반 거래처
+				apiUrl = "/api/merchants/merchant";
+				smsMessage = "[R2 - 일반 거래처 : 등록] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if(workType === "AWRK-0003") {
+				//거래처 서비스
+				apiUrl = "/api/merchants/services/service";
+				smsMessage = "[R2 - 거래처 서비스 : 등록] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if(workType === "AWRK-0004") {
+				//서비스 정산
+				apiUrl = "/api/merchants/services/service/billing";
+				smsMessage = "[R2 - 서비스 정산 : 등록] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if(workType === "AWRK-0006") {
+				//서비스 정산
+				apiUrl = "/api/billing/";
+				smsMessage = "[R2 - 정산명세서 : 등록] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+				var jsonData2 = jsonData;
+				for(var i in jsonData2){
+					jsonData[i] = jsonData2[i].replace(/,/g,"");
+				}				
+				jsonData["seq"] = $("#seq").val();
+				jsonData["billingSeq"] = $("#billingSeq").val();
+				jsonData["contentSeq"] = $("#contentSeq").val();
+				jsonData["commRatio"] = $("#merchantComm").text();
+				jsonData["serviceName"] = $("#serviceName").text();
+
+			}
+			else if(workType === "AWRK-0008") {
+				//서비스 정산 수수료
+				apiUrl = "/api/merchants/services/service/billing/commision";
+				smsMessage = "[R2 - 서비스 정산 수수료 : 변경] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요."
+			}
+			else if (workType === "AWRK-0009") {
+				//Kcon 상품 등록
+				apiUrl = "/api/coupon/brochures/brochure";
+				smsMessage = "[R2 - KCON 상품 : 등록] 승인 요청건이 등록되었습니다. 승인 결제내역에서 확인해주세요. (신청자 : {{admin_view.sessionName}}님)"
+			}
+			else if (workType === "AWRK-0011") {				
+				//카드 잔액환불
+				apiUrl = "/api/card/balanceRefund";
+				smsMessage = "[R2 - 카드 잔액환불 : 등록] 승인 요청건이 등록되었습니다. 승인 결제내역에서 확인해주세요. (신청자 : {{admin_view.sessionName}}님)";							
+			}else if(workType == "AWRK-0012"){				
+				//팝카드 사용제한 해제
+				if($("#reason").val()==""){
+					alert("사용해제 사유를 입력해주세요.");
+					return;					
+				}
+			
+				apiUrl = "/api/card/restrict";
+				smsMessage = "[R2 - 카드 사용제한 해제] 승인 요청건이 등록되었습니다.승인 결제내역에서 확인해주세요.";		
+				jsonData["seq"] = ($("#seq").val()!="" && $("#seq").val()>0)? $("#seq").val() : "";
+				jsonData["contentSeq"] = ($("#contentSeq").val()!="" && $("#contentSeq").val()>0)? $("#contentSeq").val() : "";
+				jsonData["giftNo"] = $("#giftNo").text();
+				jsonData["restrictYN"] = "N"; 
+				jsonData["typeCode"] = "CUPS-0003";
+				jsonData["desc3Obj"] = "R2";
+				jsonData["cardNumber"] = $("#searchForm #cardNumber").val();
+				jsonData["desc2"] = $("#reason").val();
+				keyWord = $("#searchForm #cardNumber").val();
+			}			
+			
+			$.ajax({
+                url: apiUrl,
+                data: JSON.stringify(jsonData),
+                type: type,
+				dataType : "json",
+				contentType  : "application/json",
+			}).done(function(resultData,status,jqXhr){
+				if (resultData.status == 200) {
+					
+					if ($("#createApprovalReqeustNotiSms").is(':checked')) {
+						var notiInfo = {
+								"receiverEmpId" : apprEmpId,
+								"message" : smsMessage,
+								"approvalType" : "request"
+						}
+						//문자 보내기
+						approval.notificationSmsService(notiInfo);
+					}
+					
+					if (workType == "AWRK-0011") {					
+						$.ajax({
+							url: "/api/card/restrict",
+			                data: JSON.stringify({'giftNo' : jsonData["giftNo"],
+						         	'cardNumber' : jsonData["cardNumber"],
+						            'restrictYN' : "Y",
+						            'desc2' : "카드 잔액환불 요청에 의한 사용제한 설정"}),
+			                type: type,
+							dataType : "json",
+							contentType  : "application/json",
+						});
+					}					
+					
+					if (confirm("승인요청 처리되었습니다.\n신청내역 화면으로 이동하시겠습니까?")) {
+						location.href ="/approval/request";
+					}
+					else {
+						$("#createApprovalReqeustModal").modal("hide");
+						
+						if (workType === "AWRK-0004" || workType === "AWRK-0008") {
+							location.href ="/merchants/inquiry/merchantServiceInq";
+						}else if(workType === "AWRK-0012"){
+							location.href ="/card/popCard/popCardMng?cardNumber="+$("#searchForm #cardNumber").val();
+						}else {
+							//kpcUtil.resetForm("#"+formName)
+							document.location.reload();
+						}					
+					}
+            	}
+				else if (resultData.status == 500 || resultData.status == 400) {
+					kpcUtil.customAlert(resultData.message);
+					//$("#createApprovalReqeustModal").modal("hide");
+				}
+            }).fail(function(e){
+            	kpcUtil.errorHandling(e);
+        	});
+		}
+	})
+}
+</script>

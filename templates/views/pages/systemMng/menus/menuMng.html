@@ -1,0 +1,421 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>메뉴 관리</h3>
+                <h5><span class="red">[홈 > 정산 내역 관리 > 메뉴 관리]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="x_panel">
+					<div class="x_content">
+	                    <div class="form">
+	                        <form action="#" id="menuRegForm" class="form-bordered ">
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 메뉴 추가 </label>
+	                                </div>
+	                            </div>
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">메뉴ID</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                   		<i class="fa"></i>
+											<input type="text" id="menuId" name="menuId" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">메뉴명</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                   		<i class="fa"></i>
+											<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상위 메뉴 ID </label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                    	<input type="text" id="parMenuId" name="parMenuId" class="form-control col-md-7 col-xs-12" readonly="readonly" tabindex="-1">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상위 메뉴명</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+											<input type="text" id="parMenuName" name="parMenuName" class="form-control col-md-7 col-xs-12" readonly="readonly" tabindex="-1">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">메뉴 URL</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+											<input type="text" id="menuUrl" name="menuUrl" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>	                                
+	                            </div>
+	                        </form>
+		                    <br />
+		                    <div class="column-align-right">
+								{% if admin_view.pageAuth["insFlag"] == "1" %}                        
+								<a id="menuRegFormRegist" class="dt-button btn green btn-outline" href="javascript:;"><span>저장</span></a>
+								{% endif %}                        	
+								<a id="menuRegFormClear" class="dt-button btn red btn-outline" href="javascript:;"><span>초기화</span></a>
+		                    </div>                                
+	                    </div>					                        
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="x_panel">
+					<div class="x_content">
+	                    <div class="form">
+	                        <form action="#" id="menuUptForm" class="form-bordered ">
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 메뉴 수정 </label>
+	                                </div>
+	                            </div>
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">메뉴ID</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                   		<i class="fa"></i>
+											<input type="text" id="menuId" name="menuId" class="form-control col-md-7 col-xs-12" readonly="readonly">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">메뉴명</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                   		<i class="fa"></i>
+											<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상위 메뉴 ID </label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                    	<input type="text" id="parMenuId" name="parMenuId" class="form-control col-md-7 col-xs-12" readonly="readonly" tabindex="-1">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상위 메뉴명</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  input-icon left">
+											<input type="text" id="parMenuName" name="parMenuName" class="form-control col-md-7 col-xs-12" readonly="readonly" tabindex="-1">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">메뉴 URL</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+											<input type="text" id="menuUrl" name="menuUrl" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>	 
+	                            </div>
+	                        </form>
+		                    <br />
+		                    <div class="column-align-right">
+		                    	{% if admin_view.pageAuth["delFlag"] == "1" %}
+								<a id="menuUptFormDelete" class="dt-button btn red btn-outline" href="javascript:;"><span>삭제</span></a>
+								{% endif %}                        
+								{% if admin_view.pageAuth["updFlag"] == "1" %}                        
+								<a id="menuUptFormUpt" class="dt-button btn green btn-outline" href="javascript:;"><span>저장</span></a>                        	
+								{% endif %}                        
+								<a id="menuUptFormClear" class="dt-button btn red btn-outline" href="javascript:;"><span>초기화</span></a>
+		                    </div>                                
+	                    </div>					                        
+					</div>
+				</div>
+			</div>            
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_content">                   
+						<div class="dd" id="menuList">
+							<ol class="dd-list">
+								<li class="dd-item">
+									<div class="dd-handle">메뉴</div>
+									<ol class="dd-list">
+									</ol>									
+								</li>
+ 							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <script type="text/javascript">
+
+        var menuMng_inq = function () {
+            var setFormValidate = function (){
+                $("#menuRegForm").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    rules: {
+                    	menuId : {
+                            required : true,
+                        },
+                        name : {
+                            required : true,
+                        },
+
+                    },
+                    messages : {
+                    	menuId : {
+                            required : "메뉴ID를 입력해주세요.",
+                        },
+                        name : {
+                            required : "메뉴명을 입력해주세요.",
+                        },                 
+
+                    },
+                    invalidHandler:function (form,validator){
+                    	if(validator.numberOfInvalids()){
+                    		kpcUtil.customAlert("필수항목이 입력되지 않았습니다.");
+                    	}
+                    },                    
+                    errorPlacement : function (error , element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	icon.removeClass('fa-check').addClass("fa-warning");
+                    	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                       	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+                    success : function (label,element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+                    	icon.removeClass('fa-warning').addClass("fa-check");
+                    },
+                });
+                $("#menuUptForm").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    rules: {
+                    	menuId : {
+                            required : true,
+                        },
+                    },
+                    messages : {
+                    	menuId : {
+                            required : "메뉴ID를 선택해주세요.",
+                        },
+                    },
+                    invalidHandler:function (form,validator){
+                    	if(validator.numberOfInvalids()){
+                    		kpcUtil.customAlert("필수항목이 입력되지 않았습니다.");
+                    	}
+                    },                    
+                    errorPlacement : function (error , element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	icon.removeClass('fa-check').addClass("fa-warning");
+                    	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                       	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+                    success : function (label,element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+                    	icon.removeClass('fa-warning').addClass("fa-check");
+                    },
+                });
+
+            }
+            
+        	var setMenuList = function (){
+				$.ajax({
+                    url: "/api/systemMng/menus",
+                    type: 'GET',
+                    dataType : "json",
+                    contentType  : "application/json",
+                    async : true,
+                    success: function(resultData){
+                    	// li 초기화
+                    	$("#menuList >ol>li>ol").html("");
+                    	var menuData = new Array();
+                    	var topMenuData = new Array();
+            			for(var idx in resultData.data){
+            				var parMenuId = kpcUtil.nullToBlank(resultData.data[idx].parMenuId);
+            				// 상위 메뉴 등록
+           					var menu = new Object();
+           					menu.menuId      = kpcUtil.nullToBlank(resultData.data[idx].menuId     );
+           					menu.name        = kpcUtil.nullToBlank(resultData.data[idx].name       );
+           					menu.parMenuId   = kpcUtil.nullToBlank(resultData.data[idx].parMenuId  );
+           					menu.parMenuName = kpcUtil.nullToBlank(resultData.data[idx].parMenuName);
+           					menu.menuUrl     = kpcUtil.nullToBlank(resultData.data[idx].menuUrl    );
+            				if(parMenuId === ""){
+            					topMenuData.push(menu);
+            					var html = '<li class="dd-item" data-id="'  +kpcUtil.nullToBlank(resultData.data[idx].menuId) +'">'
+                    			         + '<div class="dd-handle" menuId="'+kpcUtil.nullToBlank(resultData.data[idx].menuId) + '" '
+                    			         + 'name="'+ kpcUtil.nullToBlank(resultData.data[idx].name) +'"'
+                    			         + 'menuUrl="'+ kpcUtil.nullToBlank(resultData.data[idx].menuUrl)+'"'
+                    			         + '>'
+                    			         + kpcUtil.nullToBlank(resultData.data[idx].name) +'</div>'
+                    			         + '</li>';
+                    			         $("#menuList >ol>li>ol").append(html);
+                    			
+            				}else{
+            					menuData.push(menu);            					
+            				}
+            			}    
+           				for(var idx in menuData){
+    	        			$(".dd-handle").each(function (){
+            					if($(this).attr("menuId") === menuData[idx].parMenuId){
+                        			var html = '<li class="dd-item" data-id="'  +kpcUtil.nullToBlank(menuData[idx].menuId)+'">'
+			                       	         + '<div class="dd-handle" menuId="'+kpcUtil.nullToBlank(menuData[idx].menuId)+ '" '
+			                       	         + 'name="'       + kpcUtil.nullToBlank(menuData[idx].name       )+'"' 
+			                       	         + 'menuUrl="'    + kpcUtil.nullToBlank(menuData[idx].menuUrl    )+'"' 
+			                       	         + 'parMenuId="'  + kpcUtil.nullToBlank(menuData[idx].parMenuId  )+'"' 
+			                       	         + 'parMenuName="'+ kpcUtil.nullToBlank(menuData[idx].parMenuName)+'"' 
+			                       	         + '>'
+			                       	         + kpcUtil.nullToBlank(menuData[idx].name)+ ' ['+kpcUtil.nullToBlank(menuData[idx].menuId)+']</div>'
+			                       	         + '</li>';
+			                       	var target = $(this).parent();
+           							if(target.find("ol").length == 0){
+            							html = '<ol class="dd-list">'+ html + '</ol>';
+            							target.append(html);
+           							}else{
+           								target.find("ol").append(html);
+           							}
+								}
+	            			});
+           				}
+            			
+                		$(".dd-handle").click(function (){
+                			var menuId      = kpcUtil.nullToBlank($(this).attr("menuId")     );
+                			var name        = kpcUtil.nullToBlank($(this).attr("name")       );
+                			var parMenuId   = kpcUtil.nullToBlank($(this).attr("parMenuId")  );
+                			var parMenuName = kpcUtil.nullToBlank($(this).attr("parMenuName"));
+                			var menuUrl     = kpcUtil.nullToBlank($(this).attr("menuUrl"));
+                			if(menuId === ""){
+	                			$("#menuRegForm #parMenuId").val("");
+	                			$("#menuRegForm #parMenuName").val("");
+                			} else{
+	                			$("#menuRegForm #menuId").val("");
+	                			$("#menuRegForm #name").val("");
+	                			$("#menuRegForm #parMenuId").val(menuId);
+	                			$("#menuRegForm #parMenuName").val(name);
+	                			$("#menuRegForm #menuUrl").val("");
+	                			
+	                			$("#menuUptForm #menuId").val(menuId);
+	                			$("#menuUptForm #name").val(name);
+	                			$("#menuUptForm #parMenuId").val(parMenuId);
+	                			$("#menuUptForm #parMenuName").val(parMenuName);
+	                			$("#menuUptForm #menuUrl").val(menuUrl);
+                			}
+                		});            			
+                    },
+                    error : function(e){
+                    	kpcUtil.errorHandling(e);
+                    }
+                });         
+        	}
+        	
+        	var setPageEvent = function (){
+				
+        		{% if admin_view.pageAuth["insFlag"] == "1" %}
+				$("#menuRegFormRegist").click(function (){
+	                if($("#menuRegForm").valid() && kpcUtil.confirm("저장 하시겠습니까?")){
+	                    $.ajax({
+	                       url: "/api/systemMng/menus/menu",
+	                       data: $("#menuRegForm").serializeObject(),
+	                       type: 'POST',
+	                       dataType : "json",
+	                       contentType  : "application/json",
+	                       async : true,
+	                       success: function(data){
+	                           if(kpcUtil.successHandling("#menuRegForm",data,true)){
+	                        	   kpcUtil.resetForm("#menuRegForm");
+	                        	   kpcUtil.resetForm("#menuUptForm");
+	                        	   setMenuList();
+	                           }
+	                       },
+	                       error : function(e){
+	                       	kpcUtil.errorHandling(e);
+	                       }
+	                   }); 
+	               }
+				});
+				{% endif %}
+				
+				{% if admin_view.pageAuth["updFlag"] == "1" %}
+				$("#menuUptFormUpt").click(function (){
+	                if($("#menuUptForm").valid() && kpcUtil.confirm("저장 하시겠습니까?")){
+	                    $.ajax({
+	                       url: "/api/systemMng/menus/menu",
+	                       data: $("#menuUptForm").serializeObject(),
+	                       type: 'PUT',
+	                       dataType : "json",
+	                       contentType  : "application/json",
+	                       async : true,
+	                       success: function(data){
+	                           if(kpcUtil.successHandling("#menuRegForm",data,true)){
+	                        	   kpcUtil.resetForm("#menuRegForm");
+	                        	   kpcUtil.resetForm("#menuUptForm");
+	                        	   setMenuList();
+	                           }
+	                       },
+	                       error : function(e){
+	                       	kpcUtil.errorHandling(e);
+	                       }
+	                   }); 
+	               }
+				});     
+				{% endif %}
+				
+				{% if admin_view.pageAuth["delFlag"] == "1" %}
+				$("#menuUptFormDelete").click(function (){
+	                if($("#menuUptForm").valid() && kpcUtil.confirm("삭제 하시겠습니까?")){
+	                    $.ajax({
+	                       url: "/api/systemMng/menus/menu",
+	                       data: $("#menuUptForm").serializeObject(),
+	                       type: 'DELETE',
+	                       dataType : "json",
+	                       contentType  : "application/json",
+	                       async : true,
+	                       success: function(data){
+	                           if(kpcUtil.successHandling("#menuRegForm",data,true)){
+	                        	   kpcUtil.resetForm("#menuRegForm");
+	                        	   kpcUtil.resetForm("#menuUptForm");
+	                        	   setMenuList();
+	                           }
+	                       },
+	                       error : function(e){
+	                       	kpcUtil.errorHandling(e);
+	                       }
+	                   }); 
+	               }
+				});     
+				{% endif %}
+				
+				$("#menuRegFormClear").click(function (){
+					kpcUtil.resetForm("#menuRegForm");
+				});
+				$("#menuUptFormClear").click(function (){
+					kpcUtil.resetForm("#menuUptForm");
+				});
+        	}
+
+            return {
+                init : function (){
+                	setMenuList();
+                	setFormValidate();
+                	setPageEvent();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            menuMng_inq().init();
+        });
+    </script>
+{% endblock %}

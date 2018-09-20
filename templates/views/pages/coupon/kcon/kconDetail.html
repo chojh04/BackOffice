@@ -1,0 +1,503 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>KCON 상세 정보 조회</h3>
+                <h5><span class="red">[홈 > 쿠폰 관리 > KCON 상세 정보 조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form ">
+                        <form action="javascript:nothing()" id="searchForm" class="form-bordered " >
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-12 col-xs-12" >- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+                                    <div class="custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">
+	                                   <select class="select2_single select2-selection--single form-control" id="target" name="target" style="top:3px;">
+	                                       <option value="1">쿠폰번호</option>
+	                                   </select>
+                                    </div>
+                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <input type="text" class="form-control col-md-5" id="couponNo" name="couponNo">
+                                    </div>
+                                </div>
+                            </div>                            
+                        </form>
+	                    <br />
+	                    <div class="column-align-right">
+	                    	{% if admin_view.pageAuth["selFlag"] == "1" %}
+								<a id="updateLayout" class="dt-button btn green btn-outline" href="javascript:;"><span>Layout</span></a>                        
+							{% endif %}
+
+							{% if admin_view.pageAuth["insFlag"] == "1" %}
+								<button id="kconUpdExtend" class="dt-button btn green btn-outline" >연장</button>
+								<button id="couponExtensionRequestBtn" class="hidden"></button>
+								
+								<button id="kconUpdUseLimit" class="dt-button btn red btn-outline" >사용제한</button>
+								<button id="kconUpdUseLimitCancel" class="dt-button btn green btn-outline" >사용해제</button>
+								<button id="unRestrictRequestBtn" class="hidden"></button>
+							{% endif %}
+							
+							{% if admin_view.pageAuth["selFlag"] == "1" %}
+								<a id="Search" class="dt-button btn green btn-outline" href="javascript:;"><span>조회</span></a>
+							{% endif %}
+							
+	                    </div>
+	                    <br />
+	                    <table id="kconDetailTable" class="table table-striped table-bordered" style="width: 100%" >
+                            <thead>
+                                <tr>
+                                    <th class="column-align-center">
+										<!--                                     
+                                    	<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                    		<input type="checkbox" class="group-checkable" id="selectAll"/>
+                                    		<span></span>
+                                    	</label>
+                                    	 -->
+                                    </th>                        
+                                    <th>순번</th>
+                                    <th>쿠폰번호</th>
+                                    <th>쿠폰명</th>
+                                    <th>쿠폰구분</th>
+                                    <th>발행일</th>
+                                    <th>사용일</th>
+                                    <th>유효기간</th>
+                                    <th>금액</th>
+                                    <th>카드번호</th>
+                                    <th>상태</th>
+                                    <th>사용제한</th>
+                                    <th>사용여부</th>
+                                    <th>판매처</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>	    
+					</div>
+				</div>
+			</div>                      	
+        </div>
+    </div>
+</div>
+
+{% include 'views/pages/coupon/popup/approval-request-coupon-extension-modal.html' %}
+{% include 'views/pages/coupon/popup/approval-request-coupon-un-restrict-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>      
+    <script type="text/javascript">
+
+        var kconMng = function () {
+            var kconDetailTable;
+            var setSelect2 = function () {
+                 $("#target").select2({
+                     width: 120,
+                 });
+            }
+            var setDataTable = function (){
+            	
+                $("#selectAll").click(function() {
+                	var targetTable = $('#kconDetailTable').DataTable();
+                	if ($("#selectAll").is(':checked')) {
+                		if (targetTable.rows().data().count() > 0) {
+	                		targetTable.rows().data().each(function(value, index) {
+	                   			//체크전에 해당 쿠폰에 대한 승인 요청건이 있는지 확인.
+			        	   		var isExist = approval.existApprovalRequest(value.couponNo);
+			        	   		if (!isExist) {
+			                    	targetTable.row(index).select();
+				                	$("input[name^='chk']").prop('checked', true)
+			        	   		}
+	                		})
+                		}
+                		
+                	}
+                	else {
+	                	targetTable.rows().deselect();
+	                	$("input[name^='chk']").prop('checked', false)
+                	}
+                })
+            	
+                kconDetailTable = $('#kconDetailTable')
+					.on('click', "input[name^='chk']", function(e) {
+                    	var targetTable = $('#kconDetailTable').DataTable();
+                    	
+                    	var checked = $(e.target).is(':checked'); //체크박스 체크 여부  	
+                    	var isInputTag = $(e.target).is('input'); //클릭된 tag가 input인지 확인
+                    	
+                    	/*	
+                    		DataTable의 select() api를 체크박스에서만 사용하기 위해 checked, isInputTag를 가지고 비교.
+                    		더 좋은 방법이 있다면 수정바랍니다. -민욱-
+                    	*/
+                    	if (checked && isInputTag) {
+                   			//체크박스가 체크되면 row select
+                   			
+                   			//체크전에 해당 쿠폰에 대한 승인 요청건이 있는지 확인.
+		        	   		var isExist = approval.existApprovalRequest($(e.target).val());
+		        	
+		        	   		if (!isExist) {
+		                    	targetTable.row($(e.target).parents('td:first')).select();
+		                    	$("input[name^='chk']").prop('checked', true)
+		        	   		}
+		        	   		else {
+		                    	$("input[name^='chk']").prop('checked', false)
+		        	   		}
+                    		
+	                    	// row selected의 count와 table에 보여지는 count의 값이 같다면 전체선택 체크박스 체크
+	                    	if (targetTable.rows({selected:true}).data().count() == targetTable.rows().data().count()) {
+	                    		$("#selectAll").prop('checked', true)
+	                    	}
+                    	}
+                    	else if (!checked && isInputTag) {
+							//체크박스 언체크되면 row deselect                    		
+							targetTable.row($(e.target).parents('td:first')).deselect();
+	                    	
+							// row selected의 count가 table에 보여지는 count보다 작다면 전체선택 체크박스 언체크
+	                    	if (targetTable.rows({selected:true}).data().count() < targetTable.rows().data().count()) {
+	                    		$("#selectAll").prop('checked', false)
+	                    	}
+                    	}
+					})                
+					.on("click",".history"  , function (){
+                	kpcPopupUtil.openKconHistoryModal({
+            			menuId : "CPN-1003",
+            			desc1 : $(this).attr("couponNo")
+            		});                    	
+                })
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/api/coupon/kcon/detail",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#searchForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(1)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                if (settings.aiDisplay.length == 0) {
+                                	$("#kconExtensionRequestBtn").attr("disabled", "disabled");
+                                	//$("#kconExtensionRequestBtn").addClass("disabled");
+                                }
+                                else {
+                                	$("#kconExtensionRequestBtn").removeAttr("disabled");
+                                }
+                                
+                                $(".group-checkable").prop("checked" , false); // 전체 체크 박스 해제
+                                
+                                //레이아웃 테이블 조회하며 보여줄 컬럼 재조정
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "kconDetailTable",
+                            		menuId : "{{session['menuId']}}", 
+                            		targetTable : kconDetailTable 
+                            	});                                
+                            },
+                            columns: [
+                                      {
+                                      	orderable : false,
+                                      	className : "checkboxes column-align-center",
+                                      	width : 30,
+                                      	render : function (data, type, full, meta){
+                                     		var checkbox_html = "";
+                                     			checkbox_html = '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">'
+                           		                  + '<input type="checkbox" class="checkboxes" name="chk" value="'+full.couponNo+'">'
+                           		                  + '<span></span>'
+                           		                  + '</label>';	
+                                     		
+                                     		return checkbox_html;
+                                      		
+                                      	}
+                                      }, // 체크박스
+                                      {data : "rownum" , defaultContent: "",width : 30, className: "column-align-right"}, // 순번    
+                                      {
+                                        	data : "couponNo" , 
+        	                                defaultContent: "",
+        	                                width : 100,
+        	                                className: "column-align-center" ,  	                                
+        	                                render : function (data, type , full , meta){
+        	                                	return '<a class="blue history" href="javascript:;" couponNo="'+full.couponNo+'">' + full.couponNo + '</a>';
+        	                                }
+                                      }, // 쿠폰번호  
+                                      {data : "title" , defaultContent: "",width : 150, className: "column-align-center"}, // 쿠폰명   
+                                      {data : "prodType" , defaultContent: "",width : 80, className: "column-align-center"}, // 쿠폰구분  
+                                      {
+                                      	data : "issueDate" , 
+      	                                defaultContent: "",
+      	                                width : 90,
+      	                                className: "column-align-center" ,  	                                
+      	                                render : function (data, type , full , meta){
+      	                                	return kpcUtil.setDateFormat(full.issueDate , "YYYY-MM-DD");
+      	                                }
+                                      }, // 발행일   
+                                      {
+                                      	data : "useDate" , 
+      	                                defaultContent: "",
+      	                                width : 90,
+      	                                className: "column-align-center" ,  	                                
+      	                                render : function (data, type , full , meta){
+      	                                	return kpcUtil.setDateFormat(full.useDate , "YYYY-MM-DD");
+      	                                }
+                                      }, // 사용일
+                                      {
+                                        	data : "expireDate" , 
+        	                                defaultContent: "",
+        	                                width : 90,
+        	                                className: "column-align-center" ,  	                                
+        	                                render : function (data, type , full , meta){
+        	                                	return kpcUtil.setDateFormat(full.expireDate , "YYYY-MM-DD");
+        	                                }
+                                      }, // 유효기간
+                                      {
+                                      	data : "amount" , 
+      	                                defaultContent: "", 
+      	                                width : 60,
+      	                                className: "column-align-right" ,
+      	                                render : function (data, type , full , meta){
+      	                                	return kpcUtil.numberWithCommas(full.amount);
+      	                                }
+                                      },// 금액
+                                      {data : "cardNumber" , defaultContent: "",width : 60, className: "column-align-center"}, // 카드번호
+                                      {
+                                        	data : "status" , 
+        	                                defaultContent: "", 
+        	                                width : 120,
+        	                                className: "column-align-center" ,
+        	                                render : function (data, type , full , meta){
+                                      		  var status = "";
+                                    		  if (full.status === "CONS-0001") {
+                                    			  status = "발행"
+                                    		  }
+                                    		  else if (full.status === "CONS-0002") {
+                                    			  status = "발행전체취소"
+                                    		  } 
+                                    		  else if (full.status === "CONS-0003") {
+                                    			  status = "발행망취소"
+                                    		  }
+                                    		  return status;
+        	                                }
+                                      },// 상태
+                                      {data : "restrictFlag" , defaultContent: "",width : 55, className: "column-align-center"}, // 사용제한  
+                                      {data : "useFlag" , defaultContent: "",width : 55, className: "column-align-center"}, // 사용여부  
+                                      {data : "seller" , defaultContent: "",width : 60, className: "column-align-center"}, // 판매처
+                            ],   
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-8 col-sm-12'l>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );            	
+            } 
+        	
+            var setPageEvents = function (){
+            	if("{{admin_view.couponNo}}" !== "") {
+            		$("#couponNo").val("{{admin_view.couponNo}}");
+            		kconDetailTable.fnFilter();
+            		
+            		if ("{{admin_view.updateApproval}}" === "true") {
+            			if("{{admin_view.apprReqType}}" === "extendExpireDate"){
+	            			couponExtensionRequestUpdateTrigger("{{admin_view.apprSeq}}", "AWRK-0010");
+            			}
+            			else if ("{{admin_view.apprReqType}}" === "unRestriction") {
+            				couponUnRestrictequestUpdateTrigger("{{admin_view.apprSeq}}", "AWRK-0010");	
+            			}
+            		}
+            	}
+            	
+            	$("#Search").click(function (){
+					if($("#couponNo").val() == ""){
+						kpcUtil.customAlert("쿠폰번호/주문번호를 입력해주세요.");
+						return false;
+					}
+					kconDetailTable.fnFilter();
+				});
+
+				kpcUtil.setAllChecked(".group-checkable");
+    			// 조회 이벤트
+            	kpcUtil.serachFormEvent({
+            		inputs : "#searchForm input",
+            		callback : function (){
+            			kconDetailTable.fnFilter();
+            		}
+            	});   				
+				
+            	{% if admin_view.pageAuth["insFlag"] == "1" %}
+            	
+            	// 쿠폰 연장
+            	$("#kconUpdExtend").click(function (){
+           			var targetTable = $('#kconDetailTable').DataTable();
+            		
+                   	if (targetTable.rows({selected:true}).data().count() == 1) {
+                   		var data = targetTable.rows({selected:true}).data()[0]
+                   		if (data.status === "CONS-0001" && data.restrictFlag === "N" && data.useFlag === "N") {
+			            	couponExtensionRequestBtnTrigger(data.couponNo, "AWRK-0010", data.expireDate);
+                   		}
+                   		else if (data.status !== "CONS-0001") {
+                   			kpcUtil.customAlert("발행취소 쿠폰은 연장 할 수 없습니다.");
+	                   	}
+                   		else if (data.restrictFlag === "Y") {
+                   			kpcUtil.customAlert("사용제한 쿠폰은 연장할 수 없습니다.");
+	                   	}
+	                   	else {
+		            		kpcUtil.customAlert("연장할 수 없는 쿠폰입니다.");
+	                   	}
+                   	}
+                   	else if ("{{admin_view.updateApproval}}" === "true") {
+                   		couponExtensionRequestUpdateTrigger("{{admin_view.apprSeq}}", "AWRK-0010");
+                   	}
+                   	else {
+	            		kpcUtil.customAlert("연장할 쿠폰을 선택해주세요.");
+	            		return false;
+                   	}
+            	});
+            	// 쿠폰 사용제한
+            	$("#kconUpdUseLimit").click(function (){
+           			var targetTable = $('#kconDetailTable').DataTable();
+            		
+                   	if (targetTable.rows({selected:true}).data().count() == 1) {
+                   		var data = targetTable.rows({selected:true}).data()[0]
+                   		if (data.restrictFlag === "N" && data.useFlag === "N") {
+                    		var buttonHtml = '<button type="button" class="dt-button btn green btn-outline btnSave">등록</button>';
+        			   		kpcUtil.openCommonPopup({
+        			   			modalTitle : "사용제한",
+        			   			modalSize : "custom-sm-modal-body",
+        			   			modalType : "URL",
+        			   			URL : "/coupon/kcon/restrictPop?bodyText=사용제한",
+        			   			method : "GET",		
+        			   			button : buttonHtml,
+        			   			buttonEvent : [{
+        			   				target : ".btnSave",
+        			   				eventType : "click",
+        			   				callBack : function (){
+        								if($("#desc").val() == ""){
+        									kpcUtil.customAlert("사유를 입력해주세요.");
+        									return false;
+        								}
+        								if(kpcUtil.confirm("선택한 쿠폰을 사용제한 하시겠습니까?")){
+        									$.ajax({
+        										url: "/api/coupon/kcon/restrict",
+        										data: JSON.stringify({
+        											restrict : "Y",
+        											desc : $("#desc").val(),
+        											couponList : data.couponNo,
+        										}),
+        										type: 'POST',
+        										dataType : "json",
+        										contentType  : "application/json",
+        								}).done(function (data){
+        									if(kpcUtil.kpcApiSuccessHandling("",data,false)){
+        										kpcUtil.customAlert("사용제한 되었습니다.");
+        										$("#Search").trigger("click");
+        										$(".modal").modal('hide');
+        									}
+        								}).fail(function (e){
+        		   							kpcUtil.errorHandling(e);
+        								});	
+        								}
+        							}
+        			   			}]
+        			   		});             		
+                   		}
+                   		else if (data.restrictFlag === "Y") {
+                   			kpcUtil.customAlert("이미 제한된 쿠폰입니다.");
+	                   	}
+                   	}
+                   	else {
+	            		kpcUtil.customAlert("사용제한 할 쿠폰을 선택해주세요.");
+	            		return false;
+                   	}   
+            	});
+            	
+            	// 쿠폰 사용제한 해제
+            	$("#kconUpdUseLimitCancel").click(function (){
+           			var targetTable = $('#kconDetailTable').DataTable();
+            		
+                   	if (targetTable.rows({selected:true}).data().count() == 1) {
+                   		var data = targetTable.rows({selected:true}).data()[0]
+                   		if (data.status === "CONS-0001" && data.restrictFlag === "Y" && data.useFlag === "N") {
+                   			kconUnRestrictRequestBtnTrigger(data.couponNo, "AWRK-0010");
+                   		}
+                   		else if (data.status !== "CONS-0001") {
+                   			kpcUtil.customAlert("발행취소 쿠폰은 사용해제 할 수 없습니다.");
+	                   	}
+                   		else if (data.restrictFlag === "N") {
+                   			kpcUtil.customAlert("사용중인 쿠폰은 사용해제 할 수 없습니다.");
+	                   	}
+                   	}
+                   	else {
+	            		kpcUtil.customAlert("사용해제 할 쿠폰을 선택해주세요.");
+	            		return false;
+                   	}
+            	});
+            	//테이블 레이아웃 버튼
+            	$("#updateLayout").click(function() {
+            		kpcPopupUtil.openTableColumnMng({
+			    		columnArray : $("#kconDetailTable").find("thead>tr>th").siblings().not(".checkboxes"),
+			    		tableId : "kconDetailTable",
+			    		menuId : "{{session['menuId']}}",
+			    		targetTable : kconDetailTable
+	    			});
+            	});
+            	{% endif %}				
+            }
+            
+            return {
+                init : function (){
+                	setSelect2();
+                	setDataTable();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            kconExtensionModalInit();
+            kconUnRestrictModalInit();
+            kconMng().init();
+        });
+    </script>
+{% endblock %}

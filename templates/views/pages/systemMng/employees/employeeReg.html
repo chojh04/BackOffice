@@ -1,0 +1,281 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>사용자 등록</h3>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <form action="#" id="employeeMngForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 사용자 정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사원번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                   		<i class="fa"></i>
+										<input type="text" id="employeeId" name="employeeId" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">성별</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="gender1" name="gender" value="1" checked="checked">
+                                    		<label for="gender1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			남
+                                    		</label>
+                                    	</div>
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="gender2" name="gender" value="0">
+                                    		<label for="gender2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			여
+                                    		</label>
+                                    	</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">부서</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="select2_single select2-selection--single form-control" id="divisionId" name="divisionId" >
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">팀</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline ">
+	                                    <select class="select2_single select2-selection--single form-control" id="teamId" name="teamId" >
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">휴대전화</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+                                        <input type="text" id="phone" name="phone" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">이메일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                  		<i class="fa"></i>
+										<input type="email" id="email" name="email" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">이름</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+                                        <input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">입사일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="enteringDate" name="enteringDate" class="form-control input-date-picker">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">비밀번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+                                        <input type="password" id="password" name="password" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">직위</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+ 										<select class="select2_single select2-selection--single form-control" id="position" name="position" >
+	                                    </select>                                    
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">생년월일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="birthDate" name="birthDate" class="form-control input-date-picker">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+	                    <br />
+	                    <div class="column-align-right">
+							<a id="regist" class="dt-button btn green btn-outline" href="javascript:;"><span>저장</span></a>                        	
+							<a id="clear" class="dt-button btn red btn-outline" href="javascript:;"><span>초기화</span></a>                        
+	                    </div>                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var userReg = function () {
+            var setDatePicker = function (){
+                kpcUtil.setDatePicker('#birthDate');
+                kpcUtil.setDatePicker('#enteringDate');
+            }
+      
+            var setCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+            		target : [
+            			 "#divisionId",
+            			 "#teamId",
+            			 "#position"
+            		], 
+            		apiUrl : "/api/systemMng/common/commonCodeList",
+            		params : {type : 'DIV,TEAM,POSI'},
+            		type   : "GET",
+            		option : {width : 150},	
+            		callBack : function (data,target,option){
+            			for(var idx in data){
+            				for(var idx2 in data[idx].resultList){
+	            				$(target[idx]).append($("<option></option>")
+	            						.attr("value" , data[idx].resultList[idx2].code)
+	            						.text(data[idx].resultList[idx2].codeName));
+            				}
+            				$(target[idx]).select2(option);       
+            			}
+            		}
+            	});
+            }            
+            var setFormValidate = function (){
+                $("#employeeMngForm").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    rules: {
+                    	employeeId : {
+                            required : true,
+                        },
+                        name : {
+                            required : true,
+                        },
+                        password : {
+                            required : true,
+                            minlength : 8 ,
+                            passwordValidateCheck : true
+                        },
+                        email : {
+                            required : true,
+                        },
+                    },
+                    messages : {
+                    	employeeId : {
+                            required : "사번을 입력해주세요.",
+                        },
+                        name : {
+                            required : "이름을 입력해주세요.",
+                        },
+                        password : {
+                            required : "비밀번호를 입력해주세요.",
+                            minlength : "비밀번호를 8자 이상 입력해주세요.",
+                            passwordValidateCheck : "1자리이상의 특수문자를 조합하여주세요."
+                        },
+                        email : {
+                            required : "이메일을 입력해주세요.",
+                            email : "이메일 주소 형식으로 입력해주세요."
+                        },                        
+
+                    },
+                    invalidHandler:function (form,validator){
+                    	if(validator.numberOfInvalids()){
+                    		kpcUtil.customAlert("필수항목이 입력되지 않았습니다.");
+                    	}
+                    },                    
+                    errorPlacement : function (error , element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	icon.removeClass('fa-check').addClass("fa-warning");
+                    	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                       	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+                    success : function (label,element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+                    	icon.removeClass('fa-warning').addClass("fa-check");
+                    },
+                });
+
+            }
+            
+            var setPageEvents = function () {
+            	$("#clear").click(function (){
+            		kpcUtil.resetForm("#employeeMngForm");	
+            	});
+            	
+            	$("#regist").click(function (){
+                    if($("#employeeMngForm").valid() && kpcUtil.confirm("저장 하시겠습니까?")){
+                        $.ajax({
+                           url: "/api/systemMng/employees/employee",
+                           data: $("#employeeMngForm").serializeObject(),
+                           type: 'POST',
+                           dataType : "json",
+                           contentType  : "application/json",
+                           async : true,
+                           success: function(data){
+                               if(kpcUtil.successHandling("#employeeMngForm",data,true)){
+                            	   kpcUtil.resetForm("#employeeMngForm");
+                            	   history.back();
+                               }
+                           },
+                           error : function(e){
+                           	kpcUtil.errorHandling(e);
+                           }
+                       }); 
+                   }	
+            	});
+
+            }            
+            
+            return {
+                init : function (){
+                    setDatePicker();
+                    setCommonCode();
+                    setFormValidate();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            userReg().init();
+        });
+
+    </script>
+{% endblock %}

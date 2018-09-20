@@ -1,0 +1,214 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>대표/일반 거래처 조회</h3>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="form-merchant" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" for="first-name">구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12">
+	                                    <select class="select2_single select2-selection--single form-control" id="selGubun1" name="selGubun1" >
+	                                        <option value="payment">대표 거래처</option>
+	                                        <option value="paymentCancel">결제 취소</option>
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right form-border-right-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" for="first-name">거래처명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<input type="text" id="merchant-name" name="merchant-name" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name">거래처 약칭</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="merchant-short-title" name="merchant-short-title" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right form-border-right-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12" for="first-name"></label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <table id="merchant-inq-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>구분 (대표/일반)</th>
+                                    <th>거래처명</th>
+                                    <th>약칭</th>
+                                    <th>아이디</th>
+                                    <th>레벨</th>
+                                    <th>부가 거래처 카운트</th>
+                                    <th>상세</th>
+                                    <th>비고1</th>
+                                    <th>비고2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="myLargeModal"  role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">큰 Modal 제목</h4>
+                </div>
+                <div class="modal-body">
+                    나는 관대하다
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var merchant_inq = function () {
+            var setDatePicker = function (){
+                var todayDateOption = kpcUtil.getDateOption(kpcUtil.getToday());
+                $('#startDate').daterangepicker(kpcUtil.getDateOption(kpcUtil.getFirstday()));
+                $('#endDate').daterangepicker(todayDateOption);
+                $('input[name=paymentDate]').daterangepicker(todayDateOption);
+                $('input[name=cancelDate]').daterangepicker(todayDateOption);
+            }
+            var setSelect2 = function () {
+                $("#selGubun1").select2({
+                    allowClear: true,
+                    width: 140,
+                });
+            }
+            var setDataTable = function () {
+                var table = $('#merchant-inq-table')
+                    .on('click', '.filter-submit', function () {
+                        $("#myLargeModal").modal();
+                    })                
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/api/merchant/merchant-inq",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#form-merchant-inq").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                 // 상세보기 버튼
+                                    var detailButton = '<button class="btn btn-sm green btn-outline filter-submit margin-bottom-0" '
+                                        + 'merchantId="' + settings.json.data[i].merchantId + '" shopCode="' + settings.json.data[i].shopCode + '">'
+                                        + '<i class="fa fa-search"></i>상세 보기</button>';                                    
+                                    $('td:eq(7)', settings.aoData[settings.aiDisplay[i]].nTr).html(detailButton);
+                                }
+                            },
+                            columns: [
+                                {data: "rownum", defaultContent: "", className: "column-align-right"}, // 순번
+                                {data: "merchantId", defaultContent: "" ,className: "column-align-center"},                // 거래처 ID
+                                {data: "shopCode", defaultContent: "",className: "column-align-center"},                   // 서비스 거래처ID
+                                {data: "approvalDate", defaultContent: "",className: "column-align-center"},               // 결제 일시
+                                {data: "cancelDate", defaultContent: "",className: "column-align-center"},                 // 취소 일시
+                                {data: "orderNo", defaultContent: "",className: "column-align-center"},                    // 주문 번호
+                                {data: "approvalNo", defaultContent: "",className: "column-align-center"},                 // 승인 번호
+                                {data: "detail", defaultContent: "", width: 110, className: "column-align-center"},        // 상세내역
+                                {data: "cancelAmount", defaultContent: "", className: "column-align-center"},              // 취소 금액
+                                {data: "billingAmount", defaultContent: "", className: "column-align-center"},             // 정산 금액
+                            ],
+                            buttons: [
+                                {extend: 'print', className: 'btn dark btn-outline', footer: true},
+                                {extend: 'copy', className: 'btn red btn-outline', footer: true},
+                                {extend: 'excel', className: 'btn yellow btn-outline ', footer: true},
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                        table.fnFilter();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+            return {
+                init : function (){
+                    setDatePicker();
+                    setSelect2();
+                    setDataTable();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            merchant_inq().init();
+        });
+    </script>
+{% endblock %}

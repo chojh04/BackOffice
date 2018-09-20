@@ -1,0 +1,6 @@
+{
+  "registry" : {
+    "search" : ["http://nexus.kpcard.co.kr/repository/bower-proxy/"]
+  },
+  "resolvers" : ["bower-nexus3-resolver"]
+}

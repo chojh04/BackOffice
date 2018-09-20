@@ -1,0 +1,107 @@
+<br />
+<div class="form">
+	<form action="#" id="formRepresentPopup" class="form-bordered ">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+			    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래처 코드</label>
+			    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+			    	<input type="text" id="merchantId" name="merchantId" class="form-control col-md-3 col-xs-12">
+			    </div>
+			</div>
+			<div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+			    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래처 명</label>
+			    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+			    	<input type="text" id="name" name="name" class="form-control col-md-3 col-xs-12" >
+			    </div>
+			</div>
+			<div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+			    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">별칭</label>
+			    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+			    	<input type="text" id="alias" name="alias" class="form-control col-md-3 col-xs-12">
+			    </div>
+			</div>			
+		</div>
+	</form>
+</div>	
+<br />
+<div class="col-md-12 col-sm-12 col-xs-12">
+	<table id="popupMerchantsTable" class="table table-striped table-bordered">
+	    <thead>
+	        <tr>
+	            <th>순번</th>
+	            <th>대표 거래처 코드</th>
+	            <th>거래처명</th>
+	            <th>별칭</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	    </tbody>
+	</table>
+</div>
+<script type="text/javascript">
+	$(document).ready(function (){
+        var table = $('#popupMerchantsTable')
+        .on("click" , ".popup-link" , function (){
+			kpcUtil.setMerchantId($(this).attr("merchantId"));        	
+			kpcUtil.setMerchantName($(this).attr("merchantName"));
+			$("#merchantPopupModal").modal("toggle");
+        })
+        .dataTable(
+            {
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "/api/merchants/represents",
+                    "async" : "true",
+                    "data": function (parameter) {
+                    	parameter.formData = $("#formRepresentPopup").serializeObject();
+                    },
+                    "error" : function (e){kpcUtil.sessionExpire(e);}
+                },
+                "ordering": false,
+                "drawCallback": function (settings) {
+                    for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                        $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                        settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                    }
+                },
+                columns: [
+                    {data: "rownum", defaultContent: "", className: "column-align-right"}, // 순번
+                    {
+                    	data : "merchantId" ,
+                        defaultContent: "", 
+                        render : function (data, type , full , meta){
+                        	return '<a href="javascript:;" class="popup-link" merchantId="'+ full.merchantId +'" + merchantName="'+ full.name+'">' + full.merchantId + '</a>';
+                        }
+                    },                    
+                    {data: "name", defaultContent: "",className: "column-align-center"},                   // 거래처명
+                    {data: "alias", defaultContent: "",className: "column-align-center"},               // 약칭
+                ],
+                buttons: [
+                          {
+                              text: '조회',
+                              className: 'btn green btn-outline search ',
+                              action: function (e, dt, node, config) {
+                                  table.fnFilter();
+                              }
+                          }
+                      ],
+                "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                "pageLength": 10,
+                "dom": "<'row' <'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                responsive: true,
+                "language": {
+                    "aria": {
+                        "sortAscending": ": activate to sort column ascending",
+                        "sortDescending": ": activate to sort column descending"
+                    },
+                    "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                    "emptyTable": "조회된 자료가 없습니다.",
+                    "infoEmpty": "조회된 자료가 없습니다.",
+                    "lengthMenu": "_MENU_",
+                    "zeroRecords": "조회된 자료가 없습니다."
+                },
+            }
+        );            				
+	});
+</script>

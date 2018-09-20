@@ -1,0 +1,720 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+	<div>
+		<div class="page-title">
+            <div class="title_left">
+            {% if admin_view.menuType == "request" %}
+                <h3>승인 신청내역 상세보기</h3>
+                <h5><span class="red">[홈 > 승인 관리 > 승인  신청내역 조회 > 승인 신청내역 상세보기]</span></h5>
+            {% elif admin_view.menuType == "answer" %}
+                <h3>승인 결제내역 상세보기</h3>
+                <h5><span class="red">[홈 > 승인 관리 > 승인  결제내역 조회 > 승인 결제내역 상세보기]</span></h5>
+            {% endif %}
+            </div>
+        </div>
+		<div class="clearfix"></div>
+		<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+            	<form action="#" id="searchForm" class="form-bordered ">
+					<input type="hidden" name="workType" id="workType" />
+					<input type="hidden" name="keyword" id="keyword" />
+					<input type="hidden" name="status" id="status" />
+					<input type="hidden" name="reqType" id="reqType" />
+					<input type="hidden" name="reqEmpName" id="reqEmpName" />
+					<input type="hidden" name="apprEmpName" id="apprEmpName" />
+					<input type="hidden" name="searchDateType" id="searchDateType" />
+					<input type="hidden" name="searchDate" id="searchDate" />
+					<input type="hidden" name="searchDateOrderType" id="searchDateOrderType" />
+					<input type="hidden" name="orderType" id="orderType" />
+					<input type="hidden" name="datableOffset" id="datableOffset" />
+                </form>
+            
+                <div class="x_panel">
+                    <div class="form" id="billingForm">
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="margin-top:30px">
+	                            <label class="control-label col-md-3 col-sm-3 col-xs-12"><b style="font-size:14px;">정산명세서 상세정보</b></label>
+	                        </div>
+	                    </div>
+	                    <div class="x_content" style="margin-top:0px; padding-bottom:10px;"></div>
+	                    <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">거래처명</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="submerchantName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">서비스명</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="serviceName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">정산기간</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="approvalDt" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">정산지급일</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="billingDt" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">거래구분</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="typeName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                  		</div>
+                        </div>
+                        <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+                        <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">정산타입</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="billingCommType" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">정산주기</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="billingDuration" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">거래건수</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="cnt" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">정산 수수료</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="merchantComm" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">수수료 타입</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="commTypeName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">부가세 타입</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="taxTypeName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                  		</div>
+                        </div>
+                        <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+                        <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">입금은행</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="bankName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">예금주</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="bankHolder" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">계좌번호</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="bankAccNo" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                  		</div>
+                        </div>
+                        <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+                        <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">거래금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="amount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">거래 취소금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="cancelAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">정산일별 차액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="differenceAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">불일치 금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="notMatchedAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">기타금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="etcAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">조정금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="adjustmentAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">총 거래금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="totTransAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">결제금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="payAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">할인금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="dcAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                  		</div>
+                        </div>
+                        <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+                        <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">수수료</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="commision" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">부가세</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="tax" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">수수료 합계</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="commTotal" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">실정산금액</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="billingAmount" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                  		</div>
+	                  		<div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">메모</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="descMemo" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                  		</div>
+                        </div>
+                        {% if (admin_view.pageAuth["selFlag"] == "1") and (admin_view.menuType == "request") and (admin_view.workType == "AWRK-0007") %}
+                        <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+                        <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group">
+						                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">수정 사유</label>
+	                                	<div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="apprMemo" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    {% endif %}
+	                    <div class="x_content" style="margin-top:0px; padding-bottom:10px;"><hr style="margin-top:10px;margin-bottom:10px"></div>
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+	                        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+	                            <label class="control-label col-md-3 col-sm-3 col-xs-12"><b style="font-size:14px;">승인 상세정보</b></label>
+	                        </div>
+	                    </div>
+	                    <div class="x_content" style="margin-top:0px; padding-bottom:10px;"></div>
+	                    <div>
+	                        <div class="col-md-12 col-sm-12 col-xs-12">
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">승인자</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg" >
+	                                	<span id="apprEmpName" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">승인진행상태</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+		                                <span id="apprStatusName" style="padding-left:12px; padding-top:6px; padding-bottom:6px"></span>									
+		                            	<span id="apprTypeCodeName" style="padding-top:6px; padding-bottom:6px" ></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">신청일</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="reqDate" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">처리일</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="apprDate" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            {% if (admin_view.pageAuth["selFlag"] == "1") and (admin_view.menuType == "answer") and (admin_view.status == "ARST-0003") %}
+	                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group">
+	                                <label class="col-lg-3 col-md-4 col-sm-5 col-xs-12 control-label">승인 반려사유</label>
+	                                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12 form-border-left-lg">
+	                                	<span id="apprMemo" class="span-vertical-middle"></span>
+	                                </div>
+	                            </div>
+	                            {% endif %}
+	                        </div>
+	                    </div>
+	                    <br />
+	                    <div class="column-align-right">
+	                    	{% if (admin_view.pageAuth["selFlag"] == "1") and (admin_view.menuType == "request") and (admin_view.status == "ARST-0001") %}
+	                    	<button type="button" id="updateApprovalRequestBtn" class="dt-button btn green btn-outline">수정</button>   
+	                    	<button type="button" id="cancelApprovalRequestBtn" class="dt-button btn green btn-outline">취소</button>
+	                    	{% elif (admin_view.pageAuth["selFlag"] == "1") and (admin_view.menuType == "request") and (admin_view.status == "ARST-0003" or admin_view.status == "ARST-0004") %}
+	                    	<button type="button" id="reApprovalRequestBtn" class="dt-button btn green btn-outline">재승인</button>
+							{% endif %}
+	                    	{% if (admin_view.pageAuth["apprFlag"] == "1") and (admin_view.menuType == "answer") and (admin_view.status == "ARST-0001") %}   
+							<button type="button" id="approveApprovalInfo" class="dt-button btn green btn-outline">승인</button>                        
+							<button type="button" id="rejectApprovalInfo" class="dt-button btn green btn-outline">반려</button>
+							{% endif %}
+							{% if admin_view.pageAuth["selFlag"] == "1" %}
+							<button type="button" id="returnApprovalList" class="dt-button btn red btn-outline">목록</button>
+							{% endif %}
+	                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- 반려사유 모달 -->
+<div id="rejectApprovalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+	<div class="modal-dialog" style="width:400px">
+		<div class="modal-content">
+			
+			<div class="modal-header" style="text-align: center">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h4 class="modal-title">승인 반려사유 입력</h4>
+			</div>
+			<div class="modal-body" style="text-align: center">
+				<div id="testId" class="form-horizontal" role="form">
+					<div class="form-group">
+						<span>승인 반려사유를 입력해주세요.</span>
+					</div>
+					<div class="form-group" style="margin-bottom: 0px">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="rejectApprMemo" name="rejectApprMemo" placeholder="한글 기준 (100자 이내) 입력">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer"  style="text-align: center">
+				<button id="rejectApprovalBtn" type="button" class="btn btn-primary">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+
+    <script type="text/javascript">
+
+    var billingDetail = function() {
+
+    	var seq = "{{admin_view.seq}}"
+    	var billingSeq = "";
+    	var contentSeq = "";
+    	
+    	var approvalInfo;
+    	var rejectApprovalSeqList = [];
+    	
+    	var getApprovalInfo = function() {
+    		    		
+    		$.ajax({
+                url: "/api/approval/Info/"+seq,
+                type:'GET',
+                dataType : "json",
+                contentType  : "application/json",
+            }).done(function(result){
+            	if (result.status === 200) {
+	            	approvalInfo = result.data.approvalInfo;
+	            	content = JSON.parse(result.data.content);
+    	            
+	            	var $billingForm = $("#billingForm");
+	            	
+    	            // 거래금액
+    	            $billingForm.find("#amount").text(content.amount);
+    	            // 거래 취소금액
+    	            $billingForm.find("#cancelAmount").text(content.cancelAmount);
+    	            // 정산일별 차액
+    	            $billingForm.find("#differenceAmount").text(content.differenceAmount);
+    	            // 불일치 금액
+    	            $billingForm.find("#notMatchedAmount").text(content.notMatchedAmount);
+    	            // 기타금액
+    	            $billingForm.find("#etcAmount").text(content.etcAmount);
+					// 조정금액
+					$billingForm.find("#adjustmentAmount").text(content.adjustmentAmount);
+    	            // 총 거래금액
+    	            $billingForm.find("#totTransAmount").text(content.totTransAmount);
+    	            // 결제금액
+    	            $billingForm.find("#payAmount").text(content.payAmount);
+    	            // 할인금액
+    	            $billingForm.find("#dcAmount").text(content.dcAmount);
+    	            // 수수료
+    	            $billingForm.find("#commision").text(content.commision);
+    	            // 부가세
+    	            $billingForm.find("#tax").text(content.tax);
+    	            // 수수료 합계
+    	            $billingForm.find("#commTotal").text(content.commTotal);
+					// 실정산금액
+					$billingForm.find("#billingAmount").text(content.billingAmount);
+    	            // 메모
+    	            $billingForm.find("#descMemo").text(content.descMemo);
+    	            
+    	            // 승인자
+    	            $billingForm.find("#apprEmpName").text(approvalInfo.apprEmpName);
+
+    	            // 승인진행상태
+    	            var procName = "";
+    	            if(approvalInfo.workType == "AWRK-0006") {
+    	            	procName = "(등록)";
+    	            } else if(approvalInfo.workType == "AWRK-0007") {
+    	            	procName = "(수정)";
+    	            }
+                	if(approvalInfo.status == "ARST-0001") {
+                		$billingForm.find("#apprStatusName").text("최종 승인대기");
+                	} else if (approvalInfo.status == "ARST-0002") {
+                		$billingForm.find("#apprStatusName").text("최종 승인완료" + procName);
+                	} else if (approvalInfo.status == "ARST-0003") {
+                		$billingForm.find("#apprStatusName").text("최종 승인반려" + procName);
+                		$billingForm.find("#apprStatusName").addClass("red");
+                	} else if (approvalInfo.status == "ARST-0004") {
+                		$billingForm.find("#apprStatusName").text("승인 요청취소" + procName);
+                	} else {
+                		$billingForm.find("#apprStatusName").text("");
+                	}
+    	            
+    	            // 신청일
+    	            $billingForm.find("#reqDate").text(approvalInfo.reqDate.substr(0, 10));
+    	            // 처리일
+    	            if(approvalInfo.apprDate) {
+    	            	$billingForm.find("#apprDate").text(approvalInfo.apprDate.substr(0, 10));    	            	
+    	            } else {
+    	            	$billingForm.find("#apprDate").text("-");
+    	            }
+    	            
+    	            // 수정 사유 or 승인 반려사유
+    	            $billingForm.find("#apprMemo").text(approvalInfo.apprMemo);
+    	            
+    	            contentSeq = approvalInfo.contentSeq;
+    	            
+    	            billingSeq = content.seq;
+    	            getBillingInfo(billingSeq);
+            	} else if (result.status == 500) {
+					kpcUtil.customAlert(result.message);
+				}
+            	
+            }).fail(function(e){
+        		kpcUtil.errorHandling(e);
+      	    });
+    	}
+    	
+    	var getBillingInfo = function(seq) {
+			$.ajax({
+                url: "/api/billing/billingDetail",
+                data : "seq=" + seq,
+                type: 'GET',
+                dataType : "json",
+                contentType  : "application/json",
+                success: function(data) {
+                	var data = data.resultList;
+                	
+                	var $billingForm = $("#billingForm");
+                	
+                	// 거래처명
+					$billingForm.find("#submerchantName").text(data.submerchantName);
+					// 서비스명
+					$billingForm.find("#serviceName").text(data.serviceName);
+					// 정산기간
+					$billingForm.find("#approvalDt").text(data.approvalDtMin.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3')+"~"+data.approvalDtMax.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3'));
+					// 정산지급일
+					$billingForm.find("#billingDt").text(data.billingDt);
+					// 거래구분
+					$billingForm.find("#typeName").text(data.typeName);
+					// 정산타입
+					$billingForm.find("#billingCommType").text(data.billingCommType);
+					// 정산주기
+					$billingForm.find("#billingDuration").text(data.billingDuration);
+					// 거래건수
+					$billingForm.find("#cnt").text(data.cnt);
+					// 정산 수수료
+					$billingForm.find("#merchantComm").text(data.merchantCommision+"%");
+					// 수수료타입
+					$billingForm.find("#commTypeName").text(data.commTypeName);
+					// 부가세 타입
+					$billingForm.find("#taxTypeName").text(data.taxTypeName);
+					// 입금은행
+					$billingForm.find("#bankName").text(data.bankName);
+					// 예금주
+					$billingForm.find("#bankHolder").text(data.bankHolder);
+					// 계좌번호
+					$billingForm.find("#bankAccNo").text(data.bankAccNo);
+				},
+                error : function(e){
+                	kpcUtil.errorHandling(e);
+                }
+            });
+        }
+    	
+        var setPageEvents = function () {
+        	
+        	//검색 조건 설정
+        	{% if admin_view.searchData is not none %}
+        		var searchData = {{admin_view.searchData| tojson}}
+        		
+        		$("#searchForm, #workType").val(searchData.workType);
+        		$("#searchForm, #keyword").val(searchData.keyword);
+        		$("#searchForm, #status").val(searchData.status);
+        		$("#searchForm, #reqType").val(searchData.reqType);
+        		$("#searchForm, #reqEmpName").val(searchData.reqEmpName);
+        		$("#searchForm, #apprEmpName").val(searchData.apprEmpName);
+        		$("#searchForm, #searchDateType").val(searchData.searchDateType);
+        		$("#searchForm, #searchDate").val(searchData.searchDate);
+        		$("#searchForm, #searchDateOrderType").val(searchData.searchDateOrderType);
+        		$("#searchForm, #orderType").val(searchData.orderType);
+        		$("#searchForm, #datableOffset").val(searchData.datableOffset);
+        	{% endif %}
+        	
+        	{% if admin_view.menuType == "request" %}
+        		//요청 수정 버튼
+	        	$("#updateApprovalRequestBtn").click(function () {
+	        		if(approvalInfo.status === "ARST-0001") {
+	        			location.href = "/billing/billingDetail?apprSeq="+seq+"&contentSeq="+contentSeq;
+	        		}
+	        		else {
+	        			kpcUtil.customAlert("수정 할 수 없는 요청 정보입니다.");
+	        		}
+	        	})
+	        	
+	        	//요청 취소 버튼
+	        	$("#cancelApprovalRequestBtn").click(function () {
+	        		
+	        		if (approvalInfo.status === "ARST-0001") {
+		        		if (kpcUtil.confirm("승인요청을 취소 하시겠습니까?")) {
+		           			$.ajax({
+		   	        			url: "/api/approvals/request/cancellation",
+		   	        			data: JSON.stringify(seq),
+		   	        			type:'PUT',
+		   	        			dataType : "json",
+		   	        			contentType  : "application/json"
+		   	        			}).done(function(resultData,status,jqXhr){
+		   	        				if (resultData.status == 200) {
+		                       			kpcUtil.customAlert("승인요청이 취소 되었습니다.");
+		   								approvalInfo = null;
+		   								location.href ="/approval/request";
+		                       		}
+		                           	else if (resultData.status == 500) {
+		   	                        		alert(resultData.message);
+		                           	}
+		   	        			}).fail(function(e){
+		   	        				kpcUtil.errorHandling(e);
+		           				});
+		           		}
+	        		}
+	        		else {
+              			kpcUtil.customAlert("승인 취소 할 수 없는 요청 정보입니다.");
+	        		}
+	        	})
+	        	
+	        	//재승인 요청 버튼
+	        	$("#reApprovalRequestBtn").click(function() {
+	        		if(approvalInfo.status === "ARST-0003" || approvalInfo.status === "ARST-0004") {
+	        			location.href = "/billing/billingDetail?seq="+billingSeq;
+	        		}
+	        		else {
+	        			kpcUtil.customAlert("재승인 할 수 없는 요청 정보입니다.");
+	        		}
+ 	        	})
+	        	
+        	{% elif admin_view.menuType == "answer" %}
+	        	$("#approveApprovalInfo").click(function (){
+	        		
+	        		var dataArray = new Array();
+					if(approvalInfo.status === "ARST-0001") {
+						result = {
+								"seq" : approvalInfo.seq,
+								"contentSeq" : approvalInfo.contentSeq,
+								"workType" : approvalInfo.workType,
+								"reqType" : approvalInfo.reqType,
+								"status" : approvalInfo.status
+						}
+						dataArray.push(result)
+					}
+	         		
+	        		if(kpcUtil.confirm("승인 처리 하시겠습니까?")){
+		        		$.ajax({
+		        			url: "/api/approvals/response/approval",
+		        			data: JSON.stringify(dataArray),
+		        			type:'POST',
+		        			dataType : "json",
+		        			contentType  : "application/json"
+		        			}).done(function(resultData,status,jqXhr){
+		        				if (resultData.status == 200) {
+		        					//문자보내기
+		                   			notiData = {
+		    								"workType" : approvalInfo.workType,
+		    								"reqType" : approvalInfo.reqType,
+		    								"reqEmpId" : approvalInfo.reqEmpId
+		    							}
+		    						approval.approvalAnswerSendSms(notiData, "approve");
+		                   			
+	                    			kpcUtil.customAlert("승인 처리 되었습니다.");
+									approvalInfo = null;
+									location.href ="/approval/answer";
+	                    		}
+	                        	else if (resultData.status == 500) {
+		                        		alert(resultData.message);
+	                        	}
+		        			}).fail(function(e){
+		        				kpcUtil.errorHandling(e);
+	        				});
+	        		}
+	        		
+	       		});
+        	
+	        	//승인 반려 처리 이벤트1 (모달 띄우기)
+	        	$("#rejectApprovalInfo").click(function (){
+	        		//API가 다건도 처리 가능하기 때문에 배열 사용
+	        		var sequenceList = [];
+				
+					//현재 승인요청 건인지 확인
+					if(approvalInfo.status === "ARST-0001") {
+						sequenceList.push(approvalInfo.seq)
+						
+						if(kpcUtil.confirm("승인 반려 처리하시겠습니까?")){
+							rejectApprovalSeqList = sequenceList;
+							$("#rejectApprovalModal").modal("show");
+		           		}
+					}
+					else {
+						kpcUtil.alert("반려할수 없는 승인요청입니다.");
+					}
+	        	});
+        	
+	        	//승인 반쳐 처리 이벤트2 (모달 뜬 이후 처리)
+				$("#rejectApprovalBtn").click(function (){
+					rejectList = {
+							"sequenceList" : rejectApprovalSeqList,
+							"apprMemo" : $("#rejectApprMemo").val() 
+					}
+					
+					$.ajax({
+						url: "/api/approvals/response/rejection",
+						data: JSON.stringify(rejectList),
+						type:'POST',
+						dataType : "json",
+						contentType  : "application/json"
+					}).done(function(resultData,status,jqXhr){
+												
+	               		if (resultData.status == 200) {
+	               			//문자보내기
+	               			notiData = {
+	    								"workType" : approvalInfo.workType,
+	    								"reqType" : approvalInfo.reqType,
+	    								"reqEmpId" : approvalInfo.reqEmpId
+	    							}
+	    					approval.approvalAnswerSendSms(notiData, "reject");
+	    					
+	               			kpcUtil.customAlert("반려 처리 되었습니다.");
+							rejectApprovalSeqList = []
+							$("#rejectApprovalModal").modal("hide")
+							location.href ="/approval/answer";
+	               		}
+	                   	else if (resultData.status == 500) {
+	                       		alert(resultData.message);
+	                   	}
+					}).fail(function(e){
+						kpcUtil.errorHandling(e);
+						$("#rejectApprovalModal").modal("hide")
+					});
+					
+					
+	 			})
+
+	 			//모달이 닫힐 때 모달 값 초기화
+	 			$("#rejectApprovalModal").on("hidden.bs.modal", function(e) {
+	 				$("#rejectApprMemo").val(); 
+	 			})
+	 			
+				$("#rejectApprovalModal").on("shown.bs.modal", function(e) {
+					$("#rejectApprMemo").focus(); 
+				})
+	 			
+ 			{% endif %}
+
+ 			
+        	//목록 화면으로 이동
+        	$("#returnApprovalList").click(function (){
+	        	{% if admin_view.searchData is not none %}
+	        		location.href ="/approval/{{admin_view.menuType}}?"+$("#searchForm").serialize();
+				{% else%}
+	        		location.href ="/approval/{{admin_view.menuType}}";
+	        	{% endif %}
+        	})
+        }   
+
+        return {
+            init : function() {
+            	getApprovalInfo();
+                setPageEvents();
+            }
+        }
+    }
+
+    $(document).ready(function() {
+    	billingDetail().init();
+    });
+    </script>
+{% endblock %}

@@ -1,0 +1,373 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>KCON 상품 수정</h3>
+                <h5><span class="red">[홈 > 쿠폰 관리 > KCON 상품 수정]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form ">
+                        <input type="hidden" name="beforeApprEmpId" id="beforeApprEmpId">
+                        <input type="hidden" name="beforeReqMemo" id="beforeReqMemo">
+                        <form action="#" id="couponForm" class="form-bordered ">
+                        	<input type="hidden" name="reqMemo" id="reqMemo">
+                        	<input type="hidden" name="productId" id="productId">
+                        	<input type="hidden" name="type" id="type">
+                        	<input type="hidden" name="typeDetail" id="typeDetail">
+                        	<input type="hidden" name="amount" id="amount">
+                        	<input type="hidden" name="usage" id="usage">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                </div>
+                            </div>	                        
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >상품 ID</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<input type="text" id="viewProductId" name="viewProductId" class="form-control col-md-7 col-xs-12" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >상품명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+										<input type="text" id="title" name="title" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" ><b>[쿠폰 상품 속성]</b></label>
+                                </div>
+                            </div>	                        
+                        	<div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상품유형</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="type1" name="viewType" value="PRTY-0001" disabled>
+                                    		<label for="type1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			충전쿠폰
+                                    		</label>
+                                    	</div>      
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="type2" name="viewType" value="PRTY-0002" disabled>
+                                    		<label for="type2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			교환쿠폰
+                                    		</label>
+                                    	</div>     
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상품유형상세</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="viewTypeDetail" name="viewTypeDetail" disabled>
+	                                    </select>                                         
+                                    </div>
+                                </div>	                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">권종</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+                                        <input type="text" id="viewAmount" name="viewAmount" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        <span class="table-span-vertical">&nbsp;원</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">유효기간 설정</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                        <span class="span-float-left">
+		                                    <select class="form-control" id="expireDaysType" name="expireDaysType" >
+		                                    </select>                                     
+                                        </span>
+                                        <span class="span-float-left-margin">발행일로부터</span>
+                                        <span class="span-unput-float-left">
+											&nbsp;<input type="text" id="expireDays" name="expireDays" class="form-control input-xxsmall" maxlength="5">
+										</span>
+                                        <span class="span-float-left-margin" id="dateTypeText">&nbsp;일</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사용처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline input-icon left">
+                                    	<i class="fa"></i>
+	                                    <select class="form-control" id="viewUsage" name="viewUsage" disabled>
+	                                    	<option value="전체">전체</option>
+	                                    	<option value="온라인">온라인</option>
+	                                    	<option value="오프라인">오프라인</option>
+	                                    </select>                                                                            
+                                    </div>
+                                </div>                                            
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상품등록자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id=viewRegister name="viewRegister" class="form-control col-md-7 col-xs-12" readonly>
+                                    </div>
+                                </div>            
+                           	</div>
+                        </form>
+	                    <br />
+	                    <div class="column-align-right">
+							{% if (admin_view.pageAuth["updFlag"] == "1")  and ((admin_view.reApproval == "true")  and (admin_view.updateApproval == "false")) or ((admin_view.reApproval == "false")  and (admin_view.updateApproval == "false")) %}
+							<button type="button" id="updateApprovalRequestBtn" class="dt-button btn green btn-outline"><span>수정</span></button>
+							{% elif (admin_view.pageAuth["updFlag"] == "1") and (admin_view.updateApproval == "true") %}
+							<button type="button" id="updateApprovalInfoBtn" class="dt-button btn green btn-outline"><span>수정</span></button>
+							{% endif %}
+							{% if admin_view.pageAuth["selFlag"] == "1" %}
+							<a id="returnListBtn" class="dt-button btn blue btn-outline" href="/coupon/kcon/kconProductInq"><span>목록</span></a>
+							{% endif %}
+	                    </div>                                
+                    </div>		
+				</div>
+			</div>
+		</div>                      	
+	</div>
+</div>
+
+<!-- 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-update-modal.html' %}
+{% include 'views/pages/common/approval/popup/approval-request-info-update-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>        
+    <script type="text/javascript">
+
+        var couponMng = function () {
+        	
+        	var typeDetailCPCData = {};
+        	var typeDetailCPTData = {};
+        	
+        	var setSelectBox = function (){
+        		$("#viewTypeDetail").select2({width : 120});
+        		$("#expireDaysType").select2({width : 120});
+        		$("#viewUsage").select2({width : 120});
+        	}
+            
+            var setPageEvents = function (){
+           		$("select[name=expireDaysType]").change(function (){
+           			if($(this).val() == "DATE-0001"){
+           				$("#dateTypeText").html("&nbsp;일");
+           			}else if($(this).val() == "DATE-0002"){
+           				$("#dateTypeText").html("&nbsp;개월");
+           			}else if($(this).val() == "DATE-0003"){
+           				$("#dateTypeText").html("&nbsp;년");
+           			}
+           		});
+           	}
+            
+            var setFormValidate = function (){
+                $("#couponForm").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    rules: {
+                    	title : {
+                            required : true
+                        },
+                        expireDays : {
+                            required : true
+                        },
+                        expireDaysType : {
+                            required : true
+                        }
+                    },
+                    messages : {
+                    	title : {
+                            required : "상품명을 입력해주세요."
+                        },
+                        expireDays : {
+                        	required : "유효기간을 입력해주세요."
+                        },
+                        expireDaysType : {
+                        	required : "유효기간 타입을 선택해주세요."
+                        }
+                    },
+                    errorPlacement : function (error , element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	icon.removeClass('fa-check').addClass("fa-warning");
+                    	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                       	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                    }, 
+                    success : function (label,element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+                    	icon.removeClass('fa-warning').addClass("fa-check");
+                    },
+                });
+
+            }
+            
+        	var setFormData = function() {
+            	setFormValidate();
+            	
+            	if(("{{admin_view.reApproval}}" === "false") && ("{{admin_view.updateApproval}}" == "false")) {
+            		setKconProductInfo();
+            	}
+            	else if (("{{admin_view.reApproval}}" === "true") || ("{{admin_view.updateApproval}}" == "true")) {
+            		setApprovalContentInfo();
+            	}
+            	setPageEvents();
+        	}
+        	
+        	var setKconProductInfo = function() {
+        		$.ajax({
+        			url : "/api/coupon/brochures/brochure",
+        			data : "id=" + "{{admin_view.productId}}",
+        			type: 'GET',
+                    dataType : "json",
+             	}).done(function(resultData,status,jqXhr){
+             		
+             		$("#viewProductId, #productId").val(resultData.productId);
+             		$("#title").val(resultData.title);
+             		$("#viewAmount").val(resultData.amount);
+             		$("#expireDays").val(resultData.expireDays);
+             		$("#viewRegister").val(resultData.register);
+             		
+             		//상품유형
+             		$('input:radio[name=viewType]:input[value='+resultData.type+']').attr("checked", true);
+             		
+
+             		
+					var commonCodes = {
+							"typeDetail" : resultData.typeDetail,
+							"expireDaysType" : resultData.expireDaysType,
+						}
+						
+					setServiceBillingCommonCode(commonCodes);
+             		
+                 }).fail(function(e){
+         	    	kpcUtil.errorHandling(e);
+       	         });              	        		
+        	}
+        	
+        	var setApprovalContentInfo = function() {
+        		$.ajax({
+	                url: "/api/approvals/detail/"+"{{admin_view.apprSeq}}",
+	                type:'GET',
+	                dataType : "json",
+	                contentType  : "application/json",
+	            }).done(function(result){
+	            	if (result.status === 200) {
+    	            	
+	            		approvalInfo = result.data.approvalInfo;
+                    	$("#beforeApprEmpId").val(approvalInfo.apprEmpId); // 선택한 승인자
+                    	$("#beforeReqMemo").val(approvalInfo.reqMemo); // 승인 요청 사유
+	            		
+	            		var brochure = result.data.content.brochure;
+	             		
+	             		$("#register, #viewRegister").val(brochure.createId);
+    	            	
+    	            	$("#productId, #viewProductId").val(brochure.prodId);
+    	            	$("#title").val(brochure.title);
+    	            	$("#amount, #viewAmount").val(brochure.amount);
+    	            	$("#expireDays").val(brochure.expireDays);
+    	            	
+    	            	$("#type").val(brochure.type);
+    	            	$("#usage").val(brochure.usage);
+    	            	
+                 		$('input:radio[name=viewType]:input[value='+brochure.type+']').attr("checked", true);
+                 		
+    					var commonCodes = {
+    							"typeDetail" : brochure.typeDetail,
+    							"expireDaysType" : brochure.expireDaysType,
+    						}
+    						
+    					setServiceBillingCommonCode(commonCodes);
+    					
+                	}
+	            	
+                	$("#couponForm").valid();
+	            	
+	            }).fail(function(e){
+	        		kpcUtil.errorHandling(e);
+	      	    });
+        		
+        		
+        		
+        	}
+        	
+            var setServiceBillingCommonCode = function (commonCodes){
+            	kpcUtil.setSelectBoxData({
+             		target : "#expireDaysType", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : 'DATE'},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			//거래처구분 값 설정
+            			if (commonCodes.expireDaysType !== undefined) {
+	            			$(target).val(commonCodes.expireDaysType).trigger("change");          
+            			}
+             		}
+             	});
+            	kpcUtil.setSelectBoxData({
+             		target : "#typeDetail, #viewTypeDetail", 
+             		apiUrl : "/api/systemMng/common/commonCodes",
+             		params : {type : commonCodes.typeDetail.split("-")[0]},
+             		type   : "GET",
+             		option : {width : 150},	
+             		callBack : function (data,target,option){
+             			
+            			for(var idx in data.data){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.data[idx].code)
+            						.text(data.data[idx].codeName));
+            			}
+            			if (commonCodes.typeDetail !== undefined) {
+	            			$(target).val(commonCodes.typeDetail).trigger("change");          
+            			}
+             		}
+             	});
+            }      	
+        	
+            return {
+                init : function (){
+                	setFormData();
+                	setSelectBox();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            couponMng().init();
+            //임포트한 수정 승인 요청 모달 초기화
+            approvalReuestUpdateModal("{{admin_view.prodId}}", "couponForm", "MENU-0003", "AWRK-0009"); //수정 승인 요청 모달
+            approvalReuestInfoUpdateModal("{{admin_view.apprSeq}}", "couponForm", "MENU-0003", "update", "AWRK-0009"); //승인 대기중인 정보 수정 모달
+        });
+    </script>
+{% endblock %}

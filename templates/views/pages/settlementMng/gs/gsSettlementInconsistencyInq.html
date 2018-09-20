@@ -1,0 +1,416 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>GS대사 불일치 이력 조회</h3>
+                <h5><span class="red">[홈 > 대사관리 > GS대사 불일치 이력 조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="formSettlement" class="form-bordered ">
+                        	<input type="hidden" id="isExcel" name="isExcel" value="N" >
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">대사대상</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="selType" name="selType" >
+	                                        <option value="GSPOP">GS25</option>
+	                                        <option value="GSSM">GSSM</option>
+	                                        <option value="GSPOINT">GS&POINT</option>
+	                                        <option value="GSHB">GSHB</option>
+	                                        <option value="HAPPYMONEY">HAPPYMONEY</option>
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">조회일자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="dateType" name="dateType" >
+	                                    	<option value="DATE-0001">영업일자</option>
+	                                    	<option value="DATE-0002">승인일자</option>
+	                                    </select>
+                                        <input type="text" class="form-control input-date-picker-long" id="startDate" name="startDate" >                                    
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">지불상태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                        <select class="form-control" id="dealType" name="dealType" >
+	                                    	<option value="">전체</option>
+	                                    	<option value="ACT">활성화</option>
+	                                    	<option value="CHR">재충전</option>
+	                                    	<option value="PAY">결제</option>
+	                                    	<option value="REF">잔액환불</option>
+	                                    	<option value="TRN">잔액이체</option>
+	                                    </select>                              
+                                    </div>
+                                </div> 
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">상태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="dealDivider" name="dealDivider" >
+	                                    	<option value="">전체</option>
+	                                    	<option value="0">승인</option>
+	                                    	<option value="9">취소</option>
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" id="orderNoTitle">주문번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                    	<input type="text" id="orderNo" name="orderNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>                                 
+                            </div>                                
+                        </form>
+                        <br />
+						<table id="gsSettlementInconsistencyTable" class="table table-striped table-bordered" style="width: 100%">
+						    <thead>
+						        <tr>
+						        	<th>순번</th>
+						        	<th>거래처</th>
+						        	<th>영업일자</th>
+						        	<th>점포코드</th>
+						        	<th>점포명(사용처)</th>
+						        	<th>지불상태</th>
+						        	<th>상태</th>
+						        	<th>주문번호</th>
+						        	<th>승인번호</th>
+						        	<th>승인일자</th>
+						        	<th>승인시간</th>
+						        	<th>거래금액</th>
+						        	<th>카드번호</th>
+						        	<th>불일치내역</th>
+						        	<th>취소사유</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    </tbody>
+						</table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var settlement = function () {
+        	var table;
+            var setDatePicker = function (){
+            	kpcUtil.setDateRangePicker('#startDate');
+            	$('#startDate').on('change' , function(){
+            		var selectedDate = $(this).val();
+            		if(selectedDate != ""){
+		           		var diffDays = kpcUtil.getDiffDays(selectedDate.split(' - ')[0],selectedDate.split(' - ')[1]);
+						if(diffDays > 30){
+							kpcUtil.customAlert("1개월 이내의 날짜를 입력하세요.");
+							$('.cancelBtn').trigger("click");
+							return false;
+						}            		
+            		}
+            	});
+            }
+            var setSelect2 = function () {
+                $("#selType,#dateType,#dealType,#dealDivider").select2({
+                    width: 130,
+                });
+                $("#selType").on("change" , function (){
+                	if($(this).val() === "GSPOINT"){
+                		$("#orderNoTitle").text("승인번호");
+           				$("#dealDivider").html($("<option></option>")
+			           						.attr("value" , "")
+			           						.text("전체")
+			           					).append($("<option></option>")
+				           						.attr("value" , "1")
+				           						.text("사용")
+				           				).append($("<option></option>")
+				           						.attr("value" , "2")
+				           						.text("취소")
+				           				).select2({width : 130});
+           				$("#dealType").html($("<option></option>")
+           						.attr("value" , "")
+           						.text("전체")
+           					).append($("<option></option>")
+	           						.attr("value" , "ACT")
+	           						.text("활성화")
+	           				).append($("<option></option>")
+	           						.attr("value" , "CHR")
+	           						.text("재충전")
+	           				).append($("<option></option>")
+	           						.attr("value" , "PAY")
+	           						.text("결제")
+	           				).append($("<option></option>")
+	           						.attr("value" , "REF")
+	           						.text("잔액환불")
+	           				).append($("<option></option>")
+	           						.attr("value" , "TRN")
+	           						.text("잔액이체")
+	           				).select2({width : 130});           				
+                	}else if ($(this).val() === "HAPPYMONEY"){
+                		$("#orderNoTitle").text("주문번호");
+           				$("#dealType").html($("<option></option>")
+			           						.attr("value" , "")
+			           						.text("전체")
+			           					).append($("<option></option>")
+				           						.attr("value" , "O1")
+				           						.text("결제")
+				           				).append($("<option></option>")
+				           						.attr("value" , "D1")
+				           						.text("취소")
+				           				).select2({width : 130});
+           				$("#dealDivider").html($("<option></option>")
+           						.attr("value" , "")
+           						.text("전체")
+           					).append($("<option></option>")
+	           						.attr("value" , "0")
+	           						.text("승인")
+	           				).append($("<option></option>")
+	           						.attr("value" , "9")
+	           						.text("취소")
+	           				).select2({width : 130});               				
+                	}else {
+                		$("#orderNoTitle").text("주문번호");
+           				$("#dealType").html($("<option></option>")
+			           						.attr("value" , "")
+			           						.text("전체")
+			           					).append($("<option></option>")
+				           						.attr("value" , "ACT")
+				           						.text("활성화")
+				           				).append($("<option></option>")
+				           						.attr("value" , "CHR")
+				           						.text("재충전")
+				           				).append($("<option></option>")
+				           						.attr("value" , "PAY")
+				           						.text("결제")
+				           				).append($("<option></option>")
+				           						.attr("value" , "REF")
+				           						.text("잔액환불")
+				           				).append($("<option></option>")
+				           						.attr("value" , "TRN")
+				           						.text("잔액이체")
+				           				).select2({width : 130});
+           				$("#dealDivider").html($("<option></option>")
+			           						.attr("value" , "")
+			           						.text("전체")
+			           					).append($("<option></option>")
+				           						.attr("value" , "0")
+				           						.text("승인")
+				           				).append($("<option></option>")
+				           						.attr("value" , "9")
+				           						.text("취소")
+				           				).select2({width : 130});                		
+                	}
+                });
+            }
+    
+            var setCommonCode = function (){
+            }            
+            var setDataTable = function () {
+                table = $('#gsSettlementInconsistencyTable')
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,                            
+                            "ajax": {
+                                "url": "/api/settlementApi/settlement/gsStatistics/inconsistencyInq",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                	parameter.formData = $("#formSettlement").serializeObject();    
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "gsSettlementInconsistencyTable",
+                            		menuId : "{{session['menuId']}}", 
+                            		targetTable : table 
+                            	});
+                            },
+                            columns: [
+                                  {data : "rownum" , defaultContent: "",width : 50, className: "column-align-center"}, // 순번
+                                  {data : "jobDivider" , defaultContent: "",width : 60, className: "column-align-center"}, // 거래처
+                                  {
+                                    	data : "workDt" ,
+    	                                defaultContent: "",
+    	                                width : 90,
+    	                                className: "column-align-center" ,
+    	                                render : function (data, type , full , meta){
+    	                                	return kpcUtil.setDateFormat(full.workDt, "YYYY-MM-DD");
+    	                                }
+                                  },  // 영업일자   
+                                  {data : "storeCd" , defaultContent: "",width : 60, className: "column-align-center"}, // 점포코드
+                                  {data : "storeNm" , defaultContent: "",width : 60, className: "column-align-center"}, // 점포명(사용처)
+                                  {data : "dealType" , defaultContent: "",width : 60, className: "column-align-center"}, // 상태
+                                  {data : "dealDivider" , defaultContent: "",width : 60, className: "column-align-center"}, // 지불수단
+                                  {data : "dealNo" , defaultContent: "",width : 60, className: "column-align-center"}, // 점포코드
+                                  {data : "approvalNo" , defaultContent: "",width : 60, className: "column-align-center"}, // 점포코드
+                                  {
+                                    	data : "approvalDt" ,
+    	                                defaultContent: "",
+    	                                width : 90,
+    	                                className: "column-align-center" ,
+    	                                render : function (data, type , full , meta){
+    	                                	return kpcUtil.setDateFormat(full.approvalDt, "YYYY-MM-DD");
+    	                                }
+                                  },  // 승인일자
+                                  {
+                                    	data : "approvalTime" ,
+    	                                defaultContent: "",
+    	                                width : 80,
+    	                                className: "column-align-center" ,
+    	                                render : function (data, type , full , meta){
+    	                                	if(full.approvalTime == "" || full.approvalTime == null){
+    	                                		return "";
+    	                                	}
+    	                                	return kpcUtil.setDateFormat(full.approvalDt +" "+ full.approvalTime , "HH:mm:ss");
+    	                                }
+                                  },  // 승인시간
+                                  {
+                                    	data : "dealAmt" , 
+    	                                defaultContent: "", 
+    	                                width : 80,
+    	                                className: "column-align-right" ,  	                                
+    	                                render : function (data, type , full , meta){
+    	                                	return kpcUtil.numberWithCommas(full.dealAmt);
+    	                                }
+                                  }, // 거래금액
+                                  {
+                                    	data : "cardNo" , 
+    	                                defaultContent: "", 
+    	                                width : 90,
+    	                                className: "column-align-center" ,  	                                
+    	                                render : function (data, type , full , meta){
+    	                                	return full.cardNo;
+    	                                }
+                                  }, // 카드번호
+                                  {data : "statusNm" , defaultContent: "",width : 90, className: "column-align-center"}, // 불일치 내역
+                                  {data : "cancelMemo" , defaultContent: "",width : 90, className: "column-align-center"}, // 취소사유
+                            ],
+                            buttons: [
+                                {
+                                	text: 'Layout',
+                                    className: 'dt-button btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+    							    		columnArray : $(table).find("thead>tr>th").siblings().not(".checkboxes"),
+    							    		tableId : "gsSettlementInconsistencyTable",
+    							    		menuId : "{{session['menuId']}}",
+    							    		targetTable : table
+        								}); 
+                                    }
+                                },
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/settlementApi/settlement/gsStatistics/errorExcel",
+                	                            type: 'GET',
+                	                            data : $("#formSettlement").serialize(),
+                	                            contentType  : "application/json",
+                	                            async : true,
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if($('#startDate').val() ==""){
+                                    		kpcUtil.customAlert("대사일자를 선택하세요.");
+                                    		$('#startDate').focus();
+                                    		return false;
+                                    	}
+                                        table.fnFilter();
+                                    }
+                                }                                
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+            
+            var setPageEvents = function (){
+            	setDataTable();
+            }
+
+            
+            return {
+                init : function (){
+                    setDatePicker();
+                    setSelect2();
+                    setCommonCode();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            settlement().init();
+        });
+    </script>
+{% endblock %}

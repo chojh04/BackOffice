@@ -1,0 +1,380 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div >
+        <div class="page-title">
+            <div class="title_left">
+                <h3>거래처-서비스 상세보기</h3>
+                <h5><span class="red">[홈 > 거래처 관리 > 거래처 조회 > 대표/일반 거래처 조회 > 대표 거래처 상세 > 일반 거래처 상세 > 서비스 상세보기]</span></h5>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                	<input type="hidden" id="serviceBillingId" />
+                    <div class="form">
+                        <form action="#" id="serviceForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 기본정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right">
+                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">거래처코드</label>
+                                    <div class="custom-col-lg-10 col-md-3 col-sm-4 col-xs-12 form-border-left-lg">
+                                        <span id="submerchantId"   class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스 코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-border-left-lg">
+                                        <span id="serviceId"  class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="name"  class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+	                                    <span  id="serviceTypeName"  class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스 카테고리</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                    <span  id="categoryName"  class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">연동 아이디</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                    	
+										<span id="svcConnId"  class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">서비스 사용 여부</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                    <span  id="useFlagName"  class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">매출 구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                    <span  id="saleDividerName" class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처경로</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="path" class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </form>
+                        {% if admin_view.isNew == "false" %}
+			            <br />
+                        <div class="column-align-right">
+                        	<a id="back" class="dt-button btn green btn-outline" href="javascript:;"><span>목록</span></a>
+							{% if admin_view.pageAuth["insFlag"] == "1" %}                        	
+							<a id="updateBillingCommision" class="dt-button btn green btn-outline" href="javascript:;"><span>수수료 변경</span></a>
+							{% endif %}
+							{% if admin_view.pageAuth["insFlag"] == "1" %}                        	
+							<a id="reg" class="dt-button btn green btn-outline" href="javascript:;"><span>정산등록</span></a>
+							{% endif %}
+							{% if admin_view.pageAuth["updFlag"] == "1" %}                 	
+							<a id="upt" class="dt-button btn green btn-outline" href="javascript:;"><span>수정</span></a>
+							{% endif %}                        	
+							{% if admin_view.pageAuth["delFlag"] == "1" %}                        	
+							<a id="deleteApprovalRequestBtn" class="dt-button btn red btn-outline" href="javascript:;"><span>삭제</span></a>
+							{% endif %}
+                        </div>                     
+			            <br />
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">- 정산정보</label>
+                            </div>
+                        </div>			            
+			            <table id="billingsTable" class="table table-striped table-bordered" style="width:100%">
+				            <thead>
+				                <tr>
+				                    <th>순번</th>
+				                    <th>정산코드</th>
+				                    <th>정산명</th>
+				                    <th>정산일</th>
+				                    <th>수수료</th>
+				                    <th>수수료 적용 시작일</th> 
+				                    <th>수수료 적용 종료일</th> 
+				                    <th>수정</th> 
+				                </tr>
+				            </thead>
+				            <tbody>
+				            </tbody>
+			            </table>
+			            {% endif %}                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-delete-modal.html' %}
+{% include 'views/pages/common/merchant/popup/service-billing-detail-modal.html' %}
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/merchant.js"></script>
+{% if admin_view.pageAuth["updFlag"] == "1" %}
+	<script src="/assets/js/approval/merchant/service.js"></script>
+	<script src="/assets/js/approval/merchant/billing.js"></script>
+{% endif %}    
+	<script src="/assets/js/approval/approval.js"></script>        
+    <script type="text/javascript">
+
+        var merchant_inq = function () {
+            var setDataTable = function () {
+            	{% if admin_view.isNew == "false" %}
+                var table = $('#billingsTable')
+                	{% if admin_view.pageAuth["updFlag"] == "1"%}
+	                .on('click', '.upt', function () {
+	               		var isExist = approval.existApprovalRequest($("#serviceBillingId").val());
+	               		if (!isExist) {
+							location.href = "/merchants/sub-merchant/service/billing/commision/update?serviceId={{admin_view.serviceId}}&serviceBillingId="+$("#serviceBillingId").val()+"&actionType=update&lastData=true"; 
+	               		}
+	                	/* billingUpdate($(this).attr("serviceBillingId"),function (){ table.fnFilter()}); */	                	
+	                })
+	                {% endif %}
+                    .on('click', '.det', function () {
+                    	
+                    	serviceBillingDetailModal("commision", ($(this).attr("commisionId")));
+                    	/* 
+    			   		kpcUtil.openCommonPopup({
+    			   			modalTitle : "정산 상세",
+    			   			modalSize : "modal-full",
+    			   			modalType : "URL",
+    			   			URL : "/merchants/service/merchantBillingDetail?serviceBillingId=" + $(this).attr("serviceBillingId"),
+    			   			method : "GET",		   			
+    			   		});
+    			   		 */
+                    })
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/api/merchants/billings",
+                                "async" : "true",
+                                "data": function (parameter) {
+        	                    	var params = {
+        		                    		"serviceId" : "{{admin_view.serviceId}}", 	
+        		                    	};
+        	                    	parameter.formData = JSON.stringify(params);                                	
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                            	
+                                if(settings.aiDisplay.length > 0){
+	                            	$("#serviceBillingId").val(settings.json.data[0].billing.serviceBillingId);
+                                	$("#reg").css("display" , "none");
+                                }
+                                else if (settings.aiDisplay.length == 0) {
+                                	$("#updateBillingCommision").css("display" , "none");
+                                }
+                            	
+                            	
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                	
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                
+                            },
+                            columns: [
+                                {data: "rownum", defaultContent: "", width: 80 , className: "column-align-right"}, // 순번
+                                {
+                                	data : "serviceBillingId" ,
+                                    defaultContent: "", 
+                                    className: "column-align-center",
+                                    render : function (data, type , full , meta){
+                                    	
+                                    	var commisionId = full.commision.id;
+                                    	
+                                    	return '<a class="blue det" href="javascript:;" commisionId="' + commisionId + '">' + full.billing.serviceBillingId + '</a>';
+                                    }
+                                },  // 정산코드                                 
+                                {data: "billing.name", defaultContent: "",className: "column-align-center"},                // 정산명
+                                {
+                                	//정산일
+                                	defaultContent: "", 
+	                                className: "column-align-center",
+	                                render : function (data, type , full , meta){
+
+	                                	return full.commision.billingDate+"일";
+	                                }
+                                },
+                                {
+                                	//수수료
+                                	defaultContent: "", 
+	                                className: "column-align-center",
+	                                render : function (data, type , full , meta){
+	                                	var curreny = "";
+	                                	
+	                                	if (full.commision.merchantCommisionType === "FEE-0001") {
+	                                		curreny = "%"
+	                                	}
+	                                	else if (full.commision.merchantCommisionType === "FEE-0002") {
+	                                		curreny = "원"
+	                                	}
+	                                	return full.commision.merchantCommision+curreny;
+	                                }
+                                },
+                                {
+                                	//수수료 적용 시작일
+                                	defaultContent: "", 
+	                                className: "column-align-center",
+	                                render : function (data, type , full , meta){
+	                                	return kpcUtil.setDateFormat(full.commision.billingStartDate , "YYYY-MM-DD");
+	                                }
+                                },
+                                {
+	                                //수수료 적용 종료일
+                                	defaultContent: "", 
+	                                className: "column-align-center",
+	                                render : function (data, type , full , meta){
+	                                	
+	                                	if (full.commision.billingEndDate !== "21001231") {
+		                                	return kpcUtil.setDateFormat(full.commision.billingEndDate , "YYYY-MM-DD");
+	                                	}
+	                                	else {
+	                                		return "-";
+	                                	}
+	                                }
+                                },
+                                {
+                                	data : "service" ,
+                                    defaultContent: "", 
+                                    width : 90,
+                                    className: "column-align-center",
+                                    render : function (data, type , full , meta){
+                                        // 상세보기 버튼
+                                        // 수정 버튼
+                                    var html = "";
+                                    {% if admin_view.pageAuth["updFlag"] == "1"%}
+                                    	if (full.commision.billingEndDate === "21001231") {
+                                    		
+                                        	var today = moment().format("YYYYMMDD");
+                                        	var billingStartDate = moment(full.commision.billingStartDate).format("YYYYMMDD") 
+                                        	
+                                        	if (today < billingStartDate) {
+		                                    	html = '<button type="button" class="btn btn-sm green btn-outline upt" serviceBillingId="' + full.serviceBillingId + '">수정</button>';
+                                        	}
+                                    	}
+                                    {% endif %}
+                                    	return html;
+                                    }
+                                },  // 수정 
+                            ],
+                            "dom": "<'table-scrollable'tr>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                );
+                {% endif %}                
+            }        	
+
+            var setPageEvents = function (){
+            	selectService();
+            	{% if admin_view.isNew == "false" %}
+	            	$("#upt").click(function (){
+	               		var isExist = approval.existApprovalRequest("{{admin_view.serviceId}}");
+	               		if (!isExist) {
+							location.href = "/merchants/sub-merchant/service/update?serviceId={{admin_view.serviceId}}&subMerchantId="+$("#submerchantId").text(); 
+	               		}
+	            	});
+	            	$("#reg").click(function (){
+						location.href = "/merchants/service/merchantBillingReg?serviceId={{admin_view.serviceId}}&submerchantId="+$("#submerchantId").text(); 
+	            	});
+	            	
+	            	$("#updateBillingCommision").click(function (){
+	               		var isExist = approval.existApprovalRequest($("#serviceBillingId").val());
+	               		if (!isExist) {
+							location.href = "/merchants/sub-merchant/service/billing/commision/update?serviceId={{admin_view.serviceId}}&serviceBillingId="+$("#serviceBillingId").val()+"&actionType=create&lastData=true";
+	               		}
+	            	});
+
+            	{% endif %}
+            	$("#back").click(function (){
+            		location.href="/merchants/inquiry/merchantServiceInq";
+            	});            	
+            }
+            
+            var selectService = function (){
+            	{% if admin_view.isNew == "false" %}
+				$.ajax({
+                    url: "/api/merchants/services/service",
+                    data : "serviceId=" + "{{admin_view.serviceId}}",
+                    type: 'GET',
+                    dataType : "json",
+                    contentType  : "application/json",
+                    async : true,
+                    success: function(data){
+                    	kpcUtil.setFormData("#serviceForm" , data)
+                    },
+                    error : function(e){
+                    	kpcUtil.errorHandling(e);
+                    }
+                });               	
+            	{% endif %}
+            }
+            
+            return {
+                init : function (){
+                    setDataTable();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            merchant_inq().init();
+            //임포트한 삭제 승인 요청 모달 초기화
+            approvalReuestDeleteModal("{{admin_view.serviceId}}", "MENU-0001", "AWRK-0003");
+            serviceBillingDetailModalInit();
+        });
+
+    </script>
+{% endblock %}

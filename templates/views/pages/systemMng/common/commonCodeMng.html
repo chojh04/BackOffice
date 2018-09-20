@@ -1,0 +1,362 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>시스템 코드 등록/관리</h3>
+                <h5><span class="red">[홈 > 시스템 관리 > 시스템 코드 등록/관리]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="systemCodeMngForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" >- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >코드 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="select2_single select2-selection--single form-control" id="type" name="type" >
+	                                    	<option value="">전체</option>
+	                                    </select>                                    
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<input type="text" id="code" name="code" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >코드명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<input type="text" id="name" name="name" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+	                    <div class="form">
+	                        <form action="#" id="commonCodeForm" class="form-bordered ">
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 타입 코드 추가 </label>
+	                                </div>
+	                            </div>
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">타입</label>
+	                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                   		<i class="fa"></i>
+											<input type="text" id="typeCode" name="typeCode" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">코드</label>
+	                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                   		<i class="fa"></i>
+											<input type="text" id="code" name="code" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">코드명</label>
+	                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12  input-icon left">
+	                                   		<i class="fa"></i>
+	                                    	<input type="text" id="codeName" name="codeName" class="form-control col-md-7 col-xs-12" >
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-12 col-xs-12">설명</label>
+	                                    <div class="custom-col-lg-10 col-md-12 col-sm-12 col-xs-12  input-icon left">
+											<input type="text" id="descText" name="descText" class="form-control col-md-7 col-xs-12">
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </form>
+		                    <br />
+		                    <div class="column-align-right">
+								{% if admin_view.pageAuth["insFlag"] == "1" %}                        
+								<a id="commonCodeFormRegist" class="dt-button btn green btn-outline" href="javascript:;"><span>저장</span></a>
+								{% endif %}                        	
+								<a id="commonCodeFormSearch" class="dt-button btn green btn-outline" href="javascript:;"><span>조회</span></a>
+								<a id="commonCodeFormClear" class="dt-button btn red btn-outline" href="javascript:;"><span>초기화</span></a>
+		                    </div>                                
+	                    </div>		
+	                    <br />			                        
+                       <table id="codeMngTable" class="table table-striped table-bordered" style="width: 100%" >
+                           <thead>
+                               <tr>
+                                   <th>순번</th>
+                                   <th>타입</th>
+                                   <th>코드</th>
+                                   <th>코드명</th>                                    
+                                   <th>설명</th>
+                                   <th>수정</th>
+                                   <th>삭제</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                           </tbody>
+                       </table>				
+						</div>
+					</div>
+				</div>
+			</div>                      	
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var userMenuMng_inq = function () {
+    
+        	var table = {};
+
+            var setSelect2 = function () {
+            	kpcUtil.setSelectBoxData({
+            		target : "#type", 
+            		apiUrl : "/api/systemMng/common/typeCodes",
+            		params : "",
+            		type   : "GET",
+            		option : {width : 400},	
+            		callBack : function (data,target,option){
+            			for(var idx in data.resultList){
+            				$(target).append($("<option></option>")
+            						.attr("value" , data.resultList[idx].typeCode)
+            						.text(data.resultList[idx].typeCode+"("+data.resultList[idx].codeName+")"));
+            			}
+            			$(target).select2(option);            			
+            		}
+            	});
+            }
+            var setDataTable = function () {
+                table = $('#codeMngTable')
+                    .on('click', '.upt', function () {
+                    	var typeCode = kpcUtil.nullToBlank($(this).attr("typeCode"));
+                    	var code     = kpcUtil.nullToBlank($(this).attr("code"    ));
+                    	var codeName = kpcUtil.nullToBlank($(this).attr("codeName"));
+                    	var descText = kpcUtil.nullToBlank($(this).attr("descText"));
+                    	$("#commonCodeForm #typeCode").val(typeCode).attr("readonly",true).focus();
+                    	$("#commonCodeForm #code"    ).val(code    ).attr("readonly",true).focus();
+                    	$("#commonCodeForm #codeName").val(codeName).focus();
+                    	$("#commonCodeForm #descText").val(descText).focus();
+                    })
+                    .on('click', '.del', function () {
+	                	if(kpcUtil.confirm("삭제 하시겠습니까?")){
+	                		var param = {
+	                			"typeCode" : kpcUtil.nullToBlank($(this).attr("typeCode")),
+	                			"code"     : kpcUtil.nullToBlank($(this).attr("code"    ))
+	                		};
+	                    	// detail data 조회
+							$.ajax({
+	                            url: "/api/systemMng/common/commonCode",
+	                            data: kpcUtil.jsonToStringify(param),
+	                            type: 'DELETE',
+	                            dataType : "json",
+	                            contentType  : "application/json",
+	                            async : true,
+	                            success: function(data){
+	                            	if(kpcUtil.deleteHandling(data))
+	                            		table.fnFilter();   
+	                            },
+	                            error : function(e){
+	                            	kpcUtil.errorHandling(e);
+	                            }
+	                       });                    	
+	                	}                    	
+                    })                
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/api/systemMng/common/commonCodes",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#systemCodeMngForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                 	// 상세보기 버튼
+                                    var detailButton = '<button class="btn btn-sm green btn-outline filter-submit margin-bottom-0 upt" ';
+                                		detailButton += 'typeCode="' + settings.json.data[i].typeCode+ '" ';
+                                		detailButton += 'code="' + settings.json.data[i].code+ '" ';
+                                		detailButton += 'codeName="' + settings.json.data[i].codeName+ '" ';
+                                		detailButton += 'descText="' + settings.json.data[i].descText+ '">';
+                                 		detailButton += '<i class="fa fa-search"></i>수정</button>';
+                                    $('td:eq(5)', settings.aoData[settings.aiDisplay[i]].nTr).html(detailButton);
+                                    
+                                    {% if admin_view.pageAuth["delFlag"] == "1" %}
+                                    // 삭제 버튼
+                                    var delButton  = '<button class="btn btn-sm green btn-outline filter-submit margin-bottom-0 del" ';
+	                                    delButton += 'menuId="' + settings.json.data[i].menuId+ '" ';
+	                                    delButton += 'typeCode="' + settings.json.data[i].typeCode+ '" ';
+	                                    delButton += 'code="' + settings.json.data[i].code+ '" >';
+	                                    delButton += '<i class="fa fa-search"></i>삭제</button>';
+                                    $('td:eq(6)', settings.aoData[settings.aiDisplay[i]].nTr).html(delButton);
+                                    {% endif %}
+                                }
+                                $(".selGroup").prop("checked" , false); // 전체 체크 박스 해제
+                                $(".insGroup").prop("checked" , false); // 전체 체크 박스 해제
+                                $(".updGroup").prop("checked" , false); // 전체 체크 박스 해제
+                                $(".delGroup").prop("checked" , false); // 전체 체크 박스 해제
+                            },
+                            columns: [
+                                {data: "rownum", defaultContent: "", width : 80, className: "column-align-right"},      // 순번
+                                {data: "typeCode", defaultContent: "", className: "column-align-center"},    // 타입
+                                {data: "code", defaultContent: "",className: "column-align-center"},       // 코드
+                                {data: "codeName", defaultContent: "",className: "column-align-left"},       // 코드명
+                                {data: "descText", defaultContent: "",className: "column-align-left"},       // 설명
+                                {data: "detail", defaultContent: "", width : 100, className: "column-align-center"},       // 설명
+                                {data: "delete", defaultContent: "", width : 100, className: "column-align-center"},       // 설명
+                            ],
+                            "dom": "<'table-scrollable'tr>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.2",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+            
+            var setPageEvents = function (){
+            	{% if admin_view.pageAuth["insFlag"] == "1" %}
+            	$("#commonCodeFormRegist").click(function (){
+                    if($("#commonCodeForm").valid() && kpcUtil.confirm("저장 하시겠습니까?") ){
+                        $.ajax({
+                           url: "/api/systemMng/common/commonCode",
+                           data: $("#commonCodeForm").serializeObject(),
+                           type: 'POST',
+                           dataType : "json",
+                           contentType  : "application/json",
+                           async : true,
+                           success: function(data){
+                               if(kpcUtil.successHandling("#commonCodeForm",data,true)){
+                            	   table.fnFilter();                            	   
+                               }
+                               
+                           },
+                           error : function(e){
+                           	kpcUtil.errorHandling(e);
+                           }
+                       }); 
+                   }
+            	});
+            	{% endif %}
+            	$("#commonCodeFormClear").click(function (){
+            		kpcUtil.resetForm("#commonCodeForm");
+                	$("#commonCodeForm #typeCode").attr("readonly",false);
+                	$("#commonCodeForm #code"    ).attr("readonly",false);            		
+            	});
+            	$("#commonCodeFormSearch").click(function (){
+            		table.fnFilter();
+            	});
+    			// 조회 이벤트
+            	kpcUtil.serachFormEvent({
+            		selects : "#systemCodeMngForm select",
+            		inputs : "#systemCodeMngForm input",
+            		callback : function (){
+            			$("#commonCodeFormSearch").trigger("click");
+            		}
+            	});                	
+            }
+            var setFormValidate = function (){
+                $("#commonCodeForm").validate({
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    rules: {
+                    	typeCode : {
+                            required : true,
+                        },
+                        code : {
+                            required : true,
+                        },
+                        codeName : {
+                            required : true,
+                        },
+                    },
+                    messages : {
+                    	typeCode : {
+                            required : "타입을 입력하세요.",
+                        },
+                        code : {
+                            required : "코드를 입력하세요.",
+                        },
+                        codeName : {
+                            required : "코드명을 입력하세요.",
+                        },
+                    },
+                    invalidHandler:function (form,validator){
+                    	if(validator.numberOfInvalids()){
+                    		kpcUtil.customAlert("필수항목이 입력되지 않았습니다.");
+                    	}
+                    },                    
+                    errorPlacement : function (error , element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	icon.removeClass('fa-check').addClass("fa-warning");
+                    	icon.attr("data-original-title" , error.text()).tooltip({"container" : "body"});
+                    },
+                    highlight: function (element) { // hightlight error inputs
+                       	$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+                    },
+                    success : function (label,element){
+                    	var icon = $(element).parent(".input-icon").children('i');
+                    	$(element).closest(".form-group").removeClass("has-error").addClass("has-success");
+                    	icon.removeClass('fa-warning').addClass("fa-check");
+                    },
+                });
+
+            }            
+
+            return {
+                init : function (){
+                    setSelect2();
+                    setFormValidate();
+                    setDataTable();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            userMenuMng_inq().init();
+        });
+    </script>
+{% endblock %}

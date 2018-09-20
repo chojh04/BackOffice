@@ -1,0 +1,266 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>쿠폰 내역 조회</h3>
+                <h5><span class="red">[홈 > 쿠폰 관리 > 쿠폰 내역 조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="couponSearchForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id="orderNo" name="orderNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">쿠폰번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                    	<input type="text" id="couponNo" name="couponNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">승인번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id="admitNo" name="admitNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">상태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="status" name="status" >
+	                                    	<option value="">전체</option>
+	                                    	<option value="U">사용</option>
+	                                    	<option value="P">미사용</option>
+	                                    </select>                                         
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래기간</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                                        <input type="text" class="form-control col-md-7" id="startDate" name="startDate" >
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <table id="couponChargeTable" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>쿠폰번호</th>
+                                    <th>상태</th>
+                                    <th>거래일(발행일)</th>
+                                    <th>거래시간(발행시간)</th>
+                                    <th>거래번호</th>
+                                    <th>승인번호</th>
+                                    <th>금액</th>
+                                    <th>사용카드번호</th>
+                                    <th>연동아이디</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var coupon = function () {
+        	var table;
+            var setDatePicker = function (){
+                kpcUtil.setDateRangePicker('#startDate');
+            }
+            var setSelect2 = function () {
+                $("#status").select2({
+                    width: 90,
+                });
+            }            
+            var setDataTable = function () {
+                table = $('#couponChargeTable')
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,
+                            "ajax": {
+                                "url": "/api/coupon/charge/couponCharges",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#couponSearchForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                // row number 추가
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                
+                                $(".dataTables_length span").remove();
+                                if(settings.aiDisplay.length > 0){
+									var data = table.fnSettings().json;
+									
+									var total = " 총 금액:  " + kpcUtil.numberWithCommas(data.totalData.total_amount) 
+											  + ", 페이지 총 금액 : " +kpcUtil.numberWithCommas(data.totalData.page_amount)+"";                                	
+	                                var html = "<span class='red'> "+ total +"</span>";
+	                                $(".dataTables_length").append(html).addClass("col-md-12");
+                                }
+                                
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "couponChargeTable",
+                            		menuId : "{{session['menuId']}}", 
+                            		targetTable : table 
+                            	});
+                            },
+                            columns: [
+                                {data : "rownum" , defaultContent: "", className: "column-align-right"}, // 순번
+                                {data : "coupon_no" , defaultContent: "", className: "column-align-right"}, // 쿠폰번호
+                                {
+                                	data : "status" ,
+	                                defaultContent: "",
+	                                width : 90,
+	                                className: "column-align-center" ,
+	                                render : function (data, type , full , meta){
+	                                	return kpcUtil.nullToBlank(full.status) == "" ? "미사용" : full.status; 
+	                                }
+                                },  // 상태                                    
+                                {
+                                	data : "reg_dt" ,
+	                                defaultContent: "",
+	                                width : 130,
+	                                className: "column-align-center" ,
+	                                render : function (data, type , full , meta){
+	                                	return kpcUtil.setDateFormat(full.reg_dt , "YYYY-MM-DD");
+	                                }
+                                },  // 거래일                 
+                                {
+                                	data : "reg_dt" , 
+	                                defaultContent: "",
+	                                width : 130,
+	                                className: "column-align-center" ,  	                                
+	                                render : function (data, type , full , meta){
+	                                	return kpcUtil.setDateFormat(full.reg_dt , "HH:mm:ss");
+	                                }
+                                }, // 거래일시
+                                {data : "order_no" , defaultContent: "", className: "column-align-right"}, // 주문번호                   
+                                {data : "admit_no" , defaultContent: "", className: "column-align-right"}, // 승인번호                   
+                                {
+                                	data : "charge_amt" , 
+	                                defaultContent: "", 
+	                                className: "column-align-right",
+	                                render : function (data, type , full , meta){
+	                                	return kpcUtil.numberWithCommas(full.charge_amt);
+	                                }
+                                }, // 금액
+                                {data : "barcode_no" , defaultContent: "", className: "column-align-right"}, // 사용카드번호
+                                {data : "merchant_id" , defaultContent: "", className: "column-align-right"}, // 연동아이디
+                            ],
+                            buttons: [
+								{
+                                	text: 'Layout',
+                                	className: 'dt-button btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+          									columnArray : $(table).find("thead>tr>th").siblings().not(".checkboxes"),
+          									tableId : "couponChargeTable",
+          									menuId : "{{session['menuId']}}",
+          									targetTable : table
+              							}); 
+                                    }
+								},
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                        table.fnFilter();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+            
+            var setPageEvents = function (){
+    			// 조회 이벤트
+            	kpcUtil.serachFormEvent({
+            		selects : "#couponSearchForm select",
+            		inputs : "#couponSearchForm input",
+            		callback : function (){
+            			table.fnFilter();
+            		}
+            	});                   	
+            }
+            return {
+                init : function (){
+                    setDatePicker();
+                    setDataTable();
+                    setPageEvents();
+                    setSelect2();
+                    
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            coupon().init();
+        });
+    </script>
+{% endblock %}

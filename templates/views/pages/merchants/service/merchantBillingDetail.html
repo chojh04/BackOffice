@@ -1,0 +1,198 @@
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form">
+                        <form action="#" id="billingForm" class="form-bordered ">
+                            <input type="hidden" id="serviceId" name="serviceId" value="{{admin_view.serviceId}}">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 정산정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+                                        <span  id="serviceBillingId" class="span-vertical-middle col-md-7 col-xs-12"  ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+										<span  id="name" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    	<span>
+                                    		<b>[계좌정보]</b>
+                                    	</span> 
+                                    </label>
+                                </div>
+                            </div>                            
+                            <div class="col-md-12 col-sm-12 col-xs-12" id="accDiv">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">은행명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+                                    	
+										<span  id="bankNm" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12 ">계좌번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+                                    	
+										<span  id="bankAccNo"  class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">예금주</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+                                    	
+										<span  id="bankHolder" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>[거래처 담당자정보]</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+										<span  id="billingNm" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span  id="billingTel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 이메일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+										<span  id="billingEmail" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>[KPC 담당자정보]</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+										<span  id="kpcBillingNm"  class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span  id="kpcBillingTel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 이메일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+										<span  id="kpcBillingEmail" class="span-vertical-middle col-md-7 col-xs-12" ></span>
+                                    </div>
+                                </div>                                
+                            </div>  
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12"><b>[정산정보]</b></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+	                                    <span  id="dividerName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                    <span  id="codeName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산주기</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+	                                    <span  id="billingDurationName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span  id="billingDtName"  class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">수수료 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span  id="merchantCommTypeName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 수수료</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+	                                    <span  id="merchantCommisionName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+										<span id="billingCommTypeName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">부가세 타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+										<span  id="merchantTaxTypeName"  class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                            </div>    
+                        </form>
+                    </div>
+            </div>
+    <script type="text/javascript">
+
+        var billing = function () {
+            var setPageEvents = function (){
+					$.ajax({
+	                    url: "/api/merchants/services/service/billing",
+	                    data : "serviceBillingId={{request.args.get('serviceBillingId')}}",
+	                    type: 'GET',
+	                    dataType : "json",
+	                    contentType  : "application/json",
+					}).done(function(data){
+                    	kpcUtil.setFormData("#billingForm" , data)
+                    	$("#billingForm").valid();
+	                }).fail(function(e){
+	                    	kpcUtil.errorHandling(e);
+	                });
+            }
+            
+            return {
+                init : function (){
+                	setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            billing().init();
+        });
+
+    </script>

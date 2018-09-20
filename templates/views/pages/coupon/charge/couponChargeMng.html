@@ -1,0 +1,454 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>쿠폰 상세 정보 조회</h3>
+                <h5><span class="red">[홈 > 쿠폰 관리 > 쿠폰 상세 정보 조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form ">
+                        <form action="#" id="searchForm" class="form-bordered ">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" >- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >쿠폰 번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<input type="text" id="couponNo" name="couponNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+	                    <br />
+	                    <div class="column-align-right">
+							<a id="Search" class="dt-button btn green btn-outline" href="javascript:;"><span>조회</span></a>
+	                    </div>                          
+	                    <div class="form">
+	                        <form action="#" id="couponUpdForm" class="form-bordered ">
+                                <input type="hidden" id="couponNo" name="couponNo">
+								<input type="hidden" id="status" name="status">
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" ><b>[발행정보]</b></label>
+	                                </div>
+	                            </div>	                        
+	                        	<div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">발행번호</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span  id="masterNo" class="span-vertical-middle col-md-12 col-xs-12"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">쿠폰명</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span  id="title" class="span-vertical-middle col-md-12 col-xs-12"></span>
+	                                    </div>
+	                                </div>	                                
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">쿠폰구분</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">쿠폰유형</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span  id="couponType" class="span-vertical-middle col-md-12 col-xs-12"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">발행금액</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span  id="amount" class="span-vertical-middle col-md-12 col-xs-12" isNumber="true"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">발행일</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+											<span  id="issueDate" class="span-vertical-middle col-md-12 col-xs-12" isDateField="true"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">유효기간</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+											<span  id="expireDate" class="span-vertical-middle col-md-12 col-xs-12" isDateField="true"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">지급일</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+											<span  id="provideDate" class="span-vertical-middle col-md-12 col-xs-12" isDateField="true"></span>
+	                                    </div>
+	                                </div>	                                
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">폐기일</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+											<span  id="disuseDate" class="span-vertical-middle col-md-12 col-xs-12" isDateField="true"></span>
+	                                    </div>
+	                                </div>
+
+                                </div>
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" ><b>[사용정보]</b></label>
+	                                </div>
+	                            </div>	                        
+	                        	<div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">충전금액</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span  id="charge_amt" class="span-vertical-middle col-md-12 col-xs-12" isNumber="true"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사용일</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+											<span  id="useDate" class="span-vertical-middle col-md-12 col-xs-12" isDateField="true"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">취소일</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+											<span  id="cancelDate" class="span-vertical-middle col-md-12 col-xs-12" isDateField="true"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래번호</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span  id="order_no" class="span-vertical-middle col-md-12 col-xs-12"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">승인번호</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+											<span  id="admit_no" class="span-vertical-middle col-md-12 col-xs-12" ></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사용카드번호</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+											<span  id="barcode_no" class="span-vertical-middle col-md-12 col-xs-12" ></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">연동아이디</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                        <span  id="merchant_id" class="span-vertical-middle col-md-12 col-xs-12"></span>
+	                                    </div>
+	                                </div>
+                                </div>
+	                            <div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+	                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" ><b>[쿠폰정보]</b></label>
+	                                </div>
+	                            </div>	                        
+	                        	<div class="col-md-12 col-sm-12 col-xs-12">
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">쿠폰상태</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+											<span  id="statusName" class="span-vertical-middle col-md-12 col-xs-12"></span>
+	                                    </div>
+	                                </div>
+	                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+	                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사용제한</label>
+	                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg ">
+											<span  id="restrictFlag" class="span-vertical-middle col-md-12 col-xs-12"></span>
+	                                    </div>
+	                                </div>
+                                </div>
+	                        </form>
+		                    <br />
+		                    <div class="column-align-right">
+		                    	<a id="cardLimitHistory" class="dt-button btn green btn-outline" href="javascript:;"><span>제한이력</span></a>
+								{% if admin_view.pageAuth["insFlag"] == "1" %}                        
+								<button id="couponUpdExtend" class="dt-button btn green btn-outline" href="javascript:;" style="display: none;">연장</button>
+								<button id="couponExtensionRequestBtn" class="hidden"></button>
+								
+								<a id="couponUpdUseLimit" class="dt-button btn green btn-outline" href="javascript:;" style="display: none;"><span>사용제한</span></a>
+								<a id="couponUpdUseLimitCancel" class="dt-button btn green btn-outline" href="javascript:;" style="display: none;"><span>사용해제</span></a>
+								<button id="unRestrictRequestBtn" class="hidden"></button>
+								{% endif %}                        	
+								<a id="couponUpdFormClear" class="dt-button btn red btn-outline" href="javascript:;"><span>초기화</span></a>
+		                    </div>                                
+	                    </div>		
+					</div>
+				</div>
+			</div>                      	
+        </div>
+    </div>
+</div>
+
+<!-- 승인 관련 모달 include -->
+{% include 'views/pages/coupon/popup/approval-request-coupon-extension-modal.html' %}
+{% include 'views/pages/coupon/popup/approval-request-coupon-un-restrict-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>  
+    <script src="/assets/js/approval/approval.js"></script>      
+    <script type="text/javascript">
+
+        var couponMng = function () {
+        	var setDatePicker = function (){
+        	}
+            var setPageEvents = function (){
+            	{% if admin_view.pageAuth["insFlag"] == "1" %}
+            	
+            	
+            	if("{{admin_view.couponNo}}" !== "") {
+            		$("#couponNo").val("{{admin_view.couponNo}}");
+            		couponSearch();
+
+            		
+            		if ("{{admin_view.updateApproval}}" === "true") {
+            			if("{{admin_view.apprReqType}}" === "extendExpireDate"){
+	            			couponExtensionRequestUpdateTrigger("{{admin_view.apprSeq}}", "AWRK-0005");
+            			}
+            			else if ("{{admin_view.apprReqType}}" === "unRestriction") {
+            				couponUnRestrictequestUpdateTrigger("{{admin_view.apprSeq}}", "AWRK-0005");	
+            			}
+            		}
+            	}
+            	
+            	
+            	// 충전권 연장
+            	$("#couponUpdExtend").click(function (){
+            		
+           			//체크전에 해당 충전권에 대한 승인 요청건이 있는지 확인.
+        	   		var isExist = approval.existApprovalRequest($("#couponUpdForm #couponNo").val());
+        	   		if (!isExist) {
+	            		if($("#couponUpdForm #couponNo").val() ===  ""){
+	            			kpcUtil.customAlert("쿠폰권 번호 조회 후 이용바랍니다.");
+	            			$("#searchForm #couponNo").focus();
+	            			return false;
+	            		}
+	            		if($("#couponUpdForm #status").val() ===  "D"){
+	            			kpcUtil.customAlert("폐기 충전권 입니다.");
+	            			return false;
+	            		}            		
+	            		if($("#couponUpdForm #status").val() ===  "U"){
+	            			kpcUtil.customAlert("이미 사용된 충전권 입니다.");
+	            			return false;
+	            		}            		
+	            		if($("#couponUpdForm #restrictFlag").text() ===  "Y"){
+	            			kpcUtil.customAlert("사용 제한 중인 충전권입니다.\n사용제한 해제 후 연장 바랍니다.");
+	            			return false;
+	            		}            		
+	            		if($("#couponUpdForm #disuseDate").text() !==  ""){
+	            			kpcUtil.customAlert("폐기된 충전권입니다.");
+	            			return false;
+	            		}            		
+	            		
+	            		var expireDate = $("#expireDate").text();
+	            		
+	            		couponExtensionRequestBtnTrigger($("#couponUpdForm #couponNo").val(), "AWRK-0005", expireDate);
+        	   		}
+              
+            	});
+            	// 충전권 사용제한
+            	$("#couponUpdUseLimit").click(function (){
+            		if($("#couponUpdForm #couponNo").val() ===  ""){
+            			kpcUtil.customAlert("쿠폰권 번호 조회 후 이용바랍니다.");
+            			$("#searchForm #couponNo").focus();
+            			return false;
+            		}
+            		if($("#couponUpdForm #status").val() ===  "D"){
+            			kpcUtil.customAlert("폐기 충전권 입니다.");
+            			return false;
+            		}            		
+            		if($("#couponUpdForm #status").val() ===  "U"){
+            			kpcUtil.customAlert("이미 사용된 충전권 입니다.");
+            			return false;
+            		}                    		
+            		if($("#couponUpdForm #restrictFlag").text() ===  "Y"){
+            			kpcUtil.customAlert("사용 제한 중인 충전권입니다.");
+            			return false;
+            		}            		
+            		if($("#couponUpdForm #disuseDate").text() !==  ""){
+            			kpcUtil.customAlert("폐기된 충전권입니다.");
+            			return false;
+            		}            		            		
+                	kpcUtil.openSystemHistoryConfirm({
+                		confirmMsg : "사용제한 하시겠습니까?<br/>변경사유 입력 후 확인버튼을 눌러주세요",
+                		confirmTitle : "사용제한",
+                		typeCode : "CUPS-0002",
+                		desc1Obj : "#couponNo",
+                		desc2Obj : "#desc2",
+                		desc3Obj : "#desc3",
+                		menuId : "CPN-0001",            
+                		alertMsg : "사용제한 되었습니다.",
+                		targetForm : "#couponUpdForm",       
+                		beforeAjaxParam : {
+                            url: "/api/coupon/charge/couponChargeMng/useLimit",
+                            data: $("#couponUpdForm").serializeObject(),
+                            type: 'PUT',
+                            dataType : "json",
+                            contentType  : "application/json",
+                            async : true,
+                        },
+                        afterCAllBack : couponSearch
+                	});              		
+            	});
+            	
+            	// 충전권 사용해제
+            	$("#couponUpdUseLimitCancel").click(function (){
+
+           			//체크전에 해당 충전권에 대한 승인 요청건이 있는지 확인.
+        	   		var isExist = approval.existApprovalRequest($("#couponUpdForm #couponNo").val());
+           			if (!isExist) {
+                		if($("#couponUpdForm #couponNo").val() ===  ""){
+                			kpcUtil.customAlert("쿠폰권 번호 조회 후 이용바랍니다.");
+                			$("#searchForm #couponNo").focus();
+                			return false;
+                		}
+                		if($("#couponUpdForm #status").val() ===  "D"){
+                			kpcUtil.customAlert("폐기 충전권 입니다.");
+                			return false;
+                		}            		
+                		if($("#couponUpdForm #status").val() ===  "U"){
+                			kpcUtil.customAlert("이미 사용된 충전권 입니다.");
+                			return false;
+                		}                    		
+                		if($("#couponUpdForm #restrictFlag").text() !=  "Y"){
+                			kpcUtil.customAlert("사용제한 충전권이 아닙니다.");
+                			return false;
+                		}            	
+                		if($("#couponUpdForm #disuseDate").text() !==  ""){
+                			kpcUtil.customAlert("폐기된 충전권입니다.");
+                			return false;
+                		}
+                		
+                		kconUnRestrictRequestBtnTrigger($("#couponUpdForm #couponNo").val(), "AWRK-0005");
+           			}
+            	});
+            	
+            	{% endif %}
+            	// 충전권 조회
+            	$("#Search").click(function (){
+            		if($("#searchForm #couponNo").val() === ""){
+            			kpcUtil.customAlert("충전권 번호를 입력해주세요.");
+            			$("#couponNo").focus();
+            			return false;
+            		}
+            		var couponNumber = $("#searchForm #couponNo").val();
+            		couponSearch();
+
+            	});
+            	$("#couponUpdFormClear").click(function (){
+					$("#couponUpdExtend").css("display", "none");
+					$("#couponUpdUseLimit").css("display", "none");
+					$("#couponUpdUseLimitCancel").css("display", "none");             		
+            		kpcUtil.resetSpanForm("#couponUpdForm");
+            		$("#couponNo").val("");
+            	});
+            	
+            	$("#cardLimitHistory").click(function (){
+            		if($("#searchForm #couponNo").val() === ""){
+            			kpcUtil.customAlert("쿠폰 번호를 입력해주세요.");
+            			$("#searchForm #couponNo").focus();
+            			return false;
+            		}
+            		
+            		kpcUtil.openSystemHistoryModal({
+            			menuId : "CPN-0001",
+            			desc1 : "#searchForm #couponNo"
+            		});
+            	});
+
+    			// 조회 이벤트
+            	kpcUtil.serachFormEvent({
+            		inputs : "#searchForm input",
+            		callback : function (){
+            			$("#Search").trigger("click");
+            		}
+            	});                	
+
+            }
+            var couponSearch = function (){
+                $.ajax({
+	                   url: "/api/coupon/charge/couponChargeMng",
+	                   data: $("#searchForm").serialize(),
+	                   type: 'GET',
+	                   dataType : "json",
+	                   contentType  : "application/json",
+	            }).done(function(data){
+               	   if(kpcUtil.kpcApiSuccessHandling("#couponUpdForm",data.detailData,false)){
+               		   
+						kpcUtil.setFormData("#couponUpdForm",data.listData);
+					    kpcUtil.setFormData("#couponUpdForm",data.detailData);
+               	   	    // I:발행, P:미사용, D:폐기, U:사용
+               	   	    if(data.detailData.status === "I"){
+               	   	        $("#couponUpdForm #statusName").text("발행");   
+               	   	    }else if(data.detailData.status === "P"){
+							$("#couponUpdForm #statusName").text("미사용");
+               	   	    }else if(data.detailData.status === "D"){
+							$("#couponUpdForm #statusName").text("폐기");
+               	   	    }else if(data.detailData.status === "U"){
+							$("#couponUpdForm #statusName").text("사용");
+               	   	    }
+               	   	    // I:발행, P:지급, D:폐기, U:사용
+               	   	    if(data.detailData.couponType === "100"){
+               	   	        $("#couponUpdForm #couponType").text("충전권");   
+               	   	    }else if(data.detailData.couponType === "200"){
+               	   	        $("#couponUpdForm #couponType").text("교환권");   
+               	   	    }
+               	   	    
+               	   	    if($("#couponUpdForm #status").val() !==  "U" && $("#couponUpdForm #status").val() !== "I"){
+	               	   	    if(data.detailData.restrictFlag === "Y"){
+	               	   	    	$("#couponUpdUseLimitCancel").css("display" , "inline-block");	
+	               	   	  		$("#couponUpdUseLimit").css("display" , "none");
+	               	   	    }else{
+	               	   	  		$("#couponUpdUseLimit").css("display" , "inline-block");
+			               	   	$("#couponUpdUseLimitCancel").css("display" , "none");
+	               	   	    }
+	               	   	    $("#couponUpdExtend").css("display" , "inline-block");	
+               	   	    } 
+               	        
+               	   }else {
+               		   kpcUtil.resetSpanForm("#couponUpdForm");
+               	   }
+	            }).fail(function(e){
+	            	console.log(e);
+	                kpcUtil.errorHandling(e);
+                });             
+    
+            }
+            return {
+                init : function (){
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            kconExtensionModalInit();
+            kconUnRestrictModalInit();
+            couponMng().init();
+        });
+    </script>
+{% endblock %}

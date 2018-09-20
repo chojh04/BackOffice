@@ -1,0 +1,141 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+	<br />
+	<table id="settlementDeatilTable" class="table table-striped table-bordered" style="width: 100%">
+	    <thead>
+	        <tr>
+	        	<th>순번</th>
+	        	<th>거래처</th>
+	        	<th>영업일자</th>
+	        	<th>지불상태</th>
+	        	<th>주문번호</th>
+	        	<th>승인번호</th>
+	        	<th>거래금액</th>
+	        	<th>불일치내역</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	    </tbody>
+	</table>
+</div>
+    <script type="text/javascript">
+
+        var settlementDetail = function () {
+        	
+        	var table;
+        	
+            var setDataTable = function () {
+                table = $('#settlementDeatilTable')
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/api/settlementApi/settlement/hmStatistics/errorDetail",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+        	                    	var params = {
+        		                    		"jobDivider" : "{{request.args.get('jobDivider')}}",
+        		                    		"workDt" : "{{request.args.get('workDt')}}",
+        		                    	};
+        	                    	parameter.formData = JSON.stringify(params);     
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                            },
+                            columns: [
+                                  {data : "rownum" , defaultContent: "",width : 60, className: "column-align-center"}, // 순번
+                                  {data : "jobDivider" , defaultContent: "",width : 60, className: "column-align-center"}, // 거래처
+                                  {
+                                    	data : "saleDt" ,
+    	                                defaultContent: "",
+    	                                width : 90,
+    	                                className: "column-align-center" ,
+    	                                render : function (data, type , full , meta){
+    	                                	if(typeof full.saleDt !== "undefined"){
+	    	                                	return kpcUtil.setDateFormat(full.saleDt, "YYYY-MM-DD");
+    	                                	}else {
+    	                                		return "";
+    	                                	}
+    	                                }
+                                  },  // 영업일자   
+                                  {data : "dealType" , defaultContent: "",width : 60, className: "column-align-center"}, // 상태
+                                  {data : "dealNo" , defaultContent: "",width : 60, className: "column-align-center"}, // 점포코드
+                                  {data : "approvalNo" , defaultContent: "",width : 60, className: "column-align-center"}, // 점포코드
+                                  {
+                                    	data : "dealAmt" , 
+    	                                defaultContent: "", 
+    	                                width : 90,
+    	                                className: "column-align-right" ,  	                                
+    	                                render : function (data, type , full , meta){
+    	                                	return kpcUtil.numberWithCommas(full.dealAmt);
+    	                                }
+                                  }, // 거래금액
+                                  {data : "statusNm" , defaultContent: "",width : 60, className: "column-align-center"}, // 불일치 내역
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/settlementApi/settlement/hmStatistics/errorDetailExcel",
+                	                            type: 'GET',
+                	                            data : "jobDivider={{request.args.get('jobDivider')}}&workDt={{request.args.get('workDt')}}",
+                	                            contentType  : "application/json",
+                	                            async : true,
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+                    	
+        	
+            var setPageEvents = function (){
+            	setDataTable();
+            }
+            
+            return {
+                init : function (){
+                	setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            settlementDetail().init();
+        });
+
+    </script>

@@ -1,0 +1,505 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>승인 신청내역 조회</h3>
+                <h5><span class="red">[홈 > 승인 관리 > 승인 신청내역 조회]</span></h5>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="searchForm" class="form-bordered ">
+                        	<input type="hidden" id="datableOffset" name="datableOffset" value="0">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" >- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >승인유형</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<select class="form-control" id="workType" name="workType" >
+	                                    	<option value="">전체</option>
+	                                    	<option value="'AWRK-0001'">대표 거래처</option>
+	                                    	<option value="'AWRK-0002'">일반 거래처</option>
+	                                    	<option value="'AWRK-0003'">서비스 정보</option>
+	                                    	<option value="'AWRK-0004'">정산 정보</option>
+	                                    	<option value="'AWRK-0011'">카드잔액환불</option>
+	                                    	<option value="'AWRK-0012'">카드 사용제한</option>
+	                                    	<option value="'AWRK-0008'">정산 수수료 정보</option>
+	                                    	<option value="'AWRK-0005'">충전권</option>
+	                                    	<option value="'AWRK-0009'">KCON 상품</option>
+	                                    	<option value="'AWRK-0010'">KCON 쿠폰</option>
+	                                    	<option value="'AWRK-0006'">정산내역명세서</option>
+	                                    	<option value="'AWRK-0007'">경비</option>
+	                                    </select>                                     
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">키워드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+										<input type="text" id="keyword" name="keyword" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >진행상태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="status" name="status" >
+	                                    	<option value="">전체</option>
+	                                    	<option value="'ARST-0001', 'ARST-0005'" selected >승인대기</option>
+	                                    	<option value="'ARST-0003', 'ARST-0007'" >승인반려</option>
+	                                    	<option value="'ARST-0002', 'ARST-0006'" >승인완료</option>
+	                                    	<option value="'ARST-0004'" >요청취소</option>
+	                                    </select>      
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >처리구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<select class="form-control" id="reqType" name="reqType" >
+	                                    	<option value="">전체</option>
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >승인자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <input type="text" id="apprEmpName" name="apprEmpName" class="form-control col-md-7 col-xs-12" maxlength="12" >                                  
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12" >조회기간</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+                       					<select class="form-control" id="searchDateType" name="searchDateType" >
+	                                        <option value="reqDate">신청일</option>
+	                                        <option value="apprDate">처리일</option>
+	                                    </select>
+										<input type="text" class="form-control input-date-picker-long" id="searchDate" name="searchDate" >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">정렬기준</label>
+									<div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline md-radio-inline" style="margin:0px">
+                       					<select class="form-control" id="searchDateOrderType" name="searchDateOrderType" >
+	                                        <option value="reqDate">신청일</option>
+	                                        <option value="apprDate">처리일</option>
+	                                    </select>
+                                    	<div class="md-radio" style="margin-left: 20px;">
+                                    		<input type="radio" id="orderAsc" name="orderType" value="ASC" >
+                                    		<label for="orderAsc">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			오름차순
+                                    		</label>
+                                    	</div>      
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="orderDesc" name="orderType" value="DESC" checked="checked">
+                                    		<label for="orderDesc">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			내림차순
+                                    		</label>
+                                    	</div> 
+                                   	</div>
+                                </div>
+                                <!-- <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">처리일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="apprOrder1" name="apprDateOrdering" value="ASC">
+                                    		<label for="apprOrder1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			오름차순
+                                    		</label>
+                                    	</div>      
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="apprOrder2" name="apprDateOrdering" value="DESC" checked="checked">
+                                    		<label for="apprOrder2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			내림차순
+                                    		</label>
+                                    	</div>                                                                        	         
+                                    </div>
+                                </div> -->
+                            </div>
+                        </form>
+                        <br/>
+	                    <div class="column-align-right">
+							<a id="search" class="dt-button btn green btn-outline" href="javascript:;"><span>조회</span></a>
+	                    </div>                                
+                        <br />
+                        <table id="approvalTable" class="table table-striped table-bordered " style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>승인유형</th>
+                                    <th>키워드</th>
+                                    <th>처리구분</th>
+                                    <th>진행상태</th>
+                                    <th>신청일</th>
+                                    <th>처리일</th>
+                                    <th>승인자</th>
+                                    <th>보기</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/datatables.net-select/js/dataTables.select.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/kpcDateUtil.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+    <script type="text/javascript">
+    
+        var approvalRequestListInq = function () {
+        	
+        	var table = {};
+        	
+        	//검색 조건 설정
+        	{% if admin_view.searchData is not none %}
+        	
+    		var searchData = {{admin_view.searchData| tojson}}
+    		$("#workType").val(searchData.workType);
+    		$("#keyword").val(searchData.keyword);
+    		$("#status").val(searchData.status).trigger("change");
+    		$("#reqType").val(searchData.reqType).trigger("change");
+    		
+    		$("#reqEmpName").val(searchData.reqEmpName);
+    		$("#apprEmpName").val(searchData.apprEmpName);
+    		
+    		$("#searchDateType").val(searchData.searchDateType).trigger("change");
+           	
+    		var searchDate = searchData.searchDate.split(" - ");
+    		
+    		kpcUtil.setStartEndDateRangePicker("#searchDate",searchDate[0], searchDate[1]);
+
+    		$("#searchDateOrderType").val(searchData.searchDateOrderType).trigger("change");
+    		$('input:radio[name=orderType]:input[value='+searchData.orderType+']').attr("checked", true);
+    		
+    		$("#datableOffset").val(searchData.datableOffset);
+        	{% endif %}
+        	
+        	//검색조건 날짜 초기값 설정
+            var setDatePicker = function (){
+            	{% if admin_view.searchData is none %}
+	            	kpcUtil.setDateRangeStartDateOptionPicker('#searchDate', moment().add(-1, 'months').format("YYYY-MM-DD"))
+            	{% endif %}	
+	            	
+            	$('#searchDate').on('change' , function(){
+                	var searchDate = $("#searchDate").val().split(" - ");
+                	var startDate = moment(searchDate[0])
+                	var endDate = moment(searchDate[1])
+					
+                	
+					if (dateRangeDiff(startDate, endDate, "months", 2)) {
+						kpcUtil.customAlert("2개월 이내의 날짜를 입력하세요.");
+						$('.cancelBtn').trigger("click");
+					}
+                	
+            	});
+            }
+        	
+            var setSelect2 = function () {
+                $("#status").select2({
+                    width: 186,
+                });
+                $("#searchDateType").select2();
+                $("#searchDateOrderType").select2();
+                $("#workType").select2({
+                    width: 186,
+                });
+                
+            }
+            
+            var setCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+            		target : ["#searchForm #reqType"], 
+            		apiUrl : "/api/systemMng/common/commonCodeList",
+            		params : {type :'AREQ'},
+            		type   : "GET",
+            		option : {width : 186},	
+            		callBack : function (data,target,option){
+            			for(var idx in data){
+            				for(var idx2 in data[idx].resultList){
+	            				$(target[idx]).append($("<option></option>")
+	            						.attr("value" , data[idx].resultList[idx2].code)
+	            						.text(data[idx].resultList[idx2].codeName));
+            				}
+            				$(target[idx]).select2(option);       
+            			}
+            			
+            			//승인유형, 처리구분 설정
+                    	{% if admin_view.searchData is not none %}
+	                		var searchData = {{admin_view.searchData| tojson}}
+	            			$("#workType").val(searchData.workType).trigger("change");
+	            			$("#reqType").val(searchData.reqType).trigger("change");
+                    	{% endif %}
+            		}
+            	});             	
+            }
+
+            var setDataTable = function () {
+
+            	table = $('#approvalTable')
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "displayStart": $("#datableOffset").val(),
+                            "ajax": {
+                                "url": "/api/approvals/request",  /* api def approvalApi.readApprovalRequestList(); */
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#searchForm").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+								
+                            	$("#datableOffset").val(settings._iDisplayStart);
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                	
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + Number(settings._iDisplayStart));
+                                    var detailBtn = '<a class="btn btn-sm green btn-outline" '
+                                    	+ 'href="/approval/request/detail?apprSeq='+settings.json.data[i].seq
+                                   		+ '&apprWorkType='+settings.json.data[i].workType
+                                   		+ '&apprStatus='+settings.json.data[i].status
+                                   		+ '&'+$("#searchForm").serialize()
+                                   		+ '" role="button">상세보기 </a>'
+                                    $('td:eq(8)', settings.aoData[settings.aiDisplay[i]].nTr).html(detailBtn)
+                                }
+                            },
+                            columns: [
+                                {data: "rownum", defaultContent: "", width : 70, className: "column-align-center"},      // 번호
+                                {	data: "workType", width : 150, defaultContent: "", className: "column-align-center",
+                                	// 승인유형
+                                 	render : function (data, type , full , meta){
+   	                                	return full.workTypeName;
+   	                                }
+                                },  
+                                {	data: "refTitle", width : 250,  defaultContent: "", className: "column-align-center" }, //키워드
+                                {
+                                	data: "reqType", width : 150, defaultContent: "", className: "column-align-center",
+                               		// 처리구분
+                                 	render : function (data, type , full , meta){
+   	                                	return full.reqTypeName;
+   	                                }
+                                },
+                                {	
+                                	data: "status", width : 90, defaultContent: "", className: "column-align-center",
+                                	// 진행상태
+                                	render : function (data, type , full , meta){
+                                		return full.statusName; 
+  	                                }
+                                },
+                                {
+                                	// 신청일
+                                	data : "reqDate" , defaultContent: "", width : 90, className: "column-align-center" ,
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.reqDate , "YYYY-MM-DD");
+  	                                }
+                                },         
+                                {
+                                	// 처리일
+                                	data : "apprDate" ,
+  	                                defaultContent: "",
+  	                                width : 90,
+  	                                className: "column-align-center" ,
+  	                                render : function (data, type , full , meta){ 	                                	
+  	                           			if (full.apprDate != "" && full.status!="ARST-0004") {
+	  	                                	return kpcUtil.setDateFormat(full.apprDate , "YYYY-MM-DD");
+  	                           			}
+  	                           			else {
+  	                           				return "-";
+  	                           			}
+  	                                }
+                                },   
+                                {data: "apprEmpName", defaultContent: "", width : 90, className: "column-align-center"}, // 승인자
+                                {data: "detail", defaultContent: "", width :90, className: "column-align-center"},      // 상세보기 버튼
+                            ],
+                            buttons: [
+                                {
+                                	text:'Excel',
+                                    className:'btn yellow btn-outline',
+                                    action: function (e, dt, node, config) {
+										var count = dt.rows().data().count();
+                                    	
+                                    	if (count > 0 ) {
+                                        	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                     							$.ajax({
+                     	                            url: "/api/approvals/request/excel",
+                     	                            type: 'GET',
+                     	                            data : "formData=" + $("#searchForm").serializeObject(),
+                     	                            contentType  : "application/json",
+                     	                            success: function(data){
+                     	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                     	                            },
+                     	                            error : function(e){
+                     	                            	kpcUtil.errorHandling(e);
+                     	                            }
+                     	                       });  	                                    	
+                                         	}
+                                    	}
+                                    	else {
+                                    		kpcUtil.customAlert("Excel로 변환할 자료가 없습니다.");
+                                    	}
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 100], [10, 20, 30, 50, 100]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-8 col-sm-12'l><'col-md-4 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+            }
+            var setPageEvents = function (){
+            	
+            	// 조회 이벤트
+            	$("#search").click(function (){
+            		table.fnFilter();
+            	});   		
+            	
+            	$("#workType").select2().on('change',function(event) {
+           			$("#reqType option").remove();
+            		if(event.target.value === "'AWRK-0005'" || event.target.value === "'AWRK-0010'") {
+            			$("#reqType").select2({
+            				width: 186,
+            				data : [
+           				        {
+	            					id : ' ',
+	            					"text": "전체"
+            					},
+           				        {
+	            					id : 'AREQ-0004',
+	            					"text": "연장"
+            					},
+           				        {
+            						id : 'AREQ-0005',
+	            					"text": "사용해제"
+            					},
+            				]
+            			})
+            		}
+            		else if (event.target.value === "") {
+            			$("#reqType").select2({
+            				width: 186,
+            				data : [
+           				        {
+	            					id : " ",
+	            					"text": "전체"
+            					},
+           				        {
+	            					id : 'AREQ-0001',
+	            					"text": "등록"
+            					},
+           				        {
+            						id : 'AREQ-0002',
+	            					"text": "수정"
+            					},
+           				        {
+            						id : 'AREQ-0003',
+	            					"text": "삭제"
+            					},
+           				        {
+	            					id : 'AREQ-0004',
+	            					"text": "연장"
+            					},
+           				        {
+            						id : 'AREQ-0005',
+	            					"text": "사용해제"
+            					},
+            				]
+            			})
+            		}
+            		else {
+            			$("#reqType").select2({
+            				width: 186,
+            				data : [
+           				        {
+	            					id : " ",
+	            					"text": "전체"
+            					},
+           				        {
+	            					id : 'AREQ-0001',
+	            					"text": "등록"
+            					},
+           				        {
+            						id : 'AREQ-0002',
+	            					"text": "수정"
+            					},
+           				        {
+            						id : 'AREQ-0003',
+	            					"text": "삭제"
+            					},
+            				]
+            			})
+            			
+            		}
+            	})
+            }
+            
+            return {
+                init : function (){
+                	setDatePicker();
+                	setSelect2();
+                	setCommonCode();
+                    setPageEvents();
+                    setDataTable();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            approvalRequestListInq().init();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="R2-Admin" default="mkzip">
+	<property file="build.properties"/>
+	<property name="base.dir" value="."/>
+	<property name="dist.dir" value="dist"/>
+	<property name="src.assets" value="assets"/>
+	<property name="src.static" value="static"/>
+	<property name="src.docs" value="docs"/>
+	<property name="src.routes" value="routes"/>
+	<property name="src.templates" value="templates"/>
+	<property name="src.util" value="util"/>
+	<property name="init.file" value="__init__.py"/>
+	<property name="app.file" value="app.py"/>
+	<property name="logging.file" value="logging.json"/>
+	<property name="bower.components" value="bower_components"/>
+	
+	<property name="src.dir" value="src" />
+	<property name="target.dir" value="target"/>
+	<property name="debug" value="on"/>
+	<property name="optimize" value="off"/>	
+	<property name="zip.file" value="R2-Admin_${version}.zip"/>
+	
+	<target name="prepare">
+		<tstamp>
+			<format property="DSTAMP" pattern="yyyy.MM.dd"/>
+			<format property="TSTAMP" pattern="HH:mm:ss"/>
+		</tstamp>
+		<echo message="Build Start!! =====> ${DSTAMP}-${TSTAMP}"/>
+	</target>
+	<target name="clean" depends="prepare">
+		<!-- delete dist dir if necessary -->
+		<!--
+		<delete dir="${dist.dir}"/>
+		-->
+		<delete dir="${dist.dir}"/>
+		<delete dir="${target.dir}"/>
+	</target>
+	<target name="compile" depends="clean">
+		<mkdir dir="${dist.dir}"/>
+		<!--
+		<copy todir="${dist.dir}/${src.assets}">
+			<fileset dir="${base.dir}/${src.assets}" />
+		</copy>
+		<copy todir="${dist.dir}/${src.docs}">
+			<fileset dir="${base.dir}/${src.docs}" />
+		</copy>
+		<copy todir="${dist.dir}/${src.routes}">
+			<fileset dir="${base.dir}/${src.routes}" />
+		</copy>
+		<copy todir="${dist.dir}/${src.templates}">
+			<fileset dir="${base.dir}/${src.templates}" />
+		</copy>
+		<copy todir="${dist.dir}/${src.util}">
+			<fileset dir="${base.dir}/${src.util}" />
+		</copy>
+		<copy todir="${dist.dir}/${bower.components}">
+			<fileset dir="${base.dir}/${bower.components}" />
+		</copy>
+		<copy todir="${dist.dir}">
+			<fileset file="${base.dir}/${init.file}" />
+			<fileset file="${base.dir}/${app.file}" />
+		</copy>
+		-->
+		<copy todir="${dist.dir}">
+			<fileset dir="${base.dir}">
+				<include name="${src.assets}/**" />
+				<include name="${src.static}/**" />
+				<include name="${src.docs}/**" />
+				<include name="${src.routes}/**" />
+				<include name="${src.templates}/**" />
+				<include name="${src.util}/**" />
+				<include name="${bower.components}/**" />
+				<include name="${init.file}" />
+				<include name="${app.file}" />
+				<include name="${logging.file}" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="mkzip" depends="compile">
+		<mkdir dir="${target.dir}"/>
+		<zip destfile="${target.dir}/${zip.file}">
+			<zipfileset dir="${base.dir}/${dist.dir}"></zipfileset>
+		</zip>
+	</target>
+	<target name="mkzip-direct" depends="clean">
+		<mkdir dir="${target.dir}"/>
+		<!--
+		<zip destfile="${target.dir}/${zip.file}">
+			<zipfileset dir="${src.assets}" prefix="${src.assets}"></zipfileset>
+			<zipfileset dir="${src.docs}" prefix="${src.docs}"></zipfileset>
+			<zipfileset dir="${src.routes}" prefix="${src.routes}"></zipfileset>
+			<zipfileset dir="${src.templates}" prefix="${src.templates}"></zipfileset>
+			<zipfileset dir="${src.util}" prefix="${src.util}"></zipfileset>
+			<zipfileset dir="${bower.components}" prefix="${bower.components}"></zipfileset>
+			<zipfileset file="${init.file}"></zipfileset>
+			<zipfileset file="${app.file}"></zipfileset>
+		</zip>
+		-->
+		<zip destfile="${target.dir}/${zip.file}" basedir="${base.dir}">
+			<include name="${src.assets}/**" />
+			<include name="${src.static}/**" />
+			<include name="${src.docs}/**" />
+			<include name="${src.routes}/**" />
+			<include name="${src.templates}/**" />
+			<include name="${src.util}/**" />
+			<include name="${bower.components}/**" />
+			<include name="${init.file}" />
+			<include name="${app.file}" />
+			<include name="${logging.file}" />
+		</zip>
+	</target>
+</project>

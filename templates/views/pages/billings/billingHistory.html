@@ -1,0 +1,544 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>정산명세서 등록/조회</h3>
+                <h5><span class="red">[홈 > 회계 등록 관리 > 정산 명세서 등록/조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="formBillings" name="formBillings" class="form-bordered ">
+							<input type="hidden" id="merchantId" name="merchantId" >                              
+							<input type="hidden" id="serviceId" name="serviceId" >                              
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 검색조건</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래처/서비스</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="selType" name="selType" >
+	                                        <option value="merchant">거래처</option>
+	                                        <option value="service">서비스</option>
+	                                    </select>
+                                        <input type="text" class="form-control " id="selName" name="selName" readonly="readonly" >
+                                        <a href="#" class="btn btn-default btn-search">조회</a>                              
+                                    </div>
+                                </div>                            
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래구분</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="serviceType" name="serviceType" >
+	                                    	<option value="" >전체</option>
+	                                    </select>
+                                	</div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">정산주기</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="bilcType" name="bilcType" >
+	                                    	<option value="" >전체</option>
+	                                    </select>
+                                	</div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">조회일자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="dateType" name="dateType" >
+	                                    	<option value="DAYT-0001">정산기간</option>
+	                                    	<option value="DAYT-0002">정산지급일</option>
+	                                    </select>
+                                        <input type="text" class="form-control input-date-picker-long" id="searchDate" name="searchDate" >                              
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+									<label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">정산조정</label>
+									<div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+										<select class="form-control" id="adjustType" name="adjustType" >
+											<option value="">전체</option>
+											<option value="Y">가능</option>
+											<option value="N">불가</option>
+										</select>
+									</div>
+								</div>
+                            </div>
+                        </form>
+                        <table id="billingsTable" class="table table-striped table-bordered" style="width: 100%; word-break: keep-all; word-wrap: break-word;">
+                            <thead>
+                                <tr>
+                                    <th class="column-align-center">
+                                    	<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                    		<input type="checkbox" class="group-checkable" data-set="#billingsTable .checkboxes" />
+                                    		<span></span>
+                                    	</label>
+                                    </th>
+                                    <th class="column-align-center">순번</th>
+                                    <th class="column-align-center">거래처명</th>
+                                    <th class="column-align-center">서비스명</th>
+                                    <th class="column-align-center">정산기간</th>
+                                    <th class="column-align-center">정산지급일</th>
+                                    <th class="column-align-center">거래구분</th>
+                                    <th class="column-align-center">거래금액</th>
+                                    <th class="column-align-center">거래취소금액</th>
+                                    <th class="column-align-center">총 거래금액</th>
+                                    <th class="column-align-center">결제금액</th>
+                                    <th class="column-align-center">할인금액</th>
+                                    <th class="column-align-center">정산 타입</th>
+                                    <th class="column-align-center">정산주기</th>
+                                    <th class="column-align-center">거래건수</th>
+                                    <th class="column-align-center">정산 수수료</th>
+                                    <th class="column-align-center">수수료 타입</th>
+                                    <th class="column-align-center">부가세 타입</th>
+                                    <th class="column-align-center">수수료</th>
+                                    <th class="column-align-center">부가세</th>
+                                    <th class="column-align-center">수수료 합계</th>
+                                    <th class="column-align-center">정산금액</th>
+                                    <th class="column-align-center">은행</th>
+                                    <th class="column-align-center">예금주</th>
+                                    <th class="column-align-center">계좌번호</th>
+                                    <th class="column-align-center">정산조정</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+	                    </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+			<button id="createApprovalRequestBtn" class="dt-button btn green btn-outline" style="display:none;">정산등록</button>
+        </div>
+    </div>
+</div>
+
+<!-- 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-create-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var billings = function () {
+        	var table;
+            var setDatePicker = function (){
+            	kpcUtil.setDateRangePicker('#searchDate');
+            }
+            var setSelect2 = function () {
+                $("#selType").select2({
+                    width: 110,
+                });
+                $("#dateType").select2({
+                    width: 150,
+                });
+            }            
+            var setCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+            		target : [
+            			 "#serviceType",
+            			 "#bilcType",
+            		], 
+            		apiUrl : "/api/systemMng/common/commonCodeList",
+            		params : {type : 'TRNT,BILC'},
+            		type   : "GET",
+            		option : {width : 150},	
+            		callBack : function (data,target,option){
+            			for(var idx in data){
+            				for(var idx2 in data[idx].resultList){
+	            				$(target[idx]).append($("<option></option>")
+	            						.attr("value" , data[idx].resultList[idx2].code)
+	            						.text(data[idx].resultList[idx2].codeName));
+            				}
+            				$(target[idx]).select2(option);       
+            			}
+            			setDataTable();
+            		}
+            	});
+            }                
+            var setDataTable = function () {
+                table = $('#billingsTable')
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/api/billing/billingHistory",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#formBillings").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(1)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                $(".group-checkable").prop("checked" , false); // 전체 체크 박스 해제
+                            },
+                            columns: [
+                                {
+                                	// 체크박스
+                                	orderable : false,
+                                	className : "checkboxes column-align-center",
+                                	width : 50,
+                                	render : function (data, type, full, meta){
+                                		var checkbox_html = "";
+                                		if(full.status == 'Y') {
+	                                		checkbox_html = '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">'
+	                                		                  + '<input type="checkbox" class="checkboxes" name="chk" value="'+full.seq+'">'
+	                                		                  + '<span></span>'
+	                                		                  + '</label>';
+                                		}
+                                		return checkbox_html;
+                                	}
+                                },                               
+                                {data : "rownum", width : 50, className: "column-align-center", defaultContent: ""}, // 순번
+                                {data : "submerchantName", className: "column-align-center", defaultContent: ""}, // 거래처명                   
+                                {data : "serviceName", className: "column-align-center", defaultContent: ""}, // 서비스명
+                                {
+                                	// 정산기간
+                                	orderable : false,
+                                	width : 300,
+                                	className : "checkboxes column-align-center",
+                                	render : function (data, type, full, meta){
+                                		return kpcUtil.setDateFormat(full.approvalDtMin , "YYYY-MM-DD") + " ~ " + kpcUtil.setDateFormat(full.approvalDtMax , "YYYY-MM-DD");
+                                	}
+                                },
+                                {
+                                	// 정산지급일
+                                	orderable : false,
+                                	className : "checkboxes column-align-center",
+                                	render : function (data, type, full, meta){
+                                		return kpcUtil.setDateFormat(full.billingDt , "YYYY-MM-DD");
+                                	}
+                                },                                
+                                {data : "typeName", className: "column-align-center", defaultContent: ""}, // 거래구분  
+                                {
+                                	// 거래 금액
+                                	data : "amount",	
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.amount);
+                                	}
+                                },                                
+                                {
+                                	// 거래 취소금액
+                                	data : "cancelAmount",	
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.cancelAmount);
+                                	}
+                                },                                
+                                {
+                                	// 총 거래금액
+                                	data : "totalAmount",	
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.totalAmount);
+                                	}
+                                }, 
+                                {
+                                	// 결제금액
+                                	data : "payAmount",	
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.payAmount);
+                                	}
+                                },   
+                                {
+                                	// 할인금액
+                                	data : "dcAmount",	
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.dcAmount);
+                                	}
+                                },   
+                                {
+                                	// 정산타입
+                                	data : "billingCommType",
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.billingCommType);
+                                	}
+                                },                                
+                                {
+                                	// 정산주기
+                                	data : "billingDuration",	
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.billingDuration);
+                                	}
+                                },                    
+                                {data : "cnt" , className: "column-align-center", defaultContent: ""}, //거래 건수                                                   
+                                {
+                                	// 정산 수수료
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                                		var merchantCommType = full.merchantCommType
+                                		if(merchantCommType === "FEE-0001") {
+                                			//FEE-0001 = 비율정산
+                                			return full.merchantCommision + "%";                                			
+                                		} else if (merchantCommType === "FEE-0002") {
+                                			//FEE-0001 = 건당
+                                			return full.merchantCommision + "원";
+                                		} else {
+                                			return "-";
+                                		}
+                                	}
+                                },
+                                {
+                                	// 수수료 타입
+                                	data : "commTypeName",
+                                	orderable : false,
+                                	className : "checkboxes column-align-right"
+                                },
+                                {
+                                	// 부가세 타입
+                                	data : "taxTypeName",	
+                                	orderable : false,
+                                	className : "checkboxes column-align-right"
+                                },
+                                {
+                                	// 수수료
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.commision);
+                                	}
+                                },
+                                {
+                                	// 부가세
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.tax);
+                                	}
+                                },
+                                {
+                                	// 수수료합계
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.commTotal);
+                                	}
+                                },
+                                {
+                                	// 정산 금액
+                                	orderable : false,
+                                	className : "checkboxes column-align-right",
+                                	render : function (data, type, full, meta){
+                               			return kpcUtil.numberWithCommas(full.billingAmount);
+                                	}
+                                },                                   
+                                {data : "bankNm" , className : "checkboxes column-align-center", defaultContent: ""}, // 입금은행   
+                                {data : "bankHolder" , className : "checkboxes column-align-center",defaultContent: ""}, // 예금주                
+                                {data : "bankAccNo" , className : "checkboxes column-align-center",defaultContent: ""}, // 계좌번호
+                                {
+                                	// 정산 조정
+                                	data : "status",
+                                	className: "column-align-center",
+                                	render : function (data, type, full, meta){
+                                		// 수정 버튼
+                                        var html = "";
+                                		if(full.status == 'N') {
+                                			html = '<button type="button"  class="btn btn-sm gray btn-outline upt" disabled="disabled">불가</button>';
+                                		} else {
+                                			html = '<button type="button"  class="btn btn-sm blue btn-outline upt" href="javascript:;" billingSeq="' + full.seq + '">가능</button>';	
+                                		}
+                                    	return html;
+                                	}
+                                }
+                            ],
+                            buttons: [
+/*                                 {
+                                    text: '관리 이력 조회',
+                                    className: 'btn blue btn-outline',
+                                    action: function (e, dt, node, config) {
+                                        kpcUtil.customAlert("미구현");
+                                    }
+                                }, */
+                                {
+                                	text: 'Layout',
+                                    className: 'dt-button btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+    							    		columnArray : $(table).find("thead>tr>th").siblings().not(".checkboxes"),
+    							    		tableId : "billingsTable",
+    							    		menuId : "{{session['menuId']}}",
+    							    		targetTable : table
+        								}); 
+                                    }
+                                },
+                                 {	text: 'Excel',
+                                	className: 'btn yellow btn-outline ',
+                                	action : function(e, dt, node, config){                                		
+                                       	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                   							$.ajax({
+                   	                            url: "/api/billing/billingHistory/excelAll",
+                   	                            type: 'GET',
+                   	                            data : $("#formBillings").serialize(),
+                   	                            contentType  : "application/json",
+                   	                            async : true,
+                   	                            success: function(data){
+                   	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                   	                            },
+                   	                            error : function(e){
+                   	                            	kpcUtil.errorHandling(e);
+                   	                            }
+                   	                       });  	                                    	
+                                       	}                                        
+                                	}	
+                                 
+                                 }, 
+/*                                 {
+                                    text: '등록 반려',
+                                    className: 'btn blue btn-outline',
+                                    action: function (e, dt, node, config) {
+                                        kpcUtil.customAlert("미구현");
+                                    }
+                                },
+                                {
+                                    text: '등록 승인',
+                                    className: 'btn blue btn-outline',
+                                    action: function (e, dt, node, config) {
+                                        kpcUtil.customAlert("미구현");
+                                    }
+                                },
+                                {
+                                    text: 'ERP 등록',
+                                    className: 'btn blue btn-outline',
+                                    action: function (e, dt, node, config) {
+                                        kpcUtil.customAlert("미구현");
+                                    }
+                                },
+                                {
+                                    text: 'ERP 등록 승인',
+                                    className: 'btn blue btn-outline',
+                                    action: function (e, dt, node, config) {
+                                        kpcUtil.customAlert("미구현");
+                                    }
+                                }, */
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                        table.fnFilter();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                            "initComplete": function() {
+                            	//승인등록 버튼 위치 조정
+                                $("#billingsTable_wrapper .dt-buttons").prepend($("#createApprovalRequestBtn"));
+                                $("#createApprovalRequestBtn").show();
+                            }
+                        }
+                    ).on('click', '.upt', function() {
+                    	location.href = "/billing/billingDetail?billingSeq=" + $(this).attr("billingSeq");
+                    });
+            }
+            
+            var setPageEvents = function (){
+
+            	kpcUtil.setAllChecked(".group-checkable");
+            	$("#selType").change(function (){
+            		$("#formBillings #serviceId").val(''); 
+            		$("#formBillings #merchantId").val(''); 
+            		$("#formBillings #selName").val('');
+            	});            	
+            	$(".btn-search").click(function (){
+            		if($("#selType option:selected").val() == "merchant"){
+	        			kpcUtil.openSubMerchantsPopup("#formBillings #merchantId", "#formBillings #selName" , "");
+            			 
+            		}else if ($("#selType option:selected").val() == "service") {
+	            		kpcUtil.openServicePopup("#formBillings #serviceId", "#formBillings #selName" , "");
+            			
+            		}
+        			
+        		});
+    			// 조회 이벤트
+            	kpcUtil.serachFormEvent({
+            		selects : "#formBillings select",
+            		inputs : "#formBillings input",
+            		callback : function (){
+            			table.fnFilter();
+            		}
+            	});             	
+            }
+            
+            return {
+                init : function (){
+                    setDatePicker();
+                    setSelect2();
+                    setCommonCode();
+                    setPageEvents();
+                    
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            billings().init();
+            
+          	//결제승인 창 생성
+            approvalReuestCreateModal("formBillings", "BSM-0001", "AWRK-0006", "", function() {
+            	var length = $("#billingsTable tbody input:checkbox:checked").length;
+            	if(length > 0) {
+            		return "선택된 "+length+"건을 정산 등록하시겠습니까?";            		
+            	} else {
+            		return false;
+            	}
+            });
+        });
+    </script>
+{% endblock %}

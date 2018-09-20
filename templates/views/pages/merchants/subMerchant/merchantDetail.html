@@ -1,0 +1,463 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>일반 거래처 상세</h3>
+                <h5><span class="red">[홈 > 거래처 관리 > 거래처 조회 > 대표/일반 거래처 조회 > 대표 거래처 상세 > 일반 거래처 상세]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="form">
+                        <form action="#" id="merchantForm" class="form-bordered ">
+                        	<input type="hidden" id="path" name="path" >
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">- 거래처 정보 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상위거래처 코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                        <span id="parentId" class="span-vertical-middle col-md-12 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상위거래처 명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                        <span id="parentName" class="span-vertical-middle col-md-12 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처코드</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                        <span id="submerchantId" class="span-vertical-middle col-md-12 col-xs-12" ></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처 명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="name" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">거래처약칭</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="alias" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표성명</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="ceoName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">개업일</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="openDate" class="span-vertical-middle col-md-7 col-xs-12" isDateField="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사업자번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="bizRegNo" class="span-vertical-middle col-md-7 col-xs-12" isBzno="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">법인등록번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+										<span id="corpRegNo" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">업종</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                    <span class="span-vertical-middle col-md-7 col-xs-12" id="bizKind" ></span>                 
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">업태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+	                                    <span class="span-vertical-middle col-md-7 col-xs-12" id="bizCond" ></span>    										
+                                    </div>
+                                </div>    
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">우편번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12  form-border-left-lg">
+                                        <span id="zipcode" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">주소</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="address" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상세주소</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="addressDetail" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="tel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">대표팩스번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="fax" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">세금계산서 담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="taxCustNm" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">세금계산서 발행 E-MAIL</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="taxEmail" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">전화번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="taxTel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">팩스번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="taxFax" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">핸드폰번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="taxPhone" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">사용여부</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="useFlagName" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">영업담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="salesNm" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">영업담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="salesTel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="billingNm" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">정산담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="billingTel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">KPC영업담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="kpcSalesNm" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">KPC영업담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="kpcSalesTel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">KPC정산담당자</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="kpcBillingNm" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">KPC정산담당자 연락처</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="kpcBillingTel" class="span-vertical-middle col-md-7 col-xs-12" isTel="true"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">에이전트 아이디</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="agentId" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>                                                                
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">홈페이지</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-border-left-lg">
+                                        <span id="urlHome" class="span-vertical-middle col-md-7 col-xs-12"></span>
+                                    </div>
+                                </div>              
+                            </div>
+                        </form>
+                        <br />
+                        <div class="column-align-right">
+							<a id="back" class="dt-button btn green btn-outline" href="javascript:;"><span>목록</span></a>
+							{% if admin_view.pageAuth["insFlag"] == "1" %}
+							<a id="serviceReg" class="dt-button btn blue btn-outline" href="javascript:;"><span>서비스 등록</span></a>
+							{% endif %}
+							{% if admin_view.pageAuth["updFlag"] == "1" %}
+							<a id="upt" class="dt-button btn blue btn-outline" href="javascript:;"><span>수정</span></a>
+							{% endif %}                        	
+							{% if admin_view.pageAuth["delFlag"] == "1" %}  
+							<a id=deleteApprovalRequestBtn class="dt-button btn red btn-outline" href="javascript:;"><span>삭제</span></a>
+							{% endif %}
+                        </div>
+			            {% if admin_view.isNew == "false" %}
+			            <br />
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                <label class="control-label col-md-12 col-sm-3 col-xs-12">- 서비스 정보 </label>
+                            </div>
+                        </div>		
+			            <table id="serviceTable" class="table table-striped table-bordered">
+				            <thead>
+				                <tr>
+				                    <th>순번</th>
+				                    <th>서비스코드</th>
+				                    <th>서비스명</th>
+				                    <th>연동아이디</th>
+				                    <th>서비스타입</th>
+				                    <th>상태</th>
+				                    <th>서비스</th>
+				                    <th>정산명</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				            </tbody>
+			            </table>
+			            {% endif %}                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 삭제 승인요청 modal include -->
+{% include 'views/pages/common/approval/popup/approval-request-delete-modal.html' %}
+{% include 'views/pages/common/merchant/popup/service-billing-detail-modal.html' %}
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/js/merchant.js"></script>
+    <script src="/assets/js/approval/approval.js"></script>
+{% if admin_view.pageAuth["updFlag"] == "1" %}
+	<script src="/assets/js/approval/merchant/submerchant.js"></script>
+{% endif %}            
+    <!-- jQuery validation -->
+    
+    <script type="text/javascript">
+
+        var merchant_inq = function () {
+        	var service_table;
+            var setDatePicker = function (){
+                var todayDateOption = kpcUtil.getDateOption(kpcUtil.getToday());
+                $('input[name=paymentDate]').daterangepicker(todayDateOption);
+                $('input[name=cancelDate]').daterangepicker(todayDateOption);
+            }
+            var setDataTable = function () {
+            	{% if admin_view.isNew == "false" %}
+                service_table = $('#serviceTable')
+                    .on('click', '.det', function () {
+                    	location.href = "/merchants/service/merchantServiceDetail?serviceId=" + $(this).attr("serviceId");
+                    })
+                    .on('click', '.upt', function () {
+                    	
+                   		var isExist = approval.existApprovalRequest($(this).attr("serviceId"));
+                   		if (!isExist) {
+    	                	location.href = "/merchants/sub-merchant/service/update?serviceId="+$(this).attr("serviceId")+"&subMerchantId="+$(this).attr("submerchantid");
+                   		}
+                    	
+                    	
+                    	
+                    	//serviceUpdate($(this).attr("serviceId"),function (){ service_table.fnFilter()});
+                    })                                    
+                    .on('click', '.detBilling', function () {
+                    	serviceBillingDetailModal("billing", ($(this).attr("serviceBillingId")));
+                    })
+                    {% if admin_view.pageAuth["updFlag"] == "1"%}
+                    .on('click', '.uptBilling', function () {
+                    	billingUpdate($(this).attr("serviceBillingId"),function (){ table.fnFilter()});
+                    })                                    
+                    {% endif %}
+                    .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "ajax": {
+                                "url": "/api/merchants/services",
+                                "async" : "true",
+                                "data": function (parameter) {
+        	                    	var params = {
+        		                    		"submerchantId" : "{{admin_view.merchantId}}", 	
+        		                    	};
+        	                    	parameter.formData = JSON.stringify(params);        
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                    // 상세보기 버튼
+                               
+                                }
+                                if(settings.aiDisplay.length > 0){
+                                	$("#serviceReg").text("서비스추가");
+                                }
+                            },
+                            columns: [
+                                {data: "rownum", defaultContent: "", width: 80 , className: "column-align-right"},     // 순번
+                                {data: "serviceId", defaultContent: "",className: "column-align-center"},              // 서비스 아이디
+                                {
+                                	data : "name" ,
+	                                defaultContent: "", 
+	                                className: "column-align-center",
+	                                render : function (data, type , full , meta){
+	                                	return '<a class="blue det" href="javascript:;" serviceId="' + full.serviceId + '">' + full.name + '</a>';
+	                                }
+                                },  // 서비스명                                     
+                                {data: "svcConnId", defaultContent: "",className: "column-align-center"},          // 연동아이디
+                                {data: "typeName", defaultContent: "",className: "column-align-center"},          // 서비스타입
+                                {data: "useFlagName", defaultContent: "",className: "column-align-center"},               // 상태
+                                {
+                                	data : "service" ,
+	                                defaultContent: "", 
+	                                width : 90,
+	                                className: "column-align-center",
+	                                render : function (data, type , full , meta){
+	                                    // 상세보기 버튼
+	                                    // 수정 버튼
+										var html = "";
+	                                	var btnDisabled = "" ;
+ 	                                	if ('{{admin_view.pageAuth["updFlag"] == "1"}}' === "False") {
+ 	                                		btnDisabled = "disabled";
+ 	                                	}
+	                                    html = '<button type="button"  class="btn btn-sm green btn-outline upt" serviceId="' + full.serviceId + '" submerchantId="'+full.submerchantId+' " '+btnDisabled+'  ">수정</button>';
+	                                	return html;
+	                                }
+                                },  // 수정 
+                                {
+                                	data : "billingName" ,
+	                                defaultContent: "", 
+	                                width : 90,
+	                                className: "column-align-center",
+	                                render : function (data, type , full , meta){
+	                                	if(kpcUtil.nullToBlank(full.billingName) !== "")
+	                                		return '<a class="blue detBilling" href="javascript:;" serviceBillingId="' + full.serviceBillingId + '">' + full.billingName + '</a>';
+	                                }
+                                },  // 정산명                                 
+                            ],
+                            "lengthMenu": [[3, 5, 10, 15, 50], [3, 5, 10, 15, 50]],
+                            "pageLength": 3,
+                            "dom": "<'row' <'col-md-6 col-sm-12'l>><'table-scrollable'tr><'col-md-12 col-sm-12'p>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+                {% endif %}                
+            }
+
+            var setPageEvents = function (){
+            	{% if admin_view.isNew == "false" %}
+            		selectSubMerchant();
+	            	$("#upt").click(function (){
+	            		location.href = "/merchants/sub-merchant/update?merchantId="+'{{admin_view.merchantId}}';
+	            	});            	
+	            	$("#serviceReg").click(function (){
+						location.href="/merchants/service/merchantServiceReg?merchantId={{admin_view.merchantId}}&path="+ $("#path").val();
+	            	});
+            	{% endif %}
+            	$("#back").click(function (){
+            		location.href="/merchants/inquiry/merchantInq";
+            	});            	
+            }
+            var selectSubMerchant = function (){
+				$.ajax({
+                    url: "/api/merchants/merchant",
+                    data : "merchantId=" + "{{admin_view.merchantId}}",
+                    type: 'GET',
+                    dataType : "json",
+                    contentType  : "application/json",
+                    async : true,
+                    success: function(data){
+                    	kpcUtil.setFormData("#merchantForm" , data)
+                    },
+                    error : function(e){
+                    	kpcUtil.errorHandling(e);
+                    }
+                });              	
+            }
+            
+            return {
+                init : function (){
+                    setDatePicker();
+                    setDataTable();
+                    setPageEvents();
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            merchant_inq().init();
+          //임포트한 삭제 승인 요청 모달 초기화
+            approvalReuestDeleteModal("{{admin_view.merchantId}}", "MENU-0001", "AWRK-0002");
+        });
+
+    </script>
+{% endblock %}

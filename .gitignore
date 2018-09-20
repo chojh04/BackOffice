@@ -1,0 +1,12 @@
+.project
+.pydevproject
+.idea/
+.settings/
+.metadata/
+bower_components/
+*.pyc
+.Pyton
+fileUpload/
+fileDownload/
+/dist/
+/target/

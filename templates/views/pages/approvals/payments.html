@@ -1,0 +1,1055 @@
+<!-- extend base layout -->
+{% extends "views/master.html" %}
+
+{% block body %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>결제 정산 내역 조회</h3>
+                <h5><span class="red">[홈 > 정산 내역 관리 > 결제 정산 내역 조회]</span></h5>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content form">
+                        <form action="#" id="formApprovals" class="form-bordered ">
+                            <input type="hidden" id="submerchantId" name="submerchantId" >                              
+                            <input type="hidden" id="serviceId" name="serviceId" >                              
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12 form-group ">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">- 검색 조건 </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label custom-col-lg-1 col-md-12 col-sm-3 col-xs-12">조회타입</label>
+                                    <div class="custom-col-lg-10 col-md-12 col-sm-9 col-xs-12 md-radio-inline">
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="tableType1" name="tableType" value="nomal" checked="checked">
+                                    		<label for="tableType1">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			일반
+                                    		</label>
+                                    	</div>      
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="tableType2" name="tableType" value="daily">
+                                    		<label for="tableType2">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			일별요약
+                                    		</label>
+                                    	</div>                                         
+                                    	<div class="md-radio">
+                                    		<input type="radio" id="tableType3" name="tableType" value="month">
+                                    		<label for="tableType3">
+                                    			<span></span>
+                                    			<span class="check"></span>
+                                    			<span class="box"></span>
+                                    			월별요약
+                                    		</label>
+                                    	</div>                                         
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">거래처/서비스</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="selType" name="selType" >
+	                                        <option value="0">거래처</option>
+	                                        <option value="1">서비스</option>
+	                                    </select>
+                                        <input type="text" class="form-control " id="selName" name="selName" readonly="readonly" style="width: 150px;">
+                                        <a href="#" class="btn btn-default btn-search">조회</a>                              
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-3 col-xs-12">정산기간</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-9 col-xs-12 form-inline">
+	                                    <select class="form-control" id="dateType" name="dateType" >
+	                                    </select>
+                                        <input type="text" class="form-control input-date-picker-long" id="startDate" name="startDate" >                              
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">                          
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">상태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="status" name="status" >
+	                                    	<option value="all">전체</option>
+	                                    </select>
+	                            	</div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">승인번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id="approvalNo" name="approvalNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">주문번호</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id=orderNo name="orderNo" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">연동아이디</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+                                    	<input type="text" id="svcConnId" name="svcConnId" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">지불수단</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="payMethod" name="payMethod" >
+	                                    	<option value="">전체</option>
+	                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-right form-border-left-xs">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">지불형태</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="saleDivider" name="saleDivider" >
+	                                    	<option value="">전체</option>
+	                                    </select>
+                                    </div>
+                                </div>                                                            
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 form-group form-border-left form-border-right ">
+                                    <label class="control-label col-lg-3 col-md-12 col-sm-12 col-xs-12">카드타입</label>
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 form-inline">
+	                                    <select class="form-control" id="cardType" name="cardType" >
+	                                    	<option value="">전체</option>
+	                                    </select>
+                                    </div>
+                                </div>                                                            
+                            </div>                                
+                        </form>
+                        <br />
+                        <div id="paymentDiv">
+	                        <table id="paymentTable" class="table table-striped table-bordered" style="width: 100%">
+	                            <thead>
+	                                <tr>
+	                                    <th class="column-align-center">
+	                                    	<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+	                                    		<input type="checkbox" class="group-checkable" data-set="paymentTable .checkboxes" />
+	                                    		<span></span>
+	                                    	</label>
+	                                    </th>
+	                                    <th>순번</th>
+	                                    <th>거래처명</th>
+	                                    <th>서비스명</th>
+	                                    <th>연동아이디</th>
+	                                    <th>점포코드</th>
+	                                    <th>점포명(사용처)</th>
+	                                    <th>상태</th>
+	                                    <th>지불수단</th>
+	                                    <th>지불형태</th>
+	                                    <th>카드구분</th>
+	                                    <th>영업일</th>
+	                                    <th>거래일</th>
+	                                    <th>거래시간</th>
+	                                    <th>주문번호</th>
+	                                    <th>승인번호</th>
+	                                    <th>카드번호</th>
+	                                    <th>거래금액</th>
+	                                    <th>결제금액</th>
+	                                    <th>할인금액</th>
+	                                    <th>수수료</th>
+	                                    <th>결제처수수료율</th>
+	                                    <th>결제처수수료</th>
+	                                    <th>고객지급금액</th>
+	                                    <th>비고</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            </tbody>
+	                        </table>
+                        </div>                        
+                        <div id="paymentDailyDiv" style="display: none;">
+	                        <table id="paymentDailyTable" class="table table-striped table-bordered" style="width: 100%">
+	                            <thead>
+	                                <tr>
+	                                    <th>순번</th>
+	                                    <th>거래처명</th>
+	                                    <th>서비스명</th>
+	                                    <th>연동아이디</th>
+	                                    <th>상태</th>
+	                                    <th>지불수단</th>
+	                                    <th>카드구분</th>
+	                                    <th>영업일</th>
+	                                    <th>거래일</th>
+	                                    <th>거래건수</th>
+	                                    <th>거래금액</th>
+	                                    <th>수수료</th>
+	                                    <th>고객지급금액</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            </tbody>
+	                        </table>
+                        </div>
+                        <div id="paymentMonthDiv" style="display: none;">
+	                        <table id="paymentMonthTable" class="table table-striped table-bordered" style="width: 100%">
+	                            <thead>
+	                                <tr>
+	                                    <th>순번</th>
+	                                    <th>거래처명</th>
+	                                    <th>서비스명</th>
+	                                    <th>연동아이디</th>
+	                                    <th>상태</th>
+	                                    <th>지불수단</th>
+	                                    <th>카드구분</th>
+	                                    <th>영업일</th>
+	                                    <th>거래일</th>
+	                                    <th>거래건수</th>
+	                                    <th>거래금액</th>
+	                                    <th>수수료</th>
+	                                    <th>고객지급금액</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            </tbody>
+	                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail %}
+    <!-- datatable lib-->
+    <script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/bower_components/jszip/dist/jszip.min.js"></script>
+    <script src="/bower_components/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/bower_components/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript">
+
+        var payment = function () {
+        	var paymentTable;
+        	var paymentDailyTable;
+        	var paymentMonthTable;
+            var setDatePicker = function (){
+            	kpcUtil.setDateRangePicker('#startDate');
+            }
+            var setSelect2 = function () {
+                $("#selType").select2({
+                    width: 90,
+                });
+            }
+            var setCommonCode = function (){
+      			kpcUtil.setSelectBoxData({
+            		target : [
+            			 "#status",
+            			 "#dateType",
+            			 "#payMethod",
+            			 "#saleDivider",
+            			 "#cardType",
+            		], 
+            		apiUrl : "/api/systemMng/common/commonCodeList",
+            		params : {type : 'PAYT,DAYT,PAMD,SVC,CARD'},
+            		type   : "GET",
+            		option : {width : 110},	
+            		callBack : function (data,target,option){
+            			for(var idx in data){
+            				for(var idx2 in data[idx].resultList){
+	            				$(target[idx]).append($("<option></option>")
+	            						.attr("value" , data[idx].resultList[idx2].code)
+	            						.text(data[idx].resultList[idx2].codeName));
+            				}
+            				if(target[idx] == "#status"){
+	            				$(target[idx]).select2({width : "100%",multiple:true,tokenSeparators : ["," , " "], maximumSelectionLength: 4});       
+            				}else if(target[idx] == "#cardType"){
+	            				$(target[idx]).select2({width : "100%",multiple:true,tokenSeparators : ["," , " "], maximumSelectionLength: 4});       
+            				}else{
+	            				$(target[idx]).select2(option);       
+            				}            				
+            			}
+            			setDataTable();
+            			setPageEvents();
+            			// 조회 이벤트
+                    	kpcUtil.serachFormEvent({
+                    		selects : "#formApprovals #dateType,#formApprovals #status",
+                    		inputs : "#formApprovals input",
+                    		callback : function (){
+                    			paymentSearch();
+                    		}
+                    	});
+            		}
+            	});            	
+            }            
+            
+            var setDataTable = function () {
+                paymentTable = $('#paymentTable') //조회타입 일반
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true, // default 조회 사용안함
+                            "deferLoading" : 0, // default 조회 사용안함
+                            "ajax": {
+                                "url": "/api/approvals/payments",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#formApprovals").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "autoWidth": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(1)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                $(".group-checkable").prop("checked" , false); // 전체 체크 박스 해제
+                                
+                               	$("#paymentDiv").find(".dataTables_length span").remove();
+                                if(settings.aiDisplay.length > 0){
+									var data = paymentTable.fnSettings().json;
+									
+	                                /*
+	                                $("#paymentDailyDiv").find(".dataTables_length span").remove();
+	                                if(settings.aiDisplay.length > 0){
+										var data = paymentDailyTable.fnSettings().json;
+										var total = "합계 (" 
+												  + "총 결제 합계:  " + kpcUtil.numberWithCommas(data.totalData.amountSum) 
+												  + "  총 취소 합계 : " +kpcUtil.numberWithCommas(data.totalData.cancelSum)
+												  + "  총 환불 합계 : " +kpcUtil.numberWithCommas(data.totalData.refundSum)
+												  + "  총 정산 금액 : " +kpcUtil.numberWithCommas(data.totalData.amountSum - data.totalData.cancelSum)
+												  // + ", 총 거래 금액 : " +kpcUtil.numberWithCommas(data.totalData.totalSum)
+												  + "  총 수수료 합계 : " +kpcUtil.numberWithCommas(data.totalData.billingSum)+")";                                	
+		                                var html = "<span class='red'> "+ total +"</span>";
+		                                $("#paymentDailyDiv").find(".dataTables_length").append(html).addClass("col-md-12");
+	                                }
+	                                */
+									
+									var total = "합계 (" 
+											  + "거래금액 합계:  " + kpcUtil.numberWithCommas(data.totalData.origAmountSum) 
+											  + "&nbsp;&nbsp;결제금액 합계:  " + kpcUtil.numberWithCommas(data.totalData.amountSum)
+											  + "&nbsp;&nbsp;할인금액 합계:  " + kpcUtil.numberWithCommas(data.totalData.dcAmountSum)
+											  + "&nbsp;&nbsp;거래 취소 합계 : " +kpcUtil.numberWithCommas(data.totalData.origCancelSum)
+											  + "&nbsp;&nbsp;결제 취소 합계 : " +kpcUtil.numberWithCommas(data.totalData.cancelSum)
+											  + "&nbsp;&nbsp;정산 금액 : " +kpcUtil.numberWithCommas(data.totalData.origAmountSum - data.totalData.cancelSum)
+											  + "&nbsp;&nbsp;수수료 합계 : " +kpcUtil.numberWithCommas(data.totalData.billingSum)
+											  + "&nbsp;&nbsp;환불 합계 : " +kpcUtil.numberWithCommas(data.totalData.refundSum)
+											  + "&nbsp;&nbsp;고객지급금액 : " +kpcUtil.numberWithCommas(data.totalData.customerProvideSum)
+											  +")";                                	
+	                                var html = "<span class='red'> "+ total +"</span>";	                   
+	                                $("#paymentDiv").find(".dataTables_length").append(html).addClass("col-md-13");
+                                }
+                                
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "paymentTable",
+                            		menuId : "{{session['menuId']}}", 
+                            		targetTable : paymentTable 
+                            	});
+                            },
+                            columns: [
+                                  {
+                                  	orderable : false,
+                                  	className : "checkboxes column-align-center",
+                                  	width : 60,
+                                  	render : function (data, type, full, meta){
+                                  		var checkbox_html = '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">'
+                                  		                  + '<input type="checkbox" class="checkboxes" name="chk" value="'+full.seq+'">'
+                                  		                  + '<span></span>'
+                                  		                  + '</label>';
+                                  		return checkbox_html;
+                                  		
+                                  	}
+                                  }, // 체크박스
+                                  {data : "rownum" , defaultContent: "",width : 60, className: "column-align-center"}, // 순번
+                                  {data : "submerchantNm", width : 200, defaultContent: ""}, // 거래처 명
+                                  {data : "serviceNm" , width : 250, defaultContent: ""}, // 서비스명                   
+                                  {data : "svcConnId" , width : 100,  defaultContent: ""}, // AGENT ID                 
+                                  {data : "storeCd" , width : 100 ,defaultContent: "", className: "column-align-center"}, // 매장(점포) 코드              
+                                  {data : "storeNm" , width : 250 ,defaultContent: ""}, // 매장(점포) 이름 (사용처)             
+                                  {data : "approvalStatusNm" , width : 100 , className: "column-align-center" ,defaultContent: ""}, // 상태        
+                                  {data : "paymethodName" , width : 100 , className: "column-align-center" ,defaultContent: ""}, // 지불수단   
+                                  {data : "saleDividerName" , width : 100 , className: "column-align-center" ,defaultContent: ""}, // 지불형태   
+                                  {data : "cardCdName" , width : 100 , className: "column-align-center" ,defaultContent: ""}, // 카드구분
+                                  {
+                                  	data : "dealDt" ,
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.dealDt , "YYYY-MM-DD");
+  	                                }
+                                  },  // 영업일                 
+                                  {
+                                  	data : "dealDt" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.approvalDt , "YYYY-MM-DD");
+  	                                }
+                                  }, // 거래일
+                                  {
+                                  	data : "approvalDt" , 
+  	                                defaultContent: "", 
+  	                                width : 100,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.approvalDt , "HH:mm:ss");
+  	                                }
+                                  }, // 거래시간                  
+                                  {data : "orderNo" , width : 250,className: "column-align-center" ,defaultContent: ""}, // 주문번호
+                                  {data : "approvalNo" , width : 120,className: "column-align-center" ,defaultContent: ""}, // 승인번호
+                                  {data : "cardEncNo" , width : 120,className: "column-align-center" ,defaultContent: ""}, // 카드번호
+                                  {
+                                  	data : "origAmount" , 
+  	                                defaultContent: "",
+  	                                width : 150,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+  	                                		tag = '<span class="red">- ';
+  	                                		endTag = "</span>";
+  	                                	}
+  	                                	return tag + kpcUtil.numberWithCommas(full.origAmount) + endTag;
+  	                                }
+                                  }, // 거래금액         
+                                  {
+                                    	data : "amount" , 
+    	                                defaultContent: "0",
+    	                                width: 150,
+    	                                className: "column-align-right" ,
+    	                                render : function (data, type , full , meta){
+    	                                	var tag = "";
+    	                                	var endTag = "";
+    	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+    	                                		tag = '<span class="red">- ';
+    	                                		endTag = "</span>";
+    	                                	}  	                                	
+    	                                	return tag + kpcUtil.numberWithCommas(full.amount) + endTag;
+    	                                }
+                                    },// 결제금액
+                                    {
+                                    	data : "dcAmount" , 
+    	                                defaultContent: "0",
+    	                                width: 150,
+    	                                className: "column-align-right" ,
+    	                                render : function (data, type , full , meta){
+    	                                	var tag = "";
+    	                                	var endTag = "";
+    	                                	var dcAmount = (full.dcAmount>0)? kpcUtil.numberWithCommas(full.dcAmount) : "-";
+    	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+    	                                		tag = '<span class="red">';
+    	                                		dcAmount = (dcAmount>0)? kpcUtil.numberWithCommas(dcAmount*-1) : "-";
+    	                                		endTag = "</span>";
+    	                                	}  	                                	
+    	                                	return tag + dcAmount + endTag;
+    	                                }
+                                    },// 할인금액                                  
+                                  {
+                                  	data : "merchantCommision" , 
+  	                                defaultContent: "",
+  	                                width: 150,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	var merchantCommision = (full.commision>0)? kpcUtil.numberWithCommas(full.commision) : "-";
+  	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+  	                                		tag = '<span class="red">';  
+  	                                		merchantCommision = (merchantCommision>0)? kpcUtil.numberWithCommas(merchantCommision*-1) : "-";
+  	                                		endTag = "</span>";
+  	                                	}  	
+  	                                	return tag + merchantCommision + endTag;
+  	                                }
+                                  },// 수수료                                 
+                                  {
+                                	  data : "kpcCommisionRatio" , 
+                                	  width : 150, 
+                                	  className: "column-align-right",
+                                	  render : function(data, type, full, meta){
+                                		  var commisionRatio = (full.kpcCommisionRatio>0)? full.kpcCommisionRatio : "-"; 
+                                		  return commisionRatio;
+                                	  }
+                                  }, // 결제처 수수료율
+                                  {
+                                	  data : "kpcCommision" , 
+                                	  width : 120, 
+                                	  className: "column-align-right",
+                                	  render : function(data, type, full, meta){
+                                		  var kpcCommision = (full.kpcCommision>0)? kpcUtil.numberWithCommas(full.kpcCommision) : "-"; 
+                                		  if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+                                			  kpcCommision = (kpcCommision>0)? kpcCommision*-1 : "-";
+                                			  kpcCommision = '<span class="red">'+kpcCommision+"</span>";
+                                		  }
+                                		  return kpcCommision;
+                                	  }
+                                  },//결제처 수수료
+                                  {
+                                	  data : "customerProvideAmount" , 
+                                	  width : 120, 
+                                	  className: "column-align-right",
+                                	  render : function(data, type, full, meta){
+                                		  var customerProvideAmount = (full.customerProvideAmount>0)? kpcUtil.numberWithCommas(full.customerProvideAmount) : "-";
+                                		  if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+                                			  customerProvideAmount = (customerProvideAmount>0)? customerProvideAmount*-1 : "-";
+                                			  customerProvideAmount = '<span class="red">'+customerProvideAmount+"</span>";
+                                		  }
+                                		  return customerProvideAmount;
+                                	  }
+                                  },//고객지급금액
+                                  {data : "desc01" , className: "column-align-center" , width: 150, defaultContent: " "}, // 비고
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Layout',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+                                    		columnArray : $(paymentTable).find("thead>tr>th").siblings().not(".checkboxes"),
+                                    		tableId : "paymentTable",
+                                    		menuId : "{{session['menuId']}}",
+                                    		targetTable : paymentTable
+                                    	});
+                                    }
+                                },
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/approvals/payments/excelAll",
+                	                            type: 'GET',
+                	                            data : $("#formApprovals").serialize(),
+                	                            contentType  : "application/json",
+                	                            async : true,
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	paymentSearch();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-10 col-sm-12'l><'col-md-2 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+                paymentDailyTable = $('#paymentDailyTable') //조회타입 일별요약
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,
+                            "ajax": {
+                                "url": "/api/approvals/paymentsDaily",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#formApprovals").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                               	
+                                $("#paymentDailyDiv").find(".dataTables_length span").remove();
+                                if(settings.aiDisplay.length > 0){
+									var data = paymentDailyTable.fnSettings().json;
+									
+									var total = "합계 (" 
+											  + "결제 합계:  " + kpcUtil.numberWithCommas(data.totalData.amountSum) 
+											  + "  취소 합계 : " +kpcUtil.numberWithCommas(data.totalData.cancelSum)
+											  + "  정산 금액 : " +kpcUtil.numberWithCommas(data.totalData.amountSum - data.totalData.cancelSum)
+											  + "  수수료 합계 : " +kpcUtil.numberWithCommas(data.totalData.billingSum)
+											  + "  환불 합계 : " +kpcUtil.numberWithCommas(data.totalData.refundSum)
+											  +")";                                	
+	                                var html = "<span class='red'> "+ total +"</span>";
+	                                $("#paymentDailyDiv").find(".dataTables_length").append(html).addClass("col-md-12");
+                                }
+                                
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "paymentDailyTable",
+                            		menuId : "{{session['menuId']}}_daily", 
+                            		targetTable : paymentDailyTable 
+                            	});
+                            },
+                            columns: [
+                                  {data : "rownum" , defaultContent: "",width : 60, className: "column-align-center"}, // 순번
+                                  {data : "submerchantNm", width : 200, defaultContent: ""}, // 거래처 명
+                                  {data : "serviceNm" , width : 250, defaultContent: ""}, // 서비스명                   
+                                  {data : "svcConnId" , defaultContent: ""}, // AGENT ID                 
+                                  {data : "approvalStatusNm" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 상태        
+                                  {data : "payTypeName" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 지불수단   
+                                  {data : "cardCdName" , width : 100, className: "column-align-center" ,defaultContent: ""}, // 카드구분
+                                  {
+                                  	data : "dealDt" ,
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.dealDt , "YYYY-MM-DD");
+  	                                }
+                                  },  // 영업일                 
+                                  {
+                                  	data : "dealDt" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.setDateFormat(full.approvalDt , "YYYY-MM-DD");
+  	                                }
+                                  }, // 거래일
+                                  {
+                                  	data : "cnt" , 
+  	                                defaultContent: "", 
+  	                                width : 100,
+  	                                className: "column-align-right" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.numberWithCommas(full.cnt);
+  	                                }
+                                  }, // 거래건수                  
+                                  {
+                                  	data : "amount" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+  	                                		tag = '<span class="red">- ';
+  	                                		endTag = "</span>";
+  	                                	}
+  	                                	return tag + kpcUtil.numberWithCommas(full.amount) + endTag;
+  	                                }
+                                  }, // 거래금액                 
+                                  {
+                                  	data : "merchantCommision" , 
+  	                                defaultContent: "", 
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+  	                                		tag = '<span class="red">- ';
+  	                                		endTag = "</span>";
+  	                                	}  	                                	
+  	                                	return tag + kpcUtil.numberWithCommas(full.commision) + endTag;
+  	                                }
+                                  },// 수수료
+                                  {
+                                  	  // 고객지급금액
+                                	  defaultContent: "",
+                                	  width : 100,
+                                	  className: "column-align-right" ,
+                                	  render : function (data, type , full , meta){
+                                		  if (full.approvalStatus == "PAYT-0003") {
+                                			  return kpcUtil.numberWithCommas(full.amount - full.commision);
+                                		  }  	                                	
+                               		  }
+                                  }
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Layout',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+                                    		columnArray : $(paymentTable).find("thead>tr>th").siblings().not(".checkboxes"),
+                                    		tableId : "paymentDailyTable",
+                                    		menuId : "{{session['menuId']}}_daily",
+                                    		targetTable : paymentDailyTable
+                                    	});
+                                    }
+                                },
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/approvals/payments/dailyExcelAll",
+                	                            type: 'GET',
+                	                            data : $("#formApprovals").serialize(),
+                	                            contentType  : "application/json",
+                	                            async : true,
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	paymentSearch();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-9 col-sm-12'l><'col-md-3 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );
+                paymentMonthTable = $('#paymentMonthTable') //조회타입 월별요약
+                .dataTable(
+                        {
+                            "processing": true,
+                            "serverSide": true,
+                            "deferRender": true,
+                            "deferLoading" : 0,
+                            "ajax": {
+                                "url": "/api/approvals/paymentsMonth",
+                                "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+                                "async" : "true",
+                                "data": function (parameter) {
+                                    parameter.formData = $("#formApprovals").serializeObject();
+                                },
+                                "error" : function (e){kpcUtil.sessionExpire(e);}
+                            },
+                            "ordering": false,
+                            "drawCallback": function (settings) {
+                                for (var i = 0, iLen = settings.aiDisplay.length; i < iLen; i++) {
+                                    $('td:eq(0)', settings.aoData[settings.aiDisplay[i]].nTr).html(i + 1 + settings._iDisplayStart);
+                                    settings.json.data[i].rownum = i + 1 + settings._iDisplayStart;
+                                }
+                                $(".group-checkable").prop("checked" , false); // 전체 체크 박스 해제
+
+                                $("#paymentMonthDiv").find(".dataTables_length span").remove();
+                                if(settings.aiDisplay.length > 0){
+                                	var data = paymentMonthTable.fnSettings().json;
+									var total = "합계 (" 
+											  + "결제 합계:  " + kpcUtil.numberWithCommas(data.totalData.amountSum) 
+											  + "  취소 합계 : " +kpcUtil.numberWithCommas(data.totalData.cancelSum)
+											  + "  정산 금액 : " +kpcUtil.numberWithCommas(data.totalData.amountSum - data.totalData.cancelSum)
+											  + "  수수료 합계 : " +kpcUtil.numberWithCommas(data.totalData.billingSum)
+
+											  + "  환불 합계 : " +kpcUtil.numberWithCommas(data.totalData.refundSum)
+											  +")";                                	
+	                                var html = "<span class='red'> "+ total +"</span>";
+	                                $("#paymentMonthDiv").find(".dataTables_length").append(html).addClass("col-md-12");
+                                }
+                                
+                            	kpcPopupUtil.setUserTableColumnData({
+                            		tableId : "paymentMonthTable",
+                            		menuId : "{{session['menuId']}}_month", 
+                            		targetTable : paymentMonthTable 
+                            	});
+                                
+                            },
+                            columns: [
+                                  {data : "rownum" , defaultContent: "",width : 60, className: "column-align-center"}, // 순번
+                                  {data : "submerchantNm", width : 200, defaultContent: ""}, // 거래처 명
+                                  {data : "serviceNm" , width : 250, defaultContent: ""}, // 서비스명                   
+                                  {data : "svcConnId" , width : 200,  defaultContent: ""}, // AGENT ID                 
+                                  {data : "approvalStatusNm" , width : 100 , className: "column-align-center" ,defaultContent: ""}, // 상태        
+                                  {data : "payTypeName" , width : 100 , className: "column-align-center" ,defaultContent: ""}, // 지불수단   
+                                  {data : "cardCdName" , width : 100 , className: "column-align-center" ,defaultContent: ""}, // 카드구분
+                                  {
+                                  	data : "dealDt" ,
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,
+  	                                render : function (data, type , full , meta){
+  	                                	if(typeof full.dealDt !== "undefined" && full.dealDt.length == 6){
+	  	                                	return kpcUtil.setDateFormat(full.dealDt + "01", "YYYY-MM");
+  	                                	}else {
+  	                                		return "";
+  	                                	}  	                                	
+  	                                }
+                                  },  // 영업일                 
+                                  {
+                                  	data : "dealDt" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-center" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	if(typeof full.approvalDt !== "undefined" && full.approvalDt.length == 6){
+	  	                                	return kpcUtil.setDateFormat(full.approvalDt + "01", "YYYY-MM");
+  	                                	}else {
+  	                                		return "";
+  	                                	}
+  	                                }
+                                  }, // 거래일
+                                  {
+                                  	data : "cnt" , 
+  	                                defaultContent: "", 
+  	                                width : 100,
+  	                                className: "column-align-right" ,  	                                
+  	                                render : function (data, type , full , meta){
+  	                                	return kpcUtil.numberWithCommas(full.cnt);
+  	                                }
+                                  }, // 거래건수                  
+                                  {
+                                  	data : "amount" , 
+  	                                defaultContent: "",
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+  	                                		tag = '<span class="red">- ';
+  	                                		endTag = "</span>";
+  	                                	}
+  	                                	return tag + kpcUtil.numberWithCommas(full.amount) + endTag;
+  	                                }
+                                  }, // 거래금액                 
+                                  {
+                                  	data : "merchantCommision" , 
+  	                                defaultContent: "", 
+  	                                width : 100,
+  	                                className: "column-align-right" ,
+  	                                render : function (data, type , full , meta){
+  	                                	var tag = "";
+  	                                	var endTag = "";
+  	                                	if (full.approvalStatus == "PAYT-0002" || full.approvalStatus == "PAYT-0004") {
+  	                                		tag = '<span class="red">- ';
+  	                                		endTag = "</span>";
+  	                                	}  	                                	
+  	                                	return tag + kpcUtil.numberWithCommas(full.commision) + endTag;
+  	                                }
+                                  },// 수수료
+                                  {
+                                	  // 고객지급금액
+                                	  defaultContent: "",
+                                	  width : 100,
+                                	  className: "column-align-right" ,
+                                	  render : function (data, type , full , meta){
+                                		  if (full.approvalStatus == "PAYT-0003") {
+                                			  return kpcUtil.numberWithCommas(full.amount - full.commision);
+                                		  }  	                                	
+                                	  }
+                                  }
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Layout',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	kpcPopupUtil.openTableColumnMng({
+                                    		columnArray : $(paymentTable).find("thead>tr>th").siblings().not(".checkboxes"),
+                                    		tableId : "paymentMonthTable",
+                                    		menuId : "{{session['menuId']}}_month",
+                                    		targetTable : paymentMonthTable
+                                    	});
+                                    }
+                                },
+                                {
+                                    text: 'Excel',
+                                    className: 'btn yellow btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	if(kpcUtil.confirm("전체 자료를 Excel변환 하시겠습니까?")){
+                							$.ajax({
+                	                            url: "/api/approvals/payments/monthExcelAll",
+                	                            type: 'GET',
+                	                            data : $("#formApprovals").serialize(),
+                	                            contentType  : "application/json",
+                	                            async : true,
+                	                            success: function(data){
+                	                            	kpcUtil.customAlert("Excel 변환 요청 성공\n작업 결과는 [시스템관리->배치 작업 조회]페이지에서 확인하세요.");
+                	                            },
+                	                            error : function(e){
+                	                            	kpcUtil.errorHandling(e);
+                	                            }
+                	                       });  	                                    	
+                                    	}
+                                    }
+                                },
+                                {
+                                    text: '조회',
+                                    className: 'btn green btn-outline ',
+                                    action: function (e, dt, node, config) {
+                                    	paymentSearch();
+                                    }
+                                }
+                            ],
+                            "lengthMenu": [[10, 20, 30, 50, 200], [10, 20, 30, 50, 200]],
+                            "pageLength": 10,
+                            "dom": "<'row' <'col-md-10 col-sm-12'l><'col-md-2 col-sm-12'B>><'table-scrollable'tr><'row'<'col-md-6 col-sm-6'i><'col-md-6 col-sm-6'p>>",
+                            responsive: true,
+                            "language": {
+                                "aria": {
+                                    "sortAscending": ": activate to sort column ascending",
+                                    "sortDescending": ": activate to sort column descending"
+                                },
+                                "info":"Total Record: _TOTAL_ Page : _PAGE_ / _PAGES_ ",
+                                "emptyTable": "조회된 자료가 없습니다.",
+                                "infoEmpty": "조회된 자료가 없습니다.",
+                                "lengthMenu": "_MENU_",
+                                "zeroRecords": "조회된 자료가 없습니다."
+                            },
+                        }
+                    );                   
+            }
+            
+            var setPageEvents = function (){
+            	$("#selType").change(function (){
+            		$("#formApprovals #serviceId").val(''); 
+            		$("#formApprovals #submerchantId").val(''); 
+            		$("#formApprovals #selName").val('');
+            	});
+            	$(".btn-search").click(function (){
+            		if($("#selType option:selected").val() == "0"){
+	        			kpcUtil.openSubMerchantsPopup("#submerchantId", "#selName" , "");
+            		}else{
+	            		kpcUtil.openServicePopup("#formApprovals #serviceId", "#formApprovals #selName" , "");
+            		}
+        			
+        		});
+            	
+            	$("input[name=tableType]").change(function (){
+            		// approvalNo 
+            		// orderNo
+            		if($(this).val() == "nomal"){
+            			$("#paymentDiv").css("display" , "inline");
+            			$("#paymentDailyDiv").css("display" , "none");
+            			$("#paymentMonthDiv").css("display" , "none");
+            			$("#approvalNo,#orderNo").attr("readonly",false);
+            		}else if($(this).val() == "daily"){
+            			$("#paymentDiv").css("display" , "none");
+            			$("#paymentDailyDiv").css("display" , "inline");
+            			$("#paymentMonthDiv").css("display" , "none");
+            			$("#approvalNo,#orderNo").attr("readonly",true);
+            		}else {
+            			$("#paymentDiv").css("display" , "none");
+            			$("#paymentDailyDiv").css("display" , "none");
+            			$("#paymentMonthDiv").css("display" , "inline");
+            			$("#approvalNo,#orderNo").attr("readonly",true);
+	           		}
+            		
+            		paymentSearch();
+            	});
+            	
+            	kpcUtil.setAllChecked(".group-checkable");
+
+            }
+            
+            var paymentSearch = function (){
+            	var checkedVal = $("input[name=tableType]:checked").val();
+        		if(checkedVal == "nomal"){
+        			paymentTable.fnFilter();
+        		}else if(checkedVal == "daily"){
+        			paymentDailyTable.fnFilter();
+        		}else {
+        			paymentMonthTable.fnFilter();
+        		}            	
+            }
+            
+            var hideTableColumn = function (){
+                // 영업일/거래일 column control
+                // DAYT-0001 영업일
+                // DAYT-0002 거래일            	
+/*                 if($("#dateType").val() == "DAYT-0001"){
+                	// 12,13 hide
+                	$('#paymentTable thead>tr>th').eq(10).show();
+                	$('#paymentTable thead>tr>th').eq(11).hide();
+                	$('#paymentTable thead>tr>th').eq(12).hide();
+                	$('#paymentTable tbody>tr').each(function (){
+                		$(this).find("td").eq(10).show();
+	                	$(this).find("td").eq(11).hide();
+	                	$(this).find("td").eq(12).hide();                	
+                	});
+                }else {
+                	$('#paymentTable thead>tr>th').eq(10).hide();
+                	$('#paymentTable thead>tr>th').eq(11).show();
+                	$('#paymentTable thead>tr>th').eq(12).show();
+                	$('#paymentTable tbody>tr').each(function (){
+	                	$(this).find("td").eq(10).hide();
+	                	$(this).find("td").eq(11).show();
+	                	$(this).find("td").eq(12).show();                    	
+                	});
+                }  */
+            }
+                        
+            return {
+                init : function (){
+                    setDatePicker();
+                    setSelect2();
+                    setCommonCode();
+                    //setPageEvents();
+                    // TODO : setDatatable call at setCommonCode callback function  
+                    // setDataTable();  
+                    
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            payment().init();
+        });
+    </script>
+{% endblock %}

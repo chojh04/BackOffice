@@ -1,0 +1,12 @@
+{% from "views/navigator.html" import nav_bar with context %}
+{% from "views/footer.html" import footer with context %}
+{% extends 'views/base.html' %}
+
+{% block page_body %}
+    {{nav_bar(admin_view.header)}}
+    {% block body %}{% endblock %}
+{% endblock %}
+
+{% block footer %}
+    {{ footer() }}
+{% endblock %}
